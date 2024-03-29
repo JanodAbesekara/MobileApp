@@ -1,8 +1,9 @@
 import 'package:dream_learn_app/utils/settings_list_tile.dart';
 import 'package:flutter/material.dart';
 
-class EmptyScreen extends StatelessWidget {
-  const EmptyScreen({super.key});
+
+class SideBar extends StatelessWidget {
+  const SideBar({super.key});
 
   @override
   Widget build(BuildContext context) {
