@@ -3,11 +3,14 @@ import 'package:dream_learn_app/utils/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  static const _loginTextStyles = TextStyle(color: Color(0xff4E919A), fontSize: 20, letterSpacing: 10, fontWeight: FontWeight.bold);
+  static const _loginTextStyles = TextStyle(
+      color: Color(0xff4E919A),
+      fontSize: 20,
+      letterSpacing: 10,
+      fontWeight: FontWeight.bold);
 
   Widget _passChild() {
     return Column(
@@ -43,7 +46,9 @@ class LoginScreen extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        const Padding(padding: EdgeInsets.symmetric(horizontal: 50), child: CommonTextField(hintText: 'Password')),
+        const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 50),
+            child: CommonTextField(hintText: 'Password')),
         const SizedBox(
           height: 15,
         ),
@@ -51,7 +56,8 @@ class LoginScreen extends StatelessWidget {
           width: 272,
           child: ElevatedButton(
             onPressed: () {},
-            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xff46498F)),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xff46498F)),
             child: const Text(
               'Login',
               style: TextStyle(color: Colors.white),
