@@ -1,18 +1,26 @@
 import 'package:dream_learn_app/screens/background.dart';
 import 'package:dream_learn_app/utils/text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:dream_learn_app/screens/main_home2.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   static const _loginTextStyles = TextStyle(
-      color: Color(0xff4E919A),
-      fontSize: 20,
-      letterSpacing: 10,
-      fontWeight: FontWeight.bold);
+    color: Color(0xff4E919A),
+    fontSize: 20,
+    letterSpacing: 10,
+    fontWeight: FontWeight.bold,
+  );
 
-  Widget _passChild() {
+  @override
+  Widget build(BuildContext context) {
+    return BackgroundScreen(
+      child: _passChild(context),
+    );
+  }
+
+  Widget _passChild(BuildContext context) {
     return Column(
       children: [
         const SizedBox(
@@ -39,25 +47,32 @@ class LoginScreen extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
           child: CommonTextField(hintText: 'User name'),
         ),
         const SizedBox(
           height: 10,
         ),
-        const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50),
-            child: CommonTextField(hintText: 'Password')),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: CommonTextField(hintText: 'Password'),
+        ),
         const SizedBox(
           height: 15,
         ),
         SizedBox(
           width: 272,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainHome2()),
+              );
+            },
             style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xff46498F)),
+              backgroundColor: const Color(0xff46498F),
+            ),
             child: const Text(
               'Login',
               style: TextStyle(color: Colors.white),
@@ -92,10 +107,5 @@ class LoginScreen extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BackgroundScreen(child: _passChild());
   }
 }
