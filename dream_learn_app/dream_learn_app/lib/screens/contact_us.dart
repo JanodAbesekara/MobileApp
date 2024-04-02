@@ -66,7 +66,14 @@ class ContactUS extends StatelessWidget {
 
         ),
 
-         
+        const SizedBox(height:100),
+         Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [GestureDetector(
+            onTap: (){
+              print('get help clicked');
+            },
+            child: Image.asset('assets/get_help.png',height: 50,)),SizedBox(width: 30,)]) 
         
 
       ],
