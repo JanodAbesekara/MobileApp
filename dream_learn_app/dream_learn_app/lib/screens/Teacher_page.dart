@@ -16,28 +16,44 @@ class _TeacherDashState extends State<TeacherDash> {
     );
   }
 
-  Widget _dashboard(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 10,
+ Widget _dashboard(BuildContext context) {
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Image.asset(
+          "assets/teacherdash.png",
+          width: 400,
+          height: 300,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 245, 241, 241),
+            borderRadius: BorderRadius.circular(10),
           ),
-          Image.asset(
-            "assets/teacherdash.png",
-            width: 400,
-            height: 300,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.person, 
+                color: Colors.blue,
+                size: 30,
+              ),
+            ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          // Add your other widgets here
-          SizedBox(
-            height: 10,
-          ),
-        ],
-      ),
-    );
-  }
+        ), // Add comma here
+        SizedBox(
+          height: 10,
+        ),
+      ],
+    ),
+  );
+}
 }
