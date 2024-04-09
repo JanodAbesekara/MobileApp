@@ -75,7 +75,17 @@ flutter:
       - assets/find_teacher_icon.png
       - assets/student_icon.png
       - assets/teacher_icon.png
-      
+      - assets/teacherdash.png
+      - assets/T/TAss.png
+      - assets/T/Quises.png
+      - assets/T/Tann.png
+      - assets/T/Tattendence.png
+      - assets/T/Tprofile.png
+      - assets/T/TLerning.png
+      - assets/T/TStudent.png
+      - assets/T/Tgades.png
+      - assets/T/Tfeed.png
+
 
   #   - images/a_dot_ham.jpeg
 
