@@ -49,7 +49,7 @@ class _TeacherDashState extends State<TeacherDash> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 10,
+            height: 2,
           ),
           Image.asset(
             "assets/teacherdash.png",
@@ -57,13 +57,13 @@ class _TeacherDashState extends State<TeacherDash> {
             height: 300,
           ),
           SizedBox(
-            height: 10,
+            height: 2,
           ),
           GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3, // 3 columns
-              crossAxisSpacing: 2.0, // horizontal space between each item
-              mainAxisSpacing: 2.0, // vertical space between each item
+              crossAxisSpacing: 40.0, // horizontal space between each item
+              mainAxisExtent: 80.0, // vertical space between each item
             ),
             itemCount: sampleImages.length, // Number of sample images
             shrinkWrap: true,
@@ -72,7 +72,7 @@ class _TeacherDashState extends State<TeacherDash> {
               return Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(2),
+                    padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Color.fromARGB(255, 245, 241, 241),
                       borderRadius: BorderRadius.circular(100),
@@ -84,12 +84,12 @@ class _TeacherDashState extends State<TeacherDash> {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(height: 5), // Space between image and text
+                  SizedBox(height: 2), // Space between image and text
                   Text(
                     sampleNames[index], // Use sampleNames list to display image names
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 10,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -98,7 +98,7 @@ class _TeacherDashState extends State<TeacherDash> {
             },
           ),
           SizedBox(
-            height: 10,
+            height: 0,
           ),
         ],
       ),
