@@ -98,7 +98,7 @@ class _TeacherDashState extends State<TeacherDash> {
             },
           ),
           SizedBox(
-            height: 0,
+            height: 10,
           ),
         ],
       ),
