@@ -78,16 +78,15 @@ flutter:
       - assets/teacher_icon.png
       - assets/teacherdash.png
       - assets/T/TAss.png
-      - assets/T/Quises.png
-      - assets/T/Tann.png
-      - assets/T/Tattendence.png
-      - assets/T/Tprofile.png
-      - assets/T/TLerning.png
-      - assets/T/TStudent.png
-      - assets/T/Tgades.png
-      - assets/T/Tfeed.png
-
-
+      - assets/T/test.png
+      - assets/T/announce1.png
+      - assets/T/attendence12.png
+      - assets/T/lecmaterial.png
+      - assets/T/Stu12.png
+      - assets/T/gade12.png
+      - assets/T/feed12.png
+      - assets/T/profile.png
+     
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
