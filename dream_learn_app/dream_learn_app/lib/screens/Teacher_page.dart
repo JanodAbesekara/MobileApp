@@ -1,5 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/background.dart';
+import 'package:dream_learn_app/screens/Profile.dart';
+import 'package:dream_learn_app/screens/announcement.dart';
+import 'package:dream_learn_app/screens/attendenceT.dart';
+import 'package:dream_learn_app/screens/lecturematerial.dart';
+import 'package:dream_learn_app/screens/StudentT.dart';
+import 'package:dream_learn_app/screens/TAssignment.dart';
+import 'package:dream_learn_app/screens/GradeT.dart';
+import 'package:dream_learn_app/screens/QuizessT.dart';
+import 'package:dream_learn_app/screens/Feedbacksview.dart';
+
+
 
 class TeacherDash extends StatefulWidget {
   const TeacherDash({Key? key}) : super(key: key);
@@ -10,31 +21,43 @@ class TeacherDash extends StatefulWidget {
 
 class _TeacherDashState extends State<TeacherDash> {
   final List<String> sampleImages = [
+    "assets/T/profile.png",
+    "assets/T/announce1.png",
+    "assets/T/attendence12.png",
+    "assets/T/lecmaterial.png",
+    "assets/T/Stu12.png",
     "assets/T/TAss.png",
-    "assets/T/Quises.png",
-    "assets/T/Tann.png",
-    "assets/T/Tattendence.png",
-    "assets/T/Tprofile.png",
-    "assets/T/TLerning.png",
-    "assets/T/TStudent.png",
-    "assets/T/Tgades.png",
-    "assets/T/Tfeed.png",
+    "assets/T/gade12.png",
+    "assets/T/test.png",
+    "assets/T/feed12.png",
   ];
 
   final List<String> sampleNames = [
-    "TAss",
-    "Quises",
-    "Tann",
-    "Tattendence",
-    "Tprofile",
-    "TLerning",
-    "TStudent",
-    "Tgades",
-    "Tfeed",
+    "Profile",
+    "Announcement",
+    "Attendance",
+    "Materials",
+    "Students",
+    "Assignments",
+    "Grades",
+    "Quizzes",
+    "Feedbacks",
   ];
 
-  final double desiredWidth = 40.0; // Adjust according to your requirement
-  final double desiredHeight = 40.0; // Adjust according to your requirement
+  final List<Widget> samplePages = [
+    Profile(),
+    Announcement(),
+    AttendenceT(),
+    LectureMaterial(),
+    StudentT(),
+    TAssignment(),
+    GradeT(),
+    QuizessT(),
+    Feedbacksview(),
+  ];
+
+  final double desiredWidth = 30.0; // Adjust according to your requirement
+  final double desiredHeight = 30.0; // Adjust according to your requirement
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +72,7 @@ class _TeacherDashState extends State<TeacherDash> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 2,
+            height: 0.0,
           ),
           Image.asset(
             "assets/teacherdash.png",
@@ -57,48 +80,65 @@ class _TeacherDashState extends State<TeacherDash> {
             height: 300,
           ),
           SizedBox(
-            height: 2,
+            height: 0.0,
           ),
-          GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, // 3 columns
-              crossAxisSpacing: 40.0, // horizontal space between each item
-              mainAxisExtent: 80.0, // vertical space between each item
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 46.0), // Add padding to left and right
+            child: Container(
+              color: Colors.grey[300], // Set your desired background color here
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, // 3 columns
+                  crossAxisSpacing: 10.0, // horizontal space between each item
+                  mainAxisExtent: 80.0, // vertical space between each item
+                ),
+                itemCount: sampleImages.length, // Number of sample images
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => samplePages[index],
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(10.0),
+                          padding: EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 245, 241, 241),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: Image.asset(
+                            sampleImages[index],
+                            width: desiredWidth,
+                            height: desiredHeight,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(height: 1.0), // Space between image and text
+                        Text(
+                          sampleNames[index], // Use sampleNames list to display image names
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
-            itemCount: sampleImages.length, // Number of sample images
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 245, 241, 241),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Image.asset(
-                      sampleImages[index],
-                      width: desiredWidth,
-                      height: desiredHeight,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(height: 2), // Space between image and text
-                  Text(
-                    sampleNames[index], // Use sampleNames list to display image names
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              );
-            },
           ),
           SizedBox(
-            height: 0,
+            height: 12,
           ),
         ],
       ),
