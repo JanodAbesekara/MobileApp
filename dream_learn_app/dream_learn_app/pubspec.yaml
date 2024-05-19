@@ -86,6 +86,10 @@ flutter:
       - assets/T/gade12.png
       - assets/T/feed12.png
       - assets/T/profile.png
+      - assets/Tprofile/tel.png
+      - assets/Tprofile/email.png
+      - assets/Tprofile/location.png
+
      
   #   - images/a_dot_ham.jpeg
 
