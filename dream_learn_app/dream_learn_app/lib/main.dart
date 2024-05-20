@@ -1,3 +1,4 @@
+
 import 'package:dream_learn_app/screens/background.dart';
 import 'package:dream_learn_app/screens/student_dashboard.dart';
 import 'package:dream_learn_app/screens/side_bar.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
