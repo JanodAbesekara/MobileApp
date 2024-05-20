@@ -1,5 +1,6 @@
 import 'package:dream_learn_app/screens/login_screen.dart';
 import 'package:dream_learn_app/screens/background.dart';
+import 'package:dream_learn_app/screens/student_dashboard.dart';
 import 'package:dream_learn_app/utils/role_selection_button.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,9 @@ class MainHome2 extends StatelessWidget {
             height: 229,
           ),
           const SizedBox(height: 20),
-          RoleSelectionButton("assets/student_icon.png", 'Students', () {}),
+          RoleSelectionButton("assets/student_icon.png", 'Students', () {
+             Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentDashboard()));
+          }),
           const SizedBox(height: 20),
           RoleSelectionButton("assets/teacher_icon.png", 'Teachers', () {}),
           const SizedBox(height: 50),

@@ -1,5 +1,4 @@
 import 'package:dream_learn_app/screens/background.dart';
-import 'package:dream_learn_app/utils/text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -73,7 +72,9 @@ class ContactUS extends StatelessWidget {
             onTap: (){
               print('get help clicked');
             },
-            child: Image.asset('assets/get_help.png',height: 50,)),SizedBox(width: 30,)]) 
+            child: Image.asset('assets/get_help.png',height: 50,)),SizedBox(width: 30,)]) ,
+
+            SizedBox(height: 25,)
         
 
       ],
