@@ -34,6 +34,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  http: ^1.2.1
+
   web_socket_channel: ^2.3.0
 
 dev_dependencies:
@@ -76,6 +78,12 @@ flutter:
       - assets/find_teacher_icon.png
       - assets/student_icon.png
       - assets/teacher_icon.png
+
+      - assets/get_help.png
+      - assets/student_dashboard_main_icon.png
+      
+
+
       - assets/teacherdash.png
       - assets/T/TAss.png
       - assets/T/test.png
@@ -94,6 +102,7 @@ flutter:
     
 
      
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
