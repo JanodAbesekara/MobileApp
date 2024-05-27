@@ -5,24 +5,16 @@ import 'package:dream_learn_app/services/auth_service.dart';
 import 'package:dream_learn_app/utils/text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dream_learn_app/screens/main_home2.dart';
+import 'package:flutter/widgets.dart';
+
 
 class LoginScreen extends StatelessWidget {
-
    LoginScreen({super.key});
 
-
-
-  @override
-  Widget build(BuildContext context) {
-    return BackgroundScreen(
-      child: _passChild(context),
-    );
-  }
+  static const _loginTextStyles = TextStyle(color: Color(0xff4E919A), fontSize: 20, letterSpacing: 10, fontWeight: FontWeight.bold);
 
 final TextEditingController _userNameTextController = TextEditingController();
  final   TextEditingController _passwordTextController = TextEditingController();
-
 
   Widget _passChild(BuildContext context) {
     return Column(
@@ -51,27 +43,22 @@ final TextEditingController _userNameTextController = TextEditingController();
         const SizedBox(
           height: 20,
         ),
-
          Padding(
           padding: EdgeInsets.symmetric(horizontal: 50),
           child: CommonTextField(hintText: 'User name',controller: _userNameTextController,),
-
         ),
         const SizedBox(
           height: 10,
-
+        ),
          Padding(padding: EdgeInsets.symmetric(horizontal: 50), child: CommonTextField(isObscureText:true , hintText: 'Password',controller: _passwordTextController,)),
-
         const SizedBox(
           height: 15,
         ),
         SizedBox(
           width: 277,
           child: ElevatedButton(
-
             onPressed:()=>_handleLogin(context),
             style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 43, 29, 168)),
-
             child: const Text(
               'Login',
               style: TextStyle(color: Colors.white),
@@ -108,7 +95,6 @@ final TextEditingController _userNameTextController = TextEditingController();
     );
   }
 
-
   _handleLogin(BuildContext context)async{
 
 LoginDataModel _authResponse= await   AuthService.login(_userNameTextController.text, _passwordTextController.text);
@@ -138,5 +124,4 @@ ScaffoldMessenger.of(context).showSnackBar(snackBar);
   Widget build(BuildContext context) {
     return BackgroundScreen(child: _passChild(context));
   }
-
 }
