@@ -5,24 +5,18 @@ import 'package:dream_learn_app/services/auth_service.dart';
 import 'package:dream_learn_app/utils/text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dream_learn_app/screens/main_home2.dart';
 
 class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
-   LoginScreen({super.key});
+  final TextEditingController _userNameTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
 
-
-
-  @override
-  Widget build(BuildContext context) {
-    return BackgroundScreen(
-      child: _passChild(context),
-    );
-  }
-
-final TextEditingController _userNameTextController = TextEditingController();
- final   TextEditingController _passwordTextController = TextEditingController();
-
+  static const TextStyle _loginTextStyles = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
 
   Widget _passChild(BuildContext context) {
     return Column(
@@ -51,27 +45,34 @@ final TextEditingController _userNameTextController = TextEditingController();
         const SizedBox(
           height: 20,
         ),
-
-         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50),
-          child: CommonTextField(hintText: 'User name',controller: _userNameTextController,),
-
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: CommonTextField(
+            hintText: 'User name',
+            controller: _userNameTextController,
+          ),
         ),
         const SizedBox(
           height: 10,
-
-         Padding(padding: EdgeInsets.symmetric(horizontal: 50), child: CommonTextField(isObscureText:true , hintText: 'Password',controller: _passwordTextController,)),
-
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: CommonTextField(
+            isObscureText: true,
+            hintText: 'Password',
+            controller: _passwordTextController,
+          ),
+        ),
         const SizedBox(
           height: 15,
         ),
         SizedBox(
           width: 277,
           child: ElevatedButton(
-
-            onPressed:()=>_handleLogin(context),
-            style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 43, 29, 168)),
-
+            onPressed: () => _handleLogin(context),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 43, 29, 168),
+            ),
             child: const Text(
               'Login',
               style: TextStyle(color: Colors.white),
@@ -83,7 +84,7 @@ final TextEditingController _userNameTextController = TextEditingController();
         ),
         GestureDetector(
           onTap: () {
-            print('i forgot password');
+            print('I forgot password');
           },
           child: const Text(
             'Forgot Password? Click here to reset',
@@ -108,35 +109,31 @@ final TextEditingController _userNameTextController = TextEditingController();
     );
   }
 
+  _handleLogin(BuildContext context) async {
+    LoginDataModel _authResponse = await AuthService.login(
+      _userNameTextController.text,
+      _passwordTextController.text,
+    );
 
-  _handleLogin(BuildContext context)async{
-
-LoginDataModel _authResponse= await   AuthService.login(_userNameTextController.text, _passwordTextController.text);
-if(_authResponse.success && _authResponse.token!=null){
     var snackBar = SnackBar(
-  content: Align(child: Text(_authResponse.message),alignment: Alignment.center,),
-);
+      content: Align(
+        child: Text(_authResponse.message),
+        alignment: Alignment.center,
+      ),
+    );
 
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
-ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainHome2()));
+    // Find the ScaffoldMessenger in the widget tree and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-}else{
-   var snackBar = SnackBar(
-  content: Align(child: Text(_authResponse.message),alignment: Alignment.center,),
-);
-
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
-ScaffoldMessenger.of(context).showSnackBar(snackBar);
-}
-
+    if (_authResponse.success && _authResponse.token != null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => MainHome2()),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return BackgroundScreen(child: _passChild(context));
   }
-
 }
