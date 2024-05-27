@@ -6,6 +6,7 @@ import 'package:dream_learn_app/utils/text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
@@ -17,6 +18,7 @@ class LoginScreen extends StatelessWidget {
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
+
 
   Widget _passChild(BuildContext context) {
     return Column(
@@ -45,16 +47,19 @@ class LoginScreen extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
+
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: CommonTextField(
             hintText: 'User name',
             controller: _userNameTextController,
           ),
+
         ),
         const SizedBox(
           height: 10,
         ),
+
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: CommonTextField(
@@ -63,16 +68,19 @@ class LoginScreen extends StatelessWidget {
             controller: _passwordTextController,
           ),
         ),
+
         const SizedBox(
           height: 15,
         ),
         SizedBox(
           width: 277,
           child: ElevatedButton(
+
             onPressed: () => _handleLogin(context),
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 43, 29, 168),
             ),
+
             child: const Text(
               'Login',
               style: TextStyle(color: Colors.white),
@@ -109,11 +117,13 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+
   _handleLogin(BuildContext context) async {
     LoginDataModel _authResponse = await AuthService.login(
       _userNameTextController.text,
       _passwordTextController.text,
     );
+
 
     var snackBar = SnackBar(
       content: Align(
@@ -137,3 +147,4 @@ class LoginScreen extends StatelessWidget {
     return BackgroundScreen(child: _passChild(context));
   }
 }
+

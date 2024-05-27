@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:more_loading_gif/more_loading_gif.dart';
 import 'package:dream_learn_app/screens/login_screen.dart';
 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -13,6 +14,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   void navigationPage() {
     Navigator.pushAndRemoveUntil(
       context,
@@ -24,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   startTime() async {
     var _duration = const Duration(seconds: 7);
     return Timer(_duration, navigationPage);
+
   }
 
   @override
@@ -31,6 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     startTime();
   }
+
 
   Widget _passChild(BuildContext context) {
     return Column(
@@ -62,6 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
         const SizedBox(height: 10),
+
       ],
     );
   }
@@ -70,6 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return BackgroundScreen(
       child: _passChild(context),
+
     );
   }
 }
