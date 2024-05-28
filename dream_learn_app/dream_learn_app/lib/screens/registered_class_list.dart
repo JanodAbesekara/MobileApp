@@ -1,46 +1,56 @@
+import 'package:dream_learn_app/helpers/student_helper.dart';
+import 'package:dream_learn_app/models/subject.dart';
 import 'package:dream_learn_app/screens/background.dart';
+import 'package:dream_learn_app/screens/student_dashboard.dart';
+import 'package:dream_learn_app/services/enrollment_service.dart';
 import 'package:dream_learn_app/utils/class_card.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class RegisteredClassList extends StatelessWidget {
+class RegisteredClassList extends StatefulWidget {
   const RegisteredClassList({super.key});
 
+  @override
+  State<RegisteredClassList> createState() => _RegisteredClassListState();
+}
 
-  
-  Widget _passChild(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        //class cards
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-          child: ClassCard(title: 'Physics',dateTime: '26 September 2024, 3:15 PM',timeLimit: 'Time limit: 30 mins',),
-        ),
-          Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-          child: ClassCard(title: 'Chemistry',dateTime: '26 September 2024, 3:15 PM',timeLimit: 'Time limit: 30 mins',),
-        ),
-          Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-          child: ClassCard(title: 'Biology',dateTime: '26 September 2024, 3:15 PM',timeLimit: 'Time limit: 30 mins',),
-        ),
-          Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-          child: ClassCard(title: 'English',dateTime: '26 September 2024, 3:15 PM',timeLimit: 'Time limit: 30 mins',),
-        ),
-          Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-          child: ClassCard(title: 'GIT',dateTime: '26 September 2024, 3:15 PM',timeLimit: 'Time limit: 30 mins',),
-        ),
-   
-      ],
-    );
+class _RegisteredClassListState extends State<RegisteredClassList> {
+
+  Future<List<Subject>> _getSubjectList()async{
+
+  List<Subject>  _subjectList= await EnrollmentService.getSubjectList();
+  final _filteredList= _subjectList.where((sub) => sub.email==studentEmail).toList();
+  return _filteredList;
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return BackgroundScreen(
-      child: _passChild(context),
+      child: FutureBuilder(future: _getSubjectList(), builder:(context,snapshot){
+        if(snapshot.hasData){
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: snapshot.data!.map((subject) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 10),
+              child: GestureDetector(
+                onTap: (){
+                 //navigate to student dashboard
+                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentDashboard()));
+                },
+                child: ClassCard(title: subject.subjectName ?? '', dateTime:  DateFormat('d MMMM yyyy, h:mm a').format(subject.date ?? DateTime.now()),medium: subject.medium ?? '',)),
+            )).toList(),
+          );
+
+        }
+
+        if(snapshot.hasError){
+          print('having error loading subject list');
+
+        }
+
+        return Center(child: CircularProgressIndicator());
+      } ),
     );
   }
 }

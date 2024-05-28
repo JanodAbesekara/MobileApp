@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class ClassCard extends StatelessWidget {
   final String title;
+  final String medium;
   final String dateTime;
-  final String timeLimit;
-  const ClassCard({required this.title,required this.dateTime,required this.timeLimit, super.key});
+  const ClassCard({required this.title,required this.dateTime,required this.medium, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +24,13 @@ class ClassCard extends StatelessWidget {
           fontSize: 20
         ),),
         SizedBox(height: 20,),
+         Text(medium,style: TextStyle(
+          fontSize: 10
+        )),
          Text(dateTime,style: TextStyle(
           fontSize: 10
         ),),
-         Text(timeLimit,style: TextStyle(
-          fontSize: 10
-        ),)
+        
        ],
       ),
     
