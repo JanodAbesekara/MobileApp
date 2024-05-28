@@ -29,7 +29,8 @@ class StudentT extends StatelessWidget {
 
   Widget _passChild(BuildContext context) {
     return Column(
-      
+      crossAxisAlignment:
+          CrossAxisAlignment.start, // Align children to the start of the column
       children: [
         StudentCard(
           name: 'John Doe',
@@ -38,7 +39,6 @@ class StudentT extends StatelessWidget {
           parentsnamel: 'jagath nimal',
           parentspho: '0712345678',
           parentsEmail: 'dasdfafad@zfd',
-
         ),
         StudentCard(
           name: 'Jane Doe',
@@ -77,7 +77,6 @@ class StudentCard extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: Container(
         width: double.infinity,
-        height: 200,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -91,9 +90,10 @@ class StudentCard extends StatelessWidget {
           ],
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 40.0, 10.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -106,6 +106,7 @@ class StudentCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(height: 5),
                   Text(
                     subject,
                     style: TextStyle(
@@ -114,6 +115,7 @@ class StudentCard extends StatelessWidget {
                       letterSpacing: 2,
                     ),
                   ),
+                  SizedBox(height: 5),
                   Text(
                     mediem,
                     style: TextStyle(
@@ -122,6 +124,7 @@ class StudentCard extends StatelessWidget {
                       letterSpacing: 2,
                     ),
                   ),
+                  SizedBox(height: 5),
                   Text(
                     parentsnamel,
                     style: TextStyle(
@@ -130,6 +133,7 @@ class StudentCard extends StatelessWidget {
                       letterSpacing: 2,
                     ),
                   ),
+                  SizedBox(height: 5),
                   Text(
                     parentspho,
                     style: TextStyle(
@@ -138,6 +142,7 @@ class StudentCard extends StatelessWidget {
                       letterSpacing: 2,
                     ),
                   ),
+                  SizedBox(height: 5),
                   Text(
                     parentsEmail,
                     style: TextStyle(
@@ -147,6 +152,19 @@ class StudentCard extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20.0,top: 10.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Image.asset(
+                    'assets/profile_avatar.png',
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
               ),
             ),
           ],
