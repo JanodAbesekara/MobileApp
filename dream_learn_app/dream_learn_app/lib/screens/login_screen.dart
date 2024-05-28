@@ -1,3 +1,4 @@
+import 'package:dream_learn_app/helpers/student_helper.dart';
 import 'package:dream_learn_app/models/login_data_model.dart';
 import 'package:dream_learn_app/screens/background.dart';
 import 'package:dream_learn_app/screens/main_home2.dart';
@@ -99,6 +100,7 @@ final TextEditingController _userNameTextController = TextEditingController();
 
 LoginDataModel _authResponse= await   AuthService.login(_userNameTextController.text, _passwordTextController.text);
 if(_authResponse.success && _authResponse.token!=null){
+  studentEmail=_userNameTextController.text;
     var snackBar = SnackBar(
   content: Align(child: Text(_authResponse.message),alignment: Alignment.center,),
 );
