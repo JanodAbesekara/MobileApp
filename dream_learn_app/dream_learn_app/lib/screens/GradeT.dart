@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/background.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class GradeT extends StatelessWidget {
   const GradeT({Key? key}) : super(key: key);
@@ -81,14 +82,14 @@ class gradecards extends StatelessWidget {
   Color getGradeColor(String gradeLabel) {
     switch (gradeLabel) {
       case 'F':
-        return Colors.red;
+        return const Color.fromARGB(255, 236, 135, 128);
       case 'C':
-        return Colors.yellow;
+        return Color.fromARGB(255, 239, 227, 127);
       case 'B':
-        return Colors.blue;
+        return Color.fromARGB(255, 137, 106, 232);
       case 'A':
       case 'A+':
-        return Colors.lightBlue;
+        return const Color.fromARGB(255, 119, 203, 243);
       default:
         return Colors.white;
     }
@@ -114,8 +115,8 @@ class gradecards extends StatelessWidget {
     Color cardColor = getGradeColor(gradeLabel);
 
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(15),
+      padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(10),
@@ -134,39 +135,41 @@ class gradecards extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Email: $email',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                'StudentEmail :- $email',
+                style: GoogleFonts.lora(
+                  fontSize: 16,
+                  
                 ),
               ),
               Text(
-                'Subject: $subject',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                'Grade :- $gradeLabel',
+                style: GoogleFonts.lora(
+                  fontSize: 16,
+                
                 ),
               ),
             ],
-          ),
-          SizedBox(
-            height: 10,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Medium: $medium',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                'Medium :- $medium',
+                style: GoogleFonts.lora(
+                  fontSize: 16,
+                 
                 ),
               ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
               Text(
-                'Grade: $gradeLabel', // Displaying grade label
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                'Subject :- $subject',
+                style: GoogleFonts.lora(
+                  fontSize: 16,
+                  
                 ),
               ),
             ],

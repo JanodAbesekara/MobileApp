@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/background.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StudentT extends StatelessWidget {
   const StudentT({Key? key}) : super(key: key);
@@ -29,24 +30,57 @@ class StudentT extends StatelessWidget {
 
   Widget _passChild(BuildContext context) {
     return Column(
-      crossAxisAlignment:
-          CrossAxisAlignment.start, // Align children to the start of the column
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         StudentCard(
           name: 'John Doe',
-          mediem: 'Shinhala',
+          medium: 'Sinhala',
           subject: 'Mathematics',
-          parentsnamel: 'jagath nimal',
-          parentspho: '0712345678',
-          parentsEmail: 'dasdfafad@zfd',
+          StudentEmail: 'asd@dafa',
+          parentsName: 'Jagath Nimal',
+          parentsPhone: '0712345678',
+          parentsEmail: 'jagath@example.com',
+          profile: 'assets/profile_avatar.png',
         ),
         StudentCard(
           name: 'Jane Doe',
-          mediem: 'English',
+          medium: 'English',
           subject: 'English',
-          parentsnamel: 'samn kumara',
-          parentspho: '0712345678',
-          parentsEmail: 'dasdfafad@zfd',
+          StudentEmail: 'asd@dafa',
+          parentsName: 'Samn Kumara',
+          parentsPhone: '0712345678',
+          parentsEmail: 'samn@example.com',
+          profile: 'assets/profile_avatar.png',
+        ),
+        StudentCard(
+          name: 'Jane Doe',
+          medium: 'English',
+          subject: 'English',
+          StudentEmail: 'asd@dafa',
+          parentsName: 'Samn Kumara',
+          parentsPhone: '0712345678',
+          parentsEmail: 'samn@example.com',
+          profile: 'assets/profile_avatar.png',
+        ),
+        StudentCard(
+          name: 'Jane Doe',
+          medium: 'English',
+          subject: 'English',
+          StudentEmail: 'asd@dafa',
+          parentsName: 'Samn Kumara',
+          parentsPhone: '0712345678',
+          parentsEmail: 'samn@example.com',
+          profile: 'assets/profile_avatar.png',
+        ),
+        StudentCard(
+          name: 'Jane Doe',
+          medium: 'English',
+          subject: 'English',
+          StudentEmail: 'asd@dafa',
+          parentsName: 'Samn Kumara',
+          parentsPhone: '0712345678',
+          parentsEmail: 'sadsds@dsds',
+          profile: 'assets/profile_avatar.png',
         ),
       ],
     );
@@ -54,22 +88,25 @@ class StudentT extends StatelessWidget {
 }
 
 class StudentCard extends StatelessWidget {
+  final String profile;
   final String name;
-  final String mediem;
   final String subject;
-  final String parentsnamel;
-  final String parentspho;
+  final String StudentEmail;
+  final String medium;
+  final String parentsName;
+  final String parentsPhone;
   final String parentsEmail;
 
-  const StudentCard({
-    Key? key,
+  StudentCard({
+    required this.profile,
     required this.name,
-    required this.mediem,
     required this.subject,
-    required this.parentsnamel,
-    required this.parentspho,
+    required this.StudentEmail,
+    required this.medium,
+    required this.parentsName,
+    required this.parentsPhone,
     required this.parentsEmail,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -89,12 +126,12 @@ class StudentCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -106,70 +143,53 @@ class StudentCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 5),
-                  Text(
-                    subject,
-                    style: TextStyle(
-                      color: Color(0xFF180565),
-                      fontSize: 16,
-                      letterSpacing: 2,
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    mediem,
-                    style: TextStyle(
-                      color: Color(0xFF180565),
-                      fontSize: 16,
-                      letterSpacing: 2,
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    parentsnamel,
-                    style: TextStyle(
-                      color: Color(0xFF180565),
-                      fontSize: 16,
-                      letterSpacing: 2,
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    parentspho,
-                    style: TextStyle(
-                      color: Color(0xFF180565),
-                      fontSize: 16,
-                      letterSpacing: 2,
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    parentsEmail,
-                    style: TextStyle(
-                      color: Color(0xFF180565),
-                      fontSize: 16,
-                      letterSpacing: 2,
-                    ),
-                  ),
+                  _buildInfoText('StudentEmail', StudentEmail),
+                  _buildInfoText('Subject', subject),
+                  _buildInfoText('Medium', medium),
+                  _buildInfoText('ParentsName', parentsName),
+                  _buildInfoText('ParentsPhone', parentsPhone),
+                  _buildInfoText('ParentsEmail', parentsEmail),
                 ],
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20.0,top: 10.0),
+              SizedBox(width: 20),
+              Expanded(
                 child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Image.asset(
-                    'assets/profile_avatar.png',
-                    width: 100,
-                    height: 100,
+                  alignment: Alignment.topRight,
+                  child: Image(
+                    image: AssetImage(profile),
+                    width: 80,
+                    height: 80,
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildInfoText(String label, String value) {
+    return Row(
+      children: [
+        Text(
+          '$label: ',
+          style: GoogleFonts.lora(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF222831),
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            color: Color(0xFF180565),
+            fontSize: 13,
+            letterSpacing: 2,
+          ),
+        ),
+        SizedBox(height: 5),
+      ],
     );
   }
 }

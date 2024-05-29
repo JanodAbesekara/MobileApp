@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/AppInsideBackground.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -53,7 +54,8 @@ class Profile extends StatelessWidget {
       children: [
         Text(
           'John Doe', // Replace with actual name
-          style: TextStyle(
+
+          style: GoogleFonts.roboto(
             color: Color(0xFF180565),
             fontSize: 20,
             letterSpacing: 2,
@@ -62,7 +64,7 @@ class Profile extends StatelessWidget {
         ),
         Text(
           '2010.09.12', // Replace with actual date
-          style: TextStyle(
+          style: GoogleFonts.acme(
             color: Color.fromARGB(255, 152, 6, 231),
             fontSize: 12,
             letterSpacing: 1.0,
