@@ -61,8 +61,8 @@ class Feedbackcard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(15),
+      padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -79,19 +79,27 @@ class Feedbackcard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('Student Email: '),
-              Text(studentmail),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    studentmail,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
             ],
+            
           ),
+          
+         
           Row(
             children: [
-              Text('Feedback Message: '),
               Text(feedbackmessage),
             ],
           ),
+          
           Row(
             children: [
-              Text('Feedback Rating: '),
               StarRating(rating: feedbakrating),
             ],
           ),

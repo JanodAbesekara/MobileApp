@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/ApplicationinsideNot.dart';
 
+
 class Announcement extends StatefulWidget {
   const Announcement({Key? key}) : super(key: key);
 
@@ -13,8 +14,8 @@ class _AnnouncementState extends State<Announcement> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      
-        title: const Text(
+        title: const
+         Text(
           'Announcements',
           textAlign: TextAlign.right,
           style: TextStyle(

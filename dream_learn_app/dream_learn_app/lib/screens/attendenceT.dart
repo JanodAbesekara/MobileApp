@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/background.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AttendenceT extends StatelessWidget {
   const AttendenceT({Key? key}) : super(key: key);
@@ -42,6 +43,30 @@ class AttendenceT extends StatelessWidget {
           medium: 'English',
           attendancePercentage: 90,
         ),
+        AttendenceCard(
+          email: 'cdsfd@zdfdf',
+          subject: "Science",
+          medium: 'English',
+          attendancePercentage: 50,
+        ),
+        AttendenceCard(
+          email: 'cdsfd@zdfdf',
+          subject: "Science",
+          medium: 'English',
+          attendancePercentage: 10,
+        ),
+        AttendenceCard(
+          email: 'cdsfd@zdfdf',
+          subject: "Science",
+          medium: 'English',
+          attendancePercentage: 30,
+        ),
+        AttendenceCard(
+          email: 'cdsfd@zdfdf',
+          subject: "Science",
+          medium: 'English',
+          attendancePercentage: 60,
+        ),
       ],
     );
   }
@@ -82,16 +107,17 @@ class AttendenceCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Email: ',
-                style: TextStyle(
-                  fontSize: 20,
+                'StudentEmail :- ',
+                style: GoogleFonts.lora(
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
+                  color: Color(0xFF222831),
                 ),
               ),
               Text(
                 email,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 13,
                 ),
               ),
             ],
@@ -99,16 +125,17 @@ class AttendenceCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Subject: ',
-                style: TextStyle(
-                  fontSize: 20,
+                'Subject :- ',
+                style: GoogleFonts.lora(
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
+                  color: Color(0xFF222831),
                 ),
               ),
               Text(
                 subject,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 13,
                 ),
               ),
             ],
@@ -116,16 +143,17 @@ class AttendenceCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Medium: ',
-                style: TextStyle(
-                  fontSize: 20,
+                'Medium :- ',
+                style: GoogleFonts.lora(
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
+                  color: Color(0xFF222831),
                 ),
               ),
               Text(
                 medium,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 13,
                 ),
               ),
             ],
@@ -133,10 +161,11 @@ class AttendenceCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Attendance Percentage: ',
-                style: TextStyle(
-                  fontSize: 20,
+                'Attendance Percentage :- ',
+                style: GoogleFonts.lora(
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
+                  color: Color(0xFF222831),
                 ),
               ),
               SizedBox(width: 10),
@@ -144,18 +173,21 @@ class AttendenceCard extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: attendancePercentage / 100,
                   backgroundColor: Colors.grey,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    attendancePercentage >= 75
-                        ? Colors.green
-                        : Colors.red,
-                  ),
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(attendancePercentage >= 90
+                          ? Colors.blue
+                          : attendancePercentage >= 75
+                              ? Colors.green
+                              : attendancePercentage >= 50
+                                  ? Colors.yellow
+                                  : Colors.red),
                 ),
               ),
               SizedBox(width: 10),
               Text(
                 '$attendancePercentage%',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 12,
                 ),
               ),
             ],
