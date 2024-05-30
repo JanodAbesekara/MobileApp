@@ -26,8 +26,8 @@ import { getregisterdesubject } from "../controllers/SubjectRegistercontroller.j
 
 router.post("/userProfile", userProfileController);
 router.post("/studentattendence", studentattendenceController);
-router.get("/studenceattendenceget", studentattendencegetController);
-router.get("/techeralectureget", techerlecturecountget);
+router.post("/studenceattendenceget", studentattendencegetController);
+router.post("/techeralectureget", techerlecturecountget);
 router.post("/teacherlecture", teacherattendenceController);
 router.post("/editlecturecount", editlecturecount);
 router.post("/teacherattendence", displayteacherattendence);
