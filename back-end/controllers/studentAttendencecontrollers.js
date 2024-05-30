@@ -1,4 +1,3 @@
-import { set } from "mongoose";
 import attendennceSchema from "../models/studentAttendesmodel.js";
 import teacherlecture from "../models/TeacherLecturecountmodel.js";
 
@@ -53,8 +52,10 @@ const studentattendenceController = async (req, res) => {
 };
 
 const studentattendencegetController = async (req, res) => {
+  const { studentemail, subject, medium, teacheremail } = req.body;
+
   try {
-    const attendances = await attendennceSchema.find();
+    const attendances = await attendennceSchema.find({ studentnemail:studentemail ,subject: subject, medium: medium, teachetmail: teacheremail});
 
     if (!attendances.length) {
       res.status(404).json({ success: false, msg: "No attendence found" });
@@ -91,8 +92,13 @@ const teacherattendenceController = async (req, res) => {
 };
 
 const techerlecturecountget = async (req, res) => {
+  const { teacheremail, subject, medium } = req.body;
   try {
-    const leccount = await teacherlecture.find();
+    const leccount = await teacherlecture.find({
+      teacheremail: teacheremail,
+      subject: subject,
+      media: medium,
+    });
     if (!leccount.length) {
       res.status(404).json({ success: false, msg: "No lecture count found" });
     } else {
@@ -104,9 +110,13 @@ const techerlecturecountget = async (req, res) => {
 };
 
 const displayteacherattendence = async (req, res) => {
-   const { teacheremail, subject, media } = req.body;
+  const { teacheremail, subject, media } = req.body;
   try {
-    const teacherattendence = await teacherlecture.find({ teacheremail, subject, media});
+    const teacherattendence = await teacherlecture.find({
+      teacheremail,
+      subject,
+      media,
+    });
     const oldteacherattendence = await teacherlecture.findOne({
       teacherattendence,
     });
