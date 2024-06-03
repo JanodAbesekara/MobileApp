@@ -2,67 +2,27 @@ import Enrollment from "../models/Enrollmentmdels.js";
 import Quize from "../models/Quizzesmodels.js";
 import lecturematerial from "../models/Lecturematerial.js";
 import Announcement from "../models/Announcementmodel.js";
-import Assignment from "../models/Assignmentmodel.js";
 
-
-
-
- const getAssignment = async (req, res) => {
-  
-  const {email} = req.query;
-
+const quisecontroller = async (req, res) => {
+  const { email } = req.body;
 
   try {
     // Find enrollments for the given user email
     const enrollments = await Enrollment.find({ userEmail: email });
 
     // Extract the subjects, mediums, and teacherEmails from the enrollments
-    const enrollmentSets = enrollments.map((enroll) => ({
-      subject: enroll.Ensubject,
-      medium: enroll.Enmedium,
-      email: enroll.teacherEmail,
-    }));
-
-    const assignments = await Assignment.find({
-      $or: enrollmentSets.map((enroll) => ({
-        TeacherSubject: enroll.subject,
-        submedium: enroll.medium,
-        TeacherEmail: enroll.email,
-      })),
-    });
-
-    res.status(200).json({ success: true, assignments });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, msg: "Internal Server Error" });
-  }
-};
-
-const quisecontroller = async (req, res) => {
-  const { email } = req.query;
-
-  try {
-    // Find enrollments for the given user email
-    const enronments = await Enrollment.find({ userEmail: email });
-
-    // Extract the subjects, mediums, and teacherEmails from the enrollments
-
-    const enrollmentSets = enronments.map((enroll) => ({
-      subject: enroll.Ensubject,
-      medium: enroll.Enmedium,
-      email: enroll.teacherEmail,
-    }));
+    const subjects = enrollments.map((enroll) => enroll.Ensubject);
+    const mediums = enrollments.map((enroll) => enroll.Enmedium);
+    const teacherEmails = enrollments.map((enroll) => enroll.teacherEmail);
 
     // Filter quizzes based on extracted subjects, mediums, and teacherEmails
-    const quizzes = await Quize.find({
-      $or: enrollmentSets.map((enroll) => ({
-        TeacherSubject: enroll.subject,
-        submedium: enroll.medium,
-        TeacherEmail: enroll.email,
-      })),
+    const quizes = await Quize.find({
+      TeacherSubject: { $in: subjects },
+      submedium: { $in: mediums },
+      TeacherEmail: { $in: teacherEmails },
     });
 
-    res.status(200).json({ success: true, quizzes });
+    res.status(200).json({ success: true, quizes });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, msg: "Internal Server Error" });
@@ -70,7 +30,7 @@ const quisecontroller = async (req, res) => {
 };
 
 const getlecturematerial = async (req, res) => {
-  const { teachermail, subject, medium } = req.query;
+  const { teachermail, subject, medium } = req.body;
 
   try {
     const lecturematerials = await lecturematerial.find({
@@ -86,7 +46,7 @@ const getlecturematerial = async (req, res) => {
 
 const getNotifacition = async (req, res) => {
   try {
-    const { email } = req.query;
+    const { email } = req.body;
 
     // Fetch enrollments for the user
     const enrollments = await Enrollment.find({ userEmail: email });
@@ -105,11 +65,11 @@ const getNotifacition = async (req, res) => {
     }
 
     // Extract subjects, medium, and teacher emails from enrollments
-    const enrollmentSets = enrollments.map((enroll) => ({
-      subject: enroll.Ensubject,
-      medium: enroll.Enmedium,
-      email: enroll.teacherEmail,
-    }));
+    const subjects = enrollments.map((enrollment) => enrollment.Ensubject);
+    const medium = enrollments.map((enrollment) => enrollment.Enmedium);
+    const teacherEmails = enrollments.map(
+      (enrollment) => enrollment.teacherEmail
+    );
 
     let announcements;
 
@@ -120,11 +80,9 @@ const getNotifacition = async (req, res) => {
     } else {
       // Fetch announcements for the enrolled subjects
       announcements = await Announcement.find({
-        $or: enrollmentSets.map((enroll) => ({
-          TeacheSubject: enroll.subject,
-          mediua: enroll.medium,
-          postedemail: enroll.email,
-        })),
+        TeacheSubject: { $in: subjects },
+        mediua: { $in: medium },
+        postedemail: { $in: teacherEmails },
       });
     }
 
@@ -138,22 +96,19 @@ const getNotifacition = async (req, res) => {
   }
 };
 
+
+
 const getNotificationT = async (req, res) => {
   try {
+
     const announcements = await Announcement.find({ jobrole: "Admin" });
-    res.status(200).json({ success: true, announcements });
+     res.status(200).json({ success: true, announcements });
   } catch (error) {
     console.error(error);
     return res
       .status(500)
       .json({ success: false, msg: "Internal Server Error" });
   }
-};
 
-export {
-  quisecontroller,
-  getlecturematerial,
-  getNotifacition,
-  getNotificationT,
-  getAssignment,
 };
+export { quisecontroller, getlecturematerial, getNotifacition ,getNotificationT  };
