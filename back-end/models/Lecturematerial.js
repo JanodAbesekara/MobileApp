@@ -25,7 +25,7 @@ const lecturematerialSchema = new Schema(
     },
     PDF: {
       type: String,
-      required: true,
+      
     },
 
     video: {

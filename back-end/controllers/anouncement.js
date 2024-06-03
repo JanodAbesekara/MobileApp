@@ -64,8 +64,8 @@ const getAnnuncements = async (req, res) => {
 
 const deleteAnnouncement = async (req, res) => {
   try {
-    const { id } = req.body;
-    await Announcement.deleteOne({ id });
+    const { _id } = req.body;
+    await Announcement.deleteOne({ _id  });
     return res
       .status(200)
       .json({ success: true, message: "Announcement deleted successfully" });

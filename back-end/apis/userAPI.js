@@ -10,6 +10,12 @@ import {
   studentParentDetailsController,
   updateUserProfileController,
   deleteEntireCard,
+  studentProfile,
+  parentDetails,
+  Admindeisplay,
+  Admindelete,
+  AdminCrete,
+
 } from "../controllers/userProfileController.js";
 
 import {
@@ -22,11 +28,11 @@ import {
   getstudentattendence,
 } from "../controllers/studentAttendencecontrollers.js";
 
-import { getregisterdesubject } from "../controllers/SubjectRegistercontroller.js";
+import  {getRegisteredSubject,getSubject}  from "../controllers/SubjectRegistercontroller.js";
 
 router.post("/userProfile", userProfileController);
 router.post("/studentattendence", studentattendenceController);
-router.post("/studenceattendenceget", studentattendencegetController);
+router.get("/studenceattendenceget", studentattendencegetController);
 router.post("/techeralectureget", techerlecturecountget);
 router.post("/teacherlecture", teacherattendenceController);
 router.post("/editlecturecount", editlecturecount);
@@ -44,14 +50,31 @@ router.get("/userProfile/:userID", userDetailsController);
 router.get("/dashboard/:userID", userOtherDetailsController);
 
 // subject get from registered
-router.post("/getsubjectreg", getregisterdesubject);
+
+router.get("/getsubjectreg", getRegisteredSubject);
+
+// admin display 
+router.get("/admindisplay", Admindeisplay);
+router.post("/admindelete", Admindelete);
+router.post("/admincreate", AdminCrete);
+
+
 //students guardian details
 
 router.post("/guardian", studentParentDetailsController);
 
 //update users details based on classes
 router.put("/update/:subID", updateUserProfileController);
-// delete subject card
+// delete entire subject card
 router.delete("/delete/:deleted", deleteEntireCard);
+
+//get specific student
+router.get("/name/:studentEmail",studentProfile);
+
+//get specific parent relevant to student
+router.get("/parent/:studentEmail",parentDetails);
+
+//get specific teachers subjects
+router.get("/getsubjects/:teacherEmail",getSubject);
 
 export default router;

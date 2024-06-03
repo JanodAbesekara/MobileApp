@@ -52,7 +52,7 @@ const studentattendenceController = async (req, res) => {
 };
 
 const studentattendencegetController = async (req, res) => {
-  const { studentemail, subject, medium, teacheremail } = req.body;
+  const { studentemail, subject, medium, teacheremail } = req.query;
 
   try {
     const attendances = await attendennceSchema.find({ studentnemail:studentemail ,subject: subject, medium: medium, teachetmail: teacheremail});

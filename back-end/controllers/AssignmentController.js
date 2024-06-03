@@ -55,6 +55,16 @@ const getAssignmentController = async (req, res) => {
   }
 };
 
+const deleteAssignmentController = async (req,res) => {
+  const id = req.params.id;
+  try {
+    await Assignment.findByIdAndDelete(id);
+    return res.status(200).json({success: true, msg: "Assignment deleted successfully"});
+  } catch (error) {
+    return res.status(500).json({success:false, msg:"error deleting assignment"});
+  }
+};
+
 const gradeController = async (req,res) => {
   const { email,subject,score } = req.body;
   try{
@@ -81,5 +91,5 @@ const gradeController = async (req,res) => {
 
 
 
-export { createAssignmentController, getAssignmentController,gradeController };
+export { createAssignmentController, getAssignmentController,gradeController,deleteAssignmentController };
 
