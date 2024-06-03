@@ -2,6 +2,7 @@ import 'package:dream_learn_app/models/login_data_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+
 class AuthService {
   static Future<LoginDataModel> login(String email, String password) async {
     var url = Uri.parse('http://localhost:6000/api/auth/login');
