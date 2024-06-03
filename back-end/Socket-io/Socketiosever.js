@@ -35,7 +35,7 @@ io.on("connection", (socket) => {
 
 
 app.post("/api/send/notifaction", postanouncement);
-app.post("/api/get/notifaction",  getNotifacition);
+app.get("/api/get/notifaction",  getNotifacition);
 app.post("/api/delete/notifaction", deleteAnnouncement);
 app.post("/api/createchat", createChatController);
 app.get("/api/createchat/:userId", userChatController); 
@@ -43,7 +43,7 @@ app.get("/api/finduser/:firstId/:secondId", findChatController);
 app.get("/api/message/:chatId", getmessageController);
 app.post("/api/message", addmessageController);
 app.get("/api/get/Notifactions", getNotificationT);
-
+app.get("/api/get/Notify",getAnnuncements);
 
 
 
