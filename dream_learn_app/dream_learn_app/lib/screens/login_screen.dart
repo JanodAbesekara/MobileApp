@@ -1,11 +1,7 @@
-import 'package:dream_learn_app/models/login_data_model.dart';
 import 'package:dream_learn_app/screens/background.dart';
 import 'package:dream_learn_app/screens/main_home2.dart';
-import 'package:dream_learn_app/services/auth_service.dart';
 import 'package:dream_learn_app/utils/text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -57,12 +53,13 @@ class LoginScreen extends StatelessWidget {
           height: 10,
         ),
         Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50),
-            child: CommonTextField(
-              isObscureText: true,
-              hintText: 'Password',
-              controller: _passwordTextController,
-            )),
+          padding: EdgeInsets.symmetric(horizontal: 50),
+          child: CommonTextField(
+            isObscureText: true,
+            hintText: 'Password',
+            controller: _passwordTextController,
+          ),
+        ),
         const SizedBox(
           height: 15,
         ),
@@ -83,7 +80,7 @@ class LoginScreen extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            print('i forgot password');
+            print('Forgot password');
           },
           child: const Text(
             'Forgot Password? Click here to reset',
@@ -94,10 +91,10 @@ class LoginScreen extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            print('create account');
+            print('Create account');
           },
           child: const Text(
-            ' New? Create An Account',
+            'New? Create An Account',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -108,32 +105,30 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  _handleLogin(BuildContext context) async {
-    LoginDataModel _authResponse = await AuthService.login(
-        _userNameTextController.text, _passwordTextController.text);
-    if (_authResponse.success && _authResponse.token != null) {
+  _handleLogin(BuildContext context) {
+    // Simulate a login response
+    bool loginSuccess = true; // Change this to false to simulate a failed login
+    String message = "Login Successful"; // Message to display in snackbar
+
+    if (loginSuccess) {
       var snackBar = SnackBar(
         content: Align(
-          child: Text(_authResponse.message),
+          child: Text(message),
           alignment: Alignment.center,
         ),
       );
 
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
+      // Find the ScaffoldMessenger in the widget tree and use it to show a SnackBar.
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => MainHome2()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainHome2()));
     } else {
       var snackBar = SnackBar(
         content: Align(
-          child: Text(_authResponse.message),
+          child: Text("Login Failed. Please check your credentials."),
           alignment: Alignment.center,
         ),
       );
 
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
