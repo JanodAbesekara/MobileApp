@@ -20,9 +20,6 @@ class _StudentQuizScreenState extends State<StudentQuizScreen> {
   @override
   void initState() {
     super.initState();
-    print(widget.teacherEmail);
-    print(widget.subject);
-    print(widget.medium);
   }
 
   Future<Quiz?> _getQuiz() async {

@@ -1,6 +1,8 @@
 import 'package:dream_learn_app/screens/background.dart';
+import 'package:dream_learn_app/screens/learning_material_screen.dart';
 import 'package:dream_learn_app/screens/side_bar.dart';
 import 'package:dream_learn_app/screens/student_quiz_screen.dart';
+import 'package:dream_learn_app/screens/teacher_details.dart';
 import 'package:dream_learn_app/utils/dashboard_grid_item.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,7 @@ class StudentDashboard extends StatelessWidget {
       child: Column(children: [
         Container(
           decoration: BoxDecoration(
-              color: Color(0xffD9D9D9).withOpacity(0.9),
+              color: const Color(0xffD9D9D9).withOpacity(0.9),
               borderRadius: BorderRadius.circular(20)),
           child: Column(
             children: [
@@ -42,8 +44,11 @@ class StudentDashboard extends StatelessWidget {
                   ),
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
-                    title: 'Teachers',
-                    onTap: () {},
+                    title: 'Teacher',
+                    onTap: () =>Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>  TeacherDetails(
+                           teacherEmail: teacherEmail ?? '',
+                              ))),
                   ),
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
@@ -58,7 +63,10 @@ class StudentDashboard extends StatelessWidget {
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
                     title: 'Learning materials',
-                    onTap: () {},
+                    onTap:()=>  Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LearningMaterialsScreen(
+                            teacherEmail:teacherEmail ?? '' ,subject:subject ?? '' ,medium:medium ?? '' ,
+                              ))),
                   ),
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
@@ -92,9 +100,9 @@ class StudentDashboard extends StatelessWidget {
         IconButton(
             onPressed: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => SideBar()));
+                  .push(MaterialPageRoute(builder: (context) => const SideBar()));
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.menu,
               color: Colors.blue,
             ))
