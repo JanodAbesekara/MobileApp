@@ -34,11 +34,50 @@ class Feedbacksview extends StatelessWidget {
           studentmail: 'adas@gmail.com',
           feedbackmessage: 'good',
           feedbakrating: 4.5,
+          Subject: 'Maths',
+          Medium: 'English',
+        ),
+         Feedbackcard(
+          studentmail: 'adas@gmail.com',
+          feedbackmessage: 'good',
+          feedbakrating: 4.5,
+          Subject: 'Maths',
+          Medium: 'English',
+        ),
+         Feedbackcard(
+          studentmail: 'adas@gmail.com',
+          feedbackmessage: 'good',
+          feedbakrating: 4.5,
+          Subject: 'Maths',
+          Medium: 'English',
+        ),
+         Feedbackcard(
+          studentmail: 'adas@gmail.com',
+          feedbackmessage: 'good',
+          feedbakrating: 4.5,
+          Subject: 'Maths',
+          Medium: 'English',
+        ),
+         Feedbackcard(
+          studentmail: 'adas@gmail.com',
+          feedbackmessage: 'good',
+          feedbakrating: 4.5,
+          Subject: 'Maths',
+          Medium: 'English',
+        ),
+         Feedbackcard(
+          studentmail: 'adas@gmail.com',
+          feedbackmessage: 'good',
+          feedbakrating: 4.5,
+          Subject: 'Maths',
+          Medium: 'English',
         ),
         Feedbackcard(
           studentmail: 'adasd@gamil.com',
           feedbackmessage: 'bad',
           feedbakrating: 2.5,
+          Subject: 'Science',
+          Medium: 'Shinhala',
         ),
         // Add more Feedbackcard widgets as needed
       ],
@@ -50,12 +89,16 @@ class Feedbackcard extends StatelessWidget {
   final String studentmail;
   final String feedbackmessage;
   final double feedbakrating;
+  final String Subject;
+  final String Medium;
 
   const Feedbackcard({
     Key? key,
     required this.studentmail,
     required this.feedbackmessage,
     required this.feedbakrating,
+    required this.Subject,
+    required this.Medium,
   }) : super(key: key);
 
   @override
@@ -88,21 +131,39 @@ class Feedbackcard extends StatelessWidget {
                 ),
               ),
             ],
-            
           ),
-          
-         
           Row(
             children: [
               Text(feedbackmessage),
             ],
           ),
-          
           Row(
             children: [
               StarRating(rating: feedbakrating),
             ],
           ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              Subject,
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              Medium,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        
         ],
       ),
     );
