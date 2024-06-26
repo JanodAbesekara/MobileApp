@@ -93,8 +93,6 @@ class Profile extends StatelessWidget {
             child: Column(
               children: [
                 _buildContactRow(Icons.email, ':-  Twasda@gmail.com'),
-                _buildContactRow(Icons.phone, ':-  0123456789'),
-                _buildContactRow(Icons.location_on, ':-  Phnom Penh, Cambodia'),
                 _buildContactRow(Icons.class_,
                     ':-  Math, Science, English'), // changed from 'classes' to 'class_'
               ],
