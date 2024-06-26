@@ -18,7 +18,8 @@ const addlecturematerial = async (req, res) => {
       !Teachersubject ||
       !Tmedium ||
       !TeacherEmail ||
-      !zoom 
+      !zoom ||
+      !PDF
     ) {
       return res
         .status(400)

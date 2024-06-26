@@ -35,9 +35,11 @@ app.use("/api/email", emailAPI);
 app.use("/api/user", userAPI);
 app.use("/api/video", videoAPI);
 app.use("/api/Quise", QuiseAPI);
-app.use("/api/Enrol", EnrolAPI);
-app.use("/api/assignment", assignmentAPI);
+app.use("/api/Enrol",  EnrolAPI);
+app.use("/api/assignment",  assignmentAPI);
 app.use("/api/Test", TestAPI);
+
+
 
 // Port
 
