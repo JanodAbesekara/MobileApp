@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/background.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:dream_learn_app/services/attendence_service.dart';
 
 class AttendenceT extends StatelessWidget {
   const AttendenceT({Key? key}) : super(key: key);
@@ -29,45 +30,34 @@ class AttendenceT extends StatelessWidget {
   }
 
   Widget _passChild(BuildContext context) {
-    return Column(
-      children: [
-        AttendenceCard(
-          email: 'sdada@gmail.com',
-          subject: "Maths",
-          medium: 'English',
-          attendancePercentage: 80,
-        ),
-        AttendenceCard(
-          email: 'cdsfd@zdfdf',
-          subject: "Science",
-          medium: 'English',
-          attendancePercentage: 90,
-        ),
-        AttendenceCard(
-          email: 'cdsfd@zdfdf',
-          subject: "Science",
-          medium: 'English',
-          attendancePercentage: 50,
-        ),
-        AttendenceCard(
-          email: 'cdsfd@zdfdf',
-          subject: "Science",
-          medium: 'English',
-          attendancePercentage: 10,
-        ),
-        AttendenceCard(
-          email: 'cdsfd@zdfdf',
-          subject: "Science",
-          medium: 'English',
-          attendancePercentage: 30,
-        ),
-        AttendenceCard(
-          email: 'cdsfd@zdfdf',
-          subject: "Science",
-          medium: 'English',
-          attendancePercentage: 60,
-        ),
-      ],
+    return FutureBuilder<List<Map<String, dynamic>>?>(
+      future: AttendenceService.getAttendence(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('No attendance available'));
+        } else {
+          List<Map<String, dynamic>> attendenceList = snapshot.data!;
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            child: ListView.builder(
+              itemCount: attendenceList.length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> attendance = attendenceList[index];
+                return AttendenceCard(
+                  email: attendance['posts']['studentnemail'],
+                  subject: attendance['posts']['subject'],
+                  medium: attendance['posts']['medium'],
+                  attendancePercentage: (attendance['posts']['countAttendence'] / attendance['profile'][0]['leccount']) * 100,
+                );
+              },
+            ),
+          );
+        }
+      },
     );
   }
 }
@@ -76,7 +66,7 @@ class AttendenceCard extends StatelessWidget {
   final String email;
   final String subject;
   final String medium;
-  final int attendancePercentage;
+  final double attendancePercentage;
   const AttendenceCard({
     Key? key,
     required this.email,
@@ -103,97 +93,57 @@ class AttendenceCard extends StatelessWidget {
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Text(
-                'StudentEmail :- ',
-                style: GoogleFonts.lora(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF222831),
-                ),
-              ),
-              Text(
-                email,
-                style: TextStyle(
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                'Subject :- ',
-                style: GoogleFonts.lora(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF222831),
-                ),
-              ),
-              Text(
-                subject,
-                style: TextStyle(
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                'Medium :- ',
-                style: GoogleFonts.lora(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF222831),
-                ),
-              ),
-              Text(
-                medium,
-                style: TextStyle(
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                'Attendance Percentage :- ',
-                style: GoogleFonts.lora(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF222831),
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: LinearProgressIndicator(
-                  value: attendancePercentage / 100,
-                  backgroundColor: Colors.grey,
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(attendancePercentage >= 90
-                          ? Colors.blue
-                          : attendancePercentage >= 75
-                              ? Colors.green
-                              : attendancePercentage >= 50
-                                  ? Colors.yellow
-                                  : Colors.red),
-                ),
-              ),
-              SizedBox(width: 10),
-              Text(
-                '$attendancePercentage%',
-                style: TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-            ],
+          _buildRow('Student Email:', email),
+          _buildRow('Subject:', subject),
+          _buildRow('Medium:', medium),
+          _buildRow(
+            'Attendance Percentage:',
+            '${attendancePercentage.toStringAsFixed(2)}%',
+            progressIndicator: true,
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildRow(String label, String value, {bool progressIndicator = false}) {
+    return Row(
+      children: [
+        Text(
+          '$label ',
+          style: GoogleFonts.lora(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF222831),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style: TextStyle(fontSize: 13),
+          ),
+        ),
+        if (progressIndicator) ...[
+          SizedBox(width: 10),
+          Expanded(
+            child: LinearProgressIndicator(
+              value: attendancePercentage / 100,
+              backgroundColor: Colors.grey,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                attendancePercentage >= 90
+                    ? Colors.blue
+                    : attendancePercentage >= 75
+                        ? Colors.green
+                        : attendancePercentage >= 50
+                            ? Colors.yellow
+                            : Colors.red,
+              ),
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

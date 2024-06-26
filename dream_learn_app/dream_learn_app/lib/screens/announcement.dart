@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/ApplicationinsideNot.dart';
-
+import 'package:dream_learn_app/services/announcement_services.dart';
 
 class Announcement extends StatefulWidget {
   const Announcement({Key? key}) : super(key: key);
@@ -14,8 +14,7 @@ class _AnnouncementState extends State<Announcement> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const
-         Text(
+        title: Text(
           'Announcements',
           textAlign: TextAlign.right,
           style: TextStyle(
@@ -26,39 +25,31 @@ class _AnnouncementState extends State<Announcement> {
         ),
         backgroundColor: Color.fromARGB(255, 189, 179, 179),
       ),
-      body: Stack(
-        children: [
-          // Background image
-          BackgroundScreen(
-            child: Container(),
-          ),
-          // Content
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.transparent, // Make the container transparent
-            ),
-            child: _Announcements(context),
-          ),
-        ],
+      body: FutureBuilder<List<Map<String, dynamic>>?>(
+        future: AnnouncementServices.getAnnouncement(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No announcements available'));
+          } else {
+            List<Map<String, dynamic>> announcementList = snapshot.data!;
+            return ListView.builder(
+              itemCount: announcementList.length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> announcement = announcementList[index];
+                return AnnouncementCard(
+                  title: announcement['titleofAnn'] ?? '',
+                  description: announcement['Announcementmessage'] ?? '',
+                  date: (announcement['date'] as String).split("T")[0] ?? '',
+                );
+              },
+            );
+          }
+        },
       ),
-    );
-  }
-
-  Widget _Announcements(BuildContext context) {
-    return ListView(
-      children: [
-        AnnouncementCard(
-          title: 'Important Announcement 1',
-          description: 'This is the first important announcement.',
-          date: '2021-10-01',
-        ),
-        AnnouncementCard(
-          title: 'Important Announcement 2',
-          description: 'This is the second important announcement.',
-          date: '2021-10-01',
-        ),
-        // Add more AnnouncementCard widgets here for additional announcements
-      ],
     );
   }
 }
@@ -66,12 +57,12 @@ class _AnnouncementState extends State<Announcement> {
 class AnnouncementCard extends StatelessWidget {
   final String title;
   final String description;
-  final String date; // Changed from Date to date
+  final String date;
 
   const AnnouncementCard({
     required this.title,
     required this.description,
-    required this.date, // Changed from Date to date
+    required this.date,
     Key? key,
   }) : super(key: key);
 
@@ -84,14 +75,11 @@ class AnnouncementCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 8),

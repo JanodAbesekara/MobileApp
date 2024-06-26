@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/background.dart';
+import 'package:dream_learn_app/services/feedback_service.dart';
 
 class Feedbacksview extends StatelessWidget {
   const Feedbacksview({Key? key}) : super(key: key);
@@ -28,77 +29,55 @@ class Feedbacksview extends StatelessWidget {
   }
 
   Widget _feedbacks(BuildContext context) {
-    return Column(
-      children: [
-        Feedbackcard(
-          studentmail: 'adas@gmail.com',
-          feedbackmessage: 'good',
-          feedbakrating: 4.5,
-          Subject: 'Maths',
-          Medium: 'English',
-        ),
-         Feedbackcard(
-          studentmail: 'adas@gmail.com',
-          feedbackmessage: 'good',
-          feedbakrating: 4.5,
-          Subject: 'Maths',
-          Medium: 'English',
-        ),
-         Feedbackcard(
-          studentmail: 'adas@gmail.com',
-          feedbackmessage: 'good',
-          feedbakrating: 4.5,
-          Subject: 'Maths',
-          Medium: 'English',
-        ),
-         Feedbackcard(
-          studentmail: 'adas@gmail.com',
-          feedbackmessage: 'good',
-          feedbakrating: 4.5,
-          Subject: 'Maths',
-          Medium: 'English',
-        ),
-         Feedbackcard(
-          studentmail: 'adas@gmail.com',
-          feedbackmessage: 'good',
-          feedbakrating: 4.5,
-          Subject: 'Maths',
-          Medium: 'English',
-        ),
-         Feedbackcard(
-          studentmail: 'adas@gmail.com',
-          feedbackmessage: 'good',
-          feedbakrating: 4.5,
-          Subject: 'Maths',
-          Medium: 'English',
-        ),
-        Feedbackcard(
-          studentmail: 'adasd@gamil.com',
-          feedbackmessage: 'bad',
-          feedbakrating: 2.5,
-          Subject: 'Science',
-          Medium: 'Shinhala',
-        ),
-        // Add more Feedbackcard widgets as needed
-      ],
+    return FutureBuilder<List<Map<String, dynamic>>?>(
+      future: FeedbackService.getFeedback(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('No feedback available'));
+        } else {
+          List<Map<String, dynamic>> feedbackList = snapshot.data!;
+          return Container(
+            height: MediaQuery.of(context)
+                .size
+                .height, // Example: Use screen height
+            child: ListView.builder(
+              itemCount: feedbackList.length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> feedback = feedbackList[index];
+                return Feedbackcard(
+                  studentemail: feedback['studentemail'],
+                  feedtext: feedback['feedtext'],
+                  value: feedback['value'].toDouble(),
+                  subject: feedback['feedSubject'],
+                  medium: feedback['feedmedium'],
+                );
+              },
+            ),
+          );
+        }
+      },
     );
   }
 }
 
 class Feedbackcard extends StatelessWidget {
-  final String studentmail;
-  final String feedbackmessage;
-  final double feedbakrating;
-  final String Subject;
-  final String Medium;
+  final String studentemail;
+  final String feedtext;
+  final double value;
+  final String subject;
+  final String medium;
 
   const Feedbackcard({
     Key? key,
-    required this.studentmail,
-    required this.feedbackmessage,
-    required this.feedbakrating,
-    required this.Subject,
-    required this.Medium,
+    required this.studentemail,
+    required this.feedtext,
+    required this.value,
+    required this.subject,
+    required this.medium,
   }) : super(key: key);
 
   @override
@@ -119,51 +98,36 @@ class Feedbackcard extends StatelessWidget {
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Center(
-                  child: Text(
-                    studentmail,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(feedbackmessage),
-            ],
-          ),
-          Row(
-            children: [
-              StarRating(rating: feedbakrating),
-            ],
-          ),
-          Align(
-            alignment: Alignment.centerRight,
+          Center(
             child: Text(
-              Subject,
+              studentemail,
               style: TextStyle(
-                fontSize: 15,
-                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
               ),
             ),
           ),
-        
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              Medium,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-              ),
+          SizedBox(height: 10),
+          Text(feedtext),
+          SizedBox(height: 10),
+          StarRating(rating: value),
+          SizedBox(height: 10),
+          Text(
+            subject,
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey,
             ),
           ),
-        
+          Text(
+            medium,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey,
+            ),
+          ),
         ],
       ),
     );
@@ -187,7 +151,7 @@ class StarRating extends StatelessWidget {
       children: List.generate(
         starCount,
         (index) => Icon(
-          index < rating.floor() ? Icons.star : Icons.star_border,
+          index < rating ? Icons.star : Icons.star_border,
           color: Colors.yellow,
         ),
       ),
