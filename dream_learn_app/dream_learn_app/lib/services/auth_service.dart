@@ -40,7 +40,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthService {
 
   static Future<LoginDataModel> login(String email, String password) async {
-    var url = Uri.http('10.0.2.2:6000', '/api/auth/login');
+ var url = Uri.https('bytegroupproject.onrender.com', '/api/auth/login');
     var response = await http.post(url, body: {'email': email, 'password': password});
     Map<String, dynamic> decodedJson = jsonDecode(response.body) as Map<String, dynamic>;
 
