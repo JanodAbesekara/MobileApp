@@ -11,8 +11,10 @@ class StudentT extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          BackgroundScreen(
-            child: _buildFutureBuilder(context),
+          Positioned.fill(
+            child: BackgroundScreen(
+              child: _buildFutureBuilder(context),
+            ),
           ),
           Positioned(
             top: 50,
@@ -52,6 +54,11 @@ class StudentT extends StatelessWidget {
       itemBuilder: (context, index) {
         final student = students[index];
         final profile = student['profile'] ?? {};
+        if (student['userEmail'] == null ||
+            student['Ensubject'] == null ||
+            student['Enmedium'] == null) {
+          return SizedBox.shrink(); // Return empty widget if data is incomplete
+        }
         return StudentCard(
           profile: profile['url'] ?? 'assets/profile_avatar.png',
           subject: student['Ensubject'] ?? 'N/A',
@@ -90,6 +97,7 @@ class StudentCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),

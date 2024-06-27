@@ -26,7 +26,8 @@ class StudentparentsService {
 
     var url = Uri.http('bytegroupproject.onrender.com',
         '/api/assignment/eachsubstudents', {'email': email});
-    var response;
+    
+    http.Response response;
     try {
       response = await http.get(url);
     } catch (e) {
@@ -44,6 +45,7 @@ class StudentparentsService {
       if (responseBody is Map<String, dynamic> &&
           responseBody.containsKey('data')) {
         List<dynamic> studentList = responseBody['data'];
+        print(studentList); // Ensure this statement is executed
         return studentList.cast<Map<String, dynamic>>();
       } else {
         throw Exception('Data field not found in response');
