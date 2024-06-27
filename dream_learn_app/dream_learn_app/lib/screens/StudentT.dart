@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/background.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:dream_learn_app/services/Studentparents_service.dart';
 
 class StudentT extends StatelessWidget {
   const StudentT({Key? key}) : super(key: key);
@@ -11,7 +12,20 @@ class StudentT extends StatelessWidget {
       body: Stack(
         children: [
           BackgroundScreen(
-            child: _passChild(context),
+            child: FutureBuilder<List<Map<String, dynamic>>?>(
+              future: StudentparentsService.getStudentList(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text("Error: ${snapshot.error}"));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text("No students found"));
+                } else {
+                  return _buildStudentList(snapshot.data!);
+                }
+              },
+            ),
           ),
           Positioned(
             top: 50,
@@ -28,61 +42,25 @@ class StudentT extends StatelessWidget {
     );
   }
 
-  Widget _passChild(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        StudentCard(
-          name: 'John Doe',
-          medium: 'Sinhala',
-          subject: 'Mathematics',
-          StudentEmail: 'asd@dafa',
-          parentsName: 'Jagath Nimal',
-          parentsPhone: '0712345678',
-          parentsEmail: 'jagath@example.com',
-          profile: 'assets/profile_avatar.png',
-        ),
-        StudentCard(
-          name: 'Jane Doe',
-          medium: 'English',
-          subject: 'English',
-          StudentEmail: 'asd@dafa',
-          parentsName: 'Samn Kumara',
-          parentsPhone: '0712345678',
-          parentsEmail: 'samn@example.com',
-          profile: 'assets/profile_avatar.png',
-        ),
-        StudentCard(
-          name: 'Jane Doe',
-          medium: 'English',
-          subject: 'English',
-          StudentEmail: 'asd@dafa',
-          parentsName: 'Samn Kumara',
-          parentsPhone: '0712345678',
-          parentsEmail: 'samn@example.com',
-          profile: 'assets/profile_avatar.png',
-        ),
-        StudentCard(
-          name: 'Jane Doe',
-          medium: 'English',
-          subject: 'English',
-          StudentEmail: 'asd@dafa',
-          parentsName: 'Samn Kumara',
-          parentsPhone: '0712345678',
-          parentsEmail: 'samn@example.com',
-          profile: 'assets/profile_avatar.png',
-        ),
-        StudentCard(
-          name: 'Jane Doe',
-          medium: 'English',
-          subject: 'English',
-          StudentEmail: 'asd@dafa',
-          parentsName: 'Samn Kumara',
-          parentsPhone: '0712345678',
-          parentsEmail: 'sadsds@dsds',
-          profile: 'assets/profile_avatar.png',
-        ),
-      ],
+  Widget _buildStudentList(List<Map<String, dynamic>> students) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: students.length,
+        itemBuilder: (context, index) {
+          final student = students[index];
+          final profile = student['profile'] ?? {};
+          return StudentCard(
+            name: profile['name'] ?? 'N/A',
+            medium: student['Enmedium'] ?? 'N/A',
+            subject: student['Ensubject'] ?? 'N/A',
+            studentEmail: student['userEmail'] ?? 'N/A',
+            parentsName: profile['name'] ?? 'N/A',
+            parentsPhone: profile['mobileNo']?.toString() ?? 'N/A',
+            parentsEmail: profile['email'] ?? 'N/A',
+            profile: profile['url'] ?? 'assets/profile_avatar.png',
+          );
+        },
+      ),
     );
   }
 }
@@ -91,7 +69,7 @@ class StudentCard extends StatelessWidget {
   final String profile;
   final String name;
   final String subject;
-  final String StudentEmail;
+  final String studentEmail;
   final String medium;
   final String parentsName;
   final String parentsPhone;
@@ -101,7 +79,7 @@ class StudentCard extends StatelessWidget {
     required this.profile,
     required this.name,
     required this.subject,
-    required this.StudentEmail,
+    required this.studentEmail,
     required this.medium,
     required this.parentsName,
     required this.parentsPhone,
@@ -143,7 +121,7 @@ class StudentCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  _buildInfoText('StudentEmail', StudentEmail),
+                  _buildInfoText('StudentEmail', studentEmail),
                   _buildInfoText('Subject', subject),
                   _buildInfoText('Medium', medium),
                   _buildInfoText('ParentsName', parentsName),
@@ -155,10 +133,13 @@ class StudentCard extends StatelessWidget {
               Expanded(
                 child: Align(
                   alignment: Alignment.topRight,
-                  child: Image(
-                    image: AssetImage(profile),
+                  child: Image.network(
+                    profile,
                     width: 80,
                     height: 80,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset('assets/profile_avatar.png', width: 80, height: 80);
+                    },
                   ),
                 ),
               ),
@@ -170,26 +151,28 @@ class StudentCard extends StatelessWidget {
   }
 
   Widget _buildInfoText(String label, String value) {
-    return Row(
-      children: [
-        Text(
-          '$label: ',
-          style: GoogleFonts.lora(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF222831),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: Row(
+        children: [
+          Text(
+            '$label: ',
+            style: GoogleFonts.lora(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF222831),
+            ),
           ),
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            color: Color(0xFF180565),
-            fontSize: 13,
-            letterSpacing: 2,
+          Text(
+            value,
+            style: TextStyle(
+              color: Color(0xFF180565),
+              fontSize: 13,
+              letterSpacing: 2,
+            ),
           ),
-        ),
-        SizedBox(height: 5),
-      ],
+        ],
+      ),
     );
   }
 }
