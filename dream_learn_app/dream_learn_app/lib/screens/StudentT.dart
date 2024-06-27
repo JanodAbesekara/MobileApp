@@ -42,32 +42,32 @@ class StudentT extends StatelessWidget {
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return Center(child: Text('No students found'));
         } else {
-          return _buildStudentList(snapshot.data!);
+          List<Map<String, dynamic>> studentList = snapshot.data!;
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            child: ListView.builder(
+              itemCount: studentList.length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> student = studentList[index];
+                final profile = student['profile'] ?? {};
+                if (student['userEmail'] == null ||
+                    student['Ensubject'] == null ||
+                    student['Enmedium'] == null) {
+                  return SizedBox.shrink();
+                }
+                return StudentCard(
+                  profile: profile['url'] ?? 'assets/profile_avatar.png',
+                  subject: student['Ensubject'] ?? 'N/A',
+                  studentEmail: student['userEmail'] ?? 'N/A',
+                  medium: student['Enmedium'] ?? 'N/A',
+                  parentsName: profile['name'] ?? 'N/A',
+                  parentsPhone: profile['mobileNo']?.toString() ?? 'N/A',
+                  parentsEmail: profile['email'] ?? 'N/A',
+                );
+              },
+            ),
+          );
         }
-      },
-    );
-  }
-
-  Widget _buildStudentList(List<Map<String, dynamic>> students) {
-    return ListView.builder(
-      itemCount: students.length,
-      itemBuilder: (context, index) {
-        final student = students[index];
-        final profile = student['profile'] ?? {};
-        if (student['userEmail'] == null ||
-            student['Ensubject'] == null ||
-            student['Enmedium'] == null) {
-          return SizedBox.shrink(); // Return empty widget if data is incomplete
-        }
-        return StudentCard(
-          profile: profile['url'] ?? 'assets/profile_avatar.png',
-          subject: student['Ensubject'] ?? 'N/A',
-          studentEmail: student['userEmail'] ?? 'N/A',
-          medium: student['Enmedium'] ?? 'N/A',
-          parentsName: profile['name'] ?? 'N/A',
-          parentsPhone: profile['mobileNo']?.toString() ?? 'N/A',
-          parentsEmail: profile['email'] ?? 'N/A',
-        );
       },
     );
   }
@@ -82,7 +82,8 @@ class StudentCard extends StatelessWidget {
   final String parentsPhone;
   final String parentsEmail;
 
-  StudentCard({
+  const StudentCard({
+    Key? key,
     required this.profile,
     required this.subject,
     required this.studentEmail,
@@ -90,7 +91,7 @@ class StudentCard extends StatelessWidget {
     required this.parentsName,
     required this.parentsPhone,
     required this.parentsEmail,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
