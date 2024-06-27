@@ -138,14 +138,12 @@ class gradecards extends StatelessWidget {
                 'StudentEmail :- $email',
                 style: GoogleFonts.lora(
                   fontSize: 16,
-                  
                 ),
               ),
               Text(
                 'Grade :- $gradeLabel',
                 style: GoogleFonts.lora(
                   fontSize: 16,
-                
                 ),
               ),
             ],
@@ -157,7 +155,6 @@ class gradecards extends StatelessWidget {
                 'Medium :- $medium',
                 style: GoogleFonts.lora(
                   fontSize: 16,
-                 
                 ),
               ),
             ],
@@ -169,7 +166,6 @@ class gradecards extends StatelessWidget {
                 'Subject :- $subject',
                 style: GoogleFonts.lora(
                   fontSize: 16,
-                  
                 ),
               ),
             ],
