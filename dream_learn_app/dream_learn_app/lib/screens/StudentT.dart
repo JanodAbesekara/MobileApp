@@ -163,7 +163,7 @@ class StudentCard extends StatelessWidget {
           Text(
             '$label: ',
             style: GoogleFonts.lora(
-              fontSize: 15,
+              fontSize: 13,
               fontWeight: FontWeight.bold,
               color: Color(0xFF222831),
             ),
@@ -173,8 +173,8 @@ class StudentCard extends StatelessWidget {
               value,
               style: TextStyle(
                 color: Color(0xFF180565),
-                fontSize: 13,
-                letterSpacing: 2,
+                fontSize: 12,
+                letterSpacing: 1,
               ),
             ),
           ),
