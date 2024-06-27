@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/AppInsideBackground.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:dream_learn_app/services/ProfileService.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);

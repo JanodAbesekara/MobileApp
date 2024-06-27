@@ -1,4 +1,3 @@
-import 'package:dream_learn_app/models/Profiledata.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decode/jwt_decode.dart';
@@ -9,27 +8,32 @@ class ProfileService {
   static Future<String?> getEmailFromToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('auth_token');
-    if (token != null) {
-      Map<String, dynamic> decodedToken = Jwt.parseJwt(token);
-      return decodedToken['email'];
+    if (token == null) {
+      throw Exception('Token not found');
     }
-    return null;
-  }
-
-  // Method to get profile data from the backend
-  static Future<ProfileData?> getProfileData() async {
-    String? email = await getEmailFromToken();
+    Map<String, dynamic> decodedToken = Jwt.parseJwt(token);
+    String? email = decodedToken['email'];
 
     if (email != null) {
-      var url = Uri.http('bytegroupproject.onrender.com', '/api/user/getsubjectreg', {'email': email});
+      var url = Uri.http('bytegroupproject.onrender.com',
+          '/api/Test/getlecturefulldtails', {'email': email});
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
-        Map<String, dynamic> decodedJson = jsonDecode(response.body);
-        return ProfileData.fromJson(decodedJson);
+        try {
+          var responseBody = jsonDecode(response.body);
+          if (responseBody.containsKey('data')) {
+            List<dynamic> profileData = responseBody['data'];
+            print(profileData);
+            return profileData.cast<Map<String, dynamic>>().first['email'];
+          } else {
+            throw Exception('Data field not found in response');
+          }
+        } catch (e) {
+          throw Exception('Error decoding JSON: $e');
+        }
       } else {
-        print("Error fetching profile data: ${response.body}");
-        return null;
+        throw Exception('Cannot get profile data');
       }
     }
     return null;
