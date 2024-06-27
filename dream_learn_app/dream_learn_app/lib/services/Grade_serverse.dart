@@ -23,8 +23,18 @@ class GradeService {
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
-      List<dynamic> gradeList = jsonDecode(response.body)['data'];
-      return gradeList.cast<Map<String, dynamic>>();
+      try {
+        var responseBody = jsonDecode(response.body);
+        if (responseBody.containsKey('data')) {
+          List<dynamic> gradeList = responseBody['data'];
+          print(gradeList);
+          return gradeList.cast<Map<String, dynamic>>();
+        } else {
+          throw Exception('Data field not found in response');
+        }
+      } catch (e) {
+        throw Exception('Error decoding JSON: $e');
+      }
     } else {
       throw Exception('Cannot get grade list');
     }

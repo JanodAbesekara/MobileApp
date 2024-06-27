@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/background.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dream_learn_app/services/Grade_serverse.dart'; // Adjust the import path based on your project structure
+import 'package:dream_learn_app/services/Grade_serverse.dart';
 
 class GradeT extends StatelessWidget {
   const GradeT({Key? key}) : super(key: key);
@@ -40,17 +40,23 @@ class GradeT extends StatelessWidget {
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return Center(child: Text('No data found'));
         } else {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              var gradeData = snapshot.data![index];
-              return gradecards(
-                email: gradeData['email'],
-                subject: gradeData['subject'],
-                medium: gradeData['medium'],
-                grade: gradeData['grade'],
-              );
-            },
+          List<Map<String, dynamic>> gradeList = snapshot.data!;
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            child: ListView.builder(
+              itemCount: gradeList.length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> grade = gradeList[index];
+                return GradeCard(
+                  email: grade['email'],
+                  name: grade['name'],
+                  subject: grade['subject'],
+                  medium: grade['medium'],
+                  grade: grade['grade'],
+                  score: grade['score'],
+                );
+              },
+            ),
           );
         }
       },
@@ -58,58 +64,61 @@ class GradeT extends StatelessWidget {
   }
 }
 
-class gradecards extends StatelessWidget {
+class GradeCard extends StatelessWidget {
   final String email;
+  final String name;
   final String subject;
   final String medium;
-  final int grade;
+  final String grade; // Ensure grade is of type String
+  final int score;
 
-  const gradecards({
+  const GradeCard({
     Key? key,
     required this.email,
+    required this.name,
     required this.subject,
     required this.medium,
-    required this.grade,
+    required this.grade, // Ensure grade is of type String
+    required this.score,
   }) : super(key: key);
 
   Color getGradeColor(String gradeLabel) {
     switch (gradeLabel) {
-      case 'F':
+      case 'W':
         return const Color.fromARGB(255, 236, 135, 128);
       case 'C':
-        return Color.fromARGB(255, 239, 227, 127);
+        return const Color.fromARGB(255, 239, 227, 127);
       case 'B':
-        return Color.fromARGB(255, 137, 106, 232);
+        return const Color.fromARGB(255, 137, 106, 232);
       case 'A':
-      case 'A+':
-        return const Color.fromARGB(255, 119, 203, 243);
+        return const Color.fromARGB(255, 106, 232, 137);
       default:
         return Colors.white;
     }
   }
 
-  String getGradeLabel(int grade) {
-    if (grade < 35) {
-      return 'F';
-    } else if (grade >= 35 && grade < 65) {
-      return 'C';
-    } else if (grade >= 65 && grade < 75) {
-      return 'B';
-    } else if (grade >= 75 && grade < 90) {
+  String getGradeLabel(int score) {
+    if (score >= 75) {
       return 'A';
+    } else if (score >= 65 && score < 75) {
+      return 'B';
+    } else if (score >= 55 && score < 65) {
+      return 'C';
+    } else if (score >= 45 && score < 55) {
+      return 'D';
     } else {
-      return 'A+';
+      return 'W';
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    String gradeLabel = getGradeLabel(grade);
+    String gradeLabel = getGradeLabel(score);
     Color cardColor = getGradeColor(gradeLabel);
 
     return Container(
-      margin: EdgeInsets.all(15),
-      padding: EdgeInsets.all(15),
+      margin: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(10),
@@ -118,7 +127,7 @@ class gradecards extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -127,25 +136,14 @@ class gradecards extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'StudentEmail :- $email',
+               Text(
+                '$name',
                 style: GoogleFonts.lora(
                   fontSize: 16,
                 ),
               ),
               Text(
-                'Grade :- $gradeLabel',
-                style: GoogleFonts.lora(
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Medium :- $medium',
+                '$gradeLabel',
                 style: GoogleFonts.lora(
                   fontSize: 16,
                 ),
@@ -156,7 +154,29 @@ class gradecards extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Subject :- $subject',
+                '$email',
+                style: GoogleFonts.lora(
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$medium',
+                style: GoogleFonts.lora(
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$subject',
                 style: GoogleFonts.lora(
                   fontSize: 16,
                 ),
