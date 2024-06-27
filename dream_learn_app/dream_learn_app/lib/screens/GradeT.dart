@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/background.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:dream_learn_app/services/Grade_serverse.dart'; // Adjust the import path based on your project structure
 
 class GradeT extends StatelessWidget {
   const GradeT({Key? key}) : super(key: key);
@@ -29,39 +30,30 @@ class GradeT extends StatelessWidget {
   }
 
   Widget _passChild(BuildContext context) {
-    return Column(
-      children: [
-        gradecards(
-          email: 'asd@agmail.com',
-          subject: "Maths",
-          medium: 'English',
-          grade: 80,
-        ),
-        gradecards(
-          email: 'sfsdf@zdfdf',
-          subject: "Science",
-          medium: 'English',
-          grade: 50,
-        ),
-        gradecards(
-          email: 'sfsdf@zdfdf',
-          subject: "Science",
-          medium: 'English',
-          grade: 100,
-        ),
-        gradecards(
-          email: 'sfsdf@zdfdf',
-          subject: "Science",
-          medium: 'English',
-          grade: 20,
-        ),
-        gradecards(
-          email: 'sfsdf@zdfdf',
-          subject: "Science",
-          medium: 'English',
-          grade: 67,
-        ),
-      ],
+    return FutureBuilder<List<Map<String, dynamic>>?>(
+      future: GradeService.getGradeList(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('No data found'));
+        } else {
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              var gradeData = snapshot.data![index];
+              return gradecards(
+                email: gradeData['email'],
+                subject: gradeData['subject'],
+                medium: gradeData['medium'],
+                grade: gradeData['grade'],
+              );
+            },
+          );
+        }
+      },
     );
   }
 }
@@ -71,6 +63,7 @@ class gradecards extends StatelessWidget {
   final String subject;
   final String medium;
   final int grade;
+
   const gradecards({
     Key? key,
     required this.email,
