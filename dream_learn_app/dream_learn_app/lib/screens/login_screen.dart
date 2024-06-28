@@ -1,3 +1,4 @@
+import 'package:dream_learn_app/helpers/student_helper.dart';
 import 'package:dream_learn_app/models/login_data_model.dart';
 import 'package:dream_learn_app/screens/background.dart';
 import 'package:dream_learn_app/screens/main_home2.dart';
@@ -46,7 +47,7 @@ class LoginScreen extends StatelessWidget {
           height: 20,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50),
+          padding: const EdgeInsets.symmetric(horizontal: 50),
           child: CommonTextField(
             hintText: 'User name',
             controller: _userNameTextController,
@@ -56,7 +57,7 @@ class LoginScreen extends StatelessWidget {
           height: 10,
         ),
         Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50),
+            padding: const EdgeInsets.symmetric(horizontal: 50),
             child: CommonTextField(
               isObscureText: true,
               hintText: 'Password',
@@ -70,7 +71,7 @@ class LoginScreen extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => _handleLogin(context),
             style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 43, 29, 168)),
+                backgroundColor: const Color.fromARGB(255, 43, 29, 168)),
             child: const Text(
               'Login',
               style: TextStyle(color: Colors.white),
@@ -80,14 +81,14 @@ class LoginScreen extends StatelessWidget {
         const SizedBox(
           height: 25,
         ),
-        HoverText(
+        const HoverText(
           text: 'Forgot Password? Click here to reset',
           url: "https://byte-group-project.vercel.app/TClasses?\$phw=66444f765aca7cfaf2bcedc4",
         ),
         const SizedBox(
           height: 25,
         ),
-        HoverText(
+        const HoverText(
           text: 'New? Create An Account',
           url: "https://byte-group-project.vercel.app/TClasses?\$phw=66444f765aca7cfaf2bcedc4",
         ),
@@ -99,13 +100,14 @@ class LoginScreen extends StatelessWidget {
   }
 
   _handleLogin(BuildContext context) async {
-    LoginDataModel _authResponse = await AuthService.login(
+    LoginDataModel authResponse = await AuthService.login(
         _userNameTextController.text, _passwordTextController.text);
-    if (_authResponse.success && _authResponse.token != null) {
+    if (authResponse.success && authResponse.token != null) {
+      studentEmail=_userNameTextController.text;
       var snackBar = SnackBar(
         content: Align(
-          child: Text(_authResponse.message),
           alignment: Alignment.center,
+          child: Text(authResponse.message),
         ),
       );
 
@@ -113,12 +115,12 @@ class LoginScreen extends StatelessWidget {
 // and use it to show a SnackBar.
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => MainHome2()));
+          .push(MaterialPageRoute(builder: (context) => const MainHome2()));
     } else {
       var snackBar = SnackBar(
         content: Align(
-          child: Text(_authResponse.message),
           alignment: Alignment.center,
+          child: Text(authResponse.message),
         ),
       );
 
@@ -138,7 +140,7 @@ class HoverText extends StatefulWidget {
   final String text;
   final String url;
 
-  HoverText({required this.text, required this.url});
+  const HoverText({super.key, required this.text, required this.url});
 
   @override
   _HoverTextState createState() => _HoverTextState();

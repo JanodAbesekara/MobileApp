@@ -41,6 +41,12 @@ dependencies:
   intl: ^0.17.0
 
   web_socket_channel: ^2.3.0
+  webview_flutter: ^4.8.0
+  pdf_viewer_plugin: ^2.0.1
+  firebase_storage: ^12.0.0
+  flutter_cache_manager: ^3.3.2
+  firebase_core: ^3.0.0
+  video_player: ^2.8.7
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +88,10 @@ flutter:
       - assets/find_teacher_icon.png
       - assets/student_icon.png
       - assets/teacher_icon.png
+      - assets/pdf.png
+      - assets/zoom.png
+      - assets/lec_recording.png
+      - assets/submission_link.png
 
       - assets/get_help.png
       - assets/student_dashboard_main_icon.png
