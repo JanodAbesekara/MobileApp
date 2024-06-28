@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-
-class LectureMaterialT extends StatelessWidget {
+class LectureMaterialT extends StatefulWidget {
   const LectureMaterialT({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    _launchURL("https://chatgpt.com/g/g-2DQzU5UZl-code-copilot/c/7a520fbb-15e4-4621-b48d-ebad621560dd");
+  _LectureMaterialTState createState() => _LectureMaterialTState();
+}
 
-    return Scaffold(
-      body: Stack(
-        // Empty stack or you can add your desired UI here.
-      ),
-    );
+class _LectureMaterialTState extends State<LectureMaterialT> {
+  @override
+  void initState() {
+    super.initState();
+    _launchURL("https://byte-group-project.vercel.app/TClasses?\$phw=66444f765aca7cfaf2bcedc4");
   }
 
   void _launchURL(String url) async {
-   
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Lecture Material'),
+      ),
+      body: Center(
+        child: Text('Redirecting to the web page...'),
+      ),
+    );
   }
 }
