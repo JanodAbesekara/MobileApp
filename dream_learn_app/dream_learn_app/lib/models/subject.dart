@@ -3,6 +3,7 @@ class Subject{
   String? medium;
   DateTime? date;
 String? email;
+String? teacherEmail;
 
   Subject.fromJson(Map<String,dynamic> json){
     subjectName=json['Ensubject'];
@@ -10,6 +11,7 @@ String? email;
     date=DateTime.tryParse(json['createdAt']
     
     );
+     teacherEmail=json['teacherEmail'];
     email=json['userEmail'];
 
   }

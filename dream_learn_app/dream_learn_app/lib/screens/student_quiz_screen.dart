@@ -26,7 +26,7 @@ class _StudentQuizScreenState extends State<StudentQuizScreen> {
     Quiz? _filteredQuiz;
     List<Quiz> _quizList = await QuizService.getQuizList();
    
-    try {
+    try { 
       _filteredQuiz = _quizList.firstWhere((quz) =>
           quz.teacherEmail == widget.teacherEmail &&
           quz.subject == widget.subject &&

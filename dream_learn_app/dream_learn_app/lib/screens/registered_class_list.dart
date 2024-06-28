@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dream_learn_app/helpers/student_helper.dart';
 import 'package:dream_learn_app/models/subject.dart';
 import 'package:dream_learn_app/screens/background.dart';
@@ -18,9 +20,9 @@ class _RegisteredClassListState extends State<RegisteredClassList> {
 
   Future<List<Subject>> _getSubjectList()async{
 
-  List<Subject>  _subjectList= await EnrollmentService.getSubjectList();
-  final _filteredList= _subjectList.where((sub) => sub.email==studentEmail).toList();
-  return _filteredList;
+  List<Subject>  subjectList= await EnrollmentService.getSubjectList();
+  final filteredList= subjectList.where((sub) => sub.email==studentEmail).toList();
+  return filteredList;
     
   }
 
@@ -36,7 +38,7 @@ class _RegisteredClassListState extends State<RegisteredClassList> {
               child: GestureDetector(
                 onTap: (){
                  //navigate to student dashboard
-                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentDashboard()));
+                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentDashboard(teacherEmail: subject.teacherEmail,subject: subject.subjectName,medium: subject.medium,)));
                 },
                 child: ClassCard(title: subject.subjectName ?? '', dateTime:  DateFormat('d MMMM yyyy, h:mm a').format(subject.date ?? DateTime.now()),medium: subject.medium ?? '',)),
             )).toList(),
@@ -49,7 +51,7 @@ class _RegisteredClassListState extends State<RegisteredClassList> {
 
         }
 
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       } ),
     );
   }

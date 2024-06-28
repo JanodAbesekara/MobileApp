@@ -4,7 +4,7 @@ import 'package:dream_learn_app/screens/AppInsideBackground.dart';
 import 'package:dream_learn_app/services/ProfileService.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+  const Profile({super.key});
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -23,16 +23,7 @@ class _ProfileState extends State<Profile> {
           BackgroundScreen(
             child: _passChild(context),
           ),
-          Positioned(
-            top: 50,
-            left: 20,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
+         
         ],
       ),
     );
@@ -74,19 +65,31 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _buildNameAndDate(String firstName, String lastName) {
-    return Column(
+    return Row(
+
       children: [
-        Text(
-          '$firstName $lastName',
-          style: GoogleFonts.roboto(
-            color: Color(0xFF180565),
-            fontSize: 20,
-            letterSpacing: 2,
-            fontWeight: FontWeight.bold,
+        
+         IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+        
+        Column(
+        children: [
+          Text(
+            '$firstName $lastName',
+            style: const TextStyle(
+              color: Color(0xFF180565),
+              fontSize: 20,
+              letterSpacing: 2,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        SizedBox(height: 10),
-      ],
+          const SizedBox(height: 10),
+        ],
+      ),]
     );
   }
 
@@ -95,11 +98,11 @@ class _ProfileState extends State<Profile> {
       future: _nameFuture,
       builder: (context, nameSnapshot) {
         if (nameSnapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (nameSnapshot.hasError) {
           return Center(child: Text('Error: ${nameSnapshot.error}'));
         } else if (!nameSnapshot.hasData || nameSnapshot.data!.isEmpty) {
-          return Center(child: Text('No name found'));
+          return const Center(child: Text('No name found'));
         } else {
           final firstName = nameSnapshot.data!['firstName']!;
           final lastName = nameSnapshot.data!['lastName']!;
@@ -107,14 +110,14 @@ class _ProfileState extends State<Profile> {
             future: _profileDataFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(child: Text('No data found'));
+                return const Center(child: Text('No data found'));
               } else {
                 List<Map<String, dynamic>> profileList = snapshot.data!;
-                return Container(
+                return SizedBox(
                   height: MediaQuery.of(context).size.height,
                   child: Column(
                     children: [
@@ -156,94 +159,148 @@ class ProfileCard extends StatelessWidget {
   final String degree;
 
   const ProfileCard({
-    Key? key,
+    super.key,
     required this.subject,
     required this.medium,
     required this.classfees,
     required this.aboutme,
     required this.experience,
     required this.degree,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
+      decoration:  BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Subject: $subject',
-            style: GoogleFonts.roboto(
+          Text.rich(
+            TextSpan(
+              text: 'Subject: ',
+              style:  const TextStyle(
               color: Color(0xFF180565),
-              fontSize: 20,
+            fontSize: 18,
               letterSpacing: 2,
-              fontWeight: FontWeight.bold,
+             fontWeight: FontWeight.bold,
             ),
+              children: <InlineSpan>[
+                TextSpan(
+                  text: subject,
+                  style: const TextStyle(fontSize: 15),
+                )
+              ]
+            )
           ),
-          SizedBox(height: 10),
-          Text(
-            'Medium: $medium',
-            style: GoogleFonts.roboto(
+       
+          const SizedBox(height: 10),
+          Text.rich(
+            TextSpan(
+              text: 'Medium: ',
+              style:  const TextStyle(
               color: Color(0xFF180565),
-              fontSize: 20,
+            fontSize: 18,
               letterSpacing: 2,
-              fontWeight: FontWeight.bold,
+             fontWeight: FontWeight.bold,
             ),
+              children: <InlineSpan>[
+                TextSpan(
+                  text: medium,
+                  style: const TextStyle(fontSize: 15),
+                )
+              ]
+            )
           ),
-          SizedBox(height: 10),
-          Text(
-            'Classfees: Rs. $classfees.00',
-            style: GoogleFonts.roboto(
+      
+          const SizedBox(height: 10),
+           Text.rich(
+            TextSpan(
+              text: 'Classfees: ',
+              style:  const TextStyle(
               color: Color(0xFF180565),
-              fontSize: 20,
+            fontSize: 18,
               letterSpacing: 2,
-              fontWeight: FontWeight.bold,
+             fontWeight: FontWeight.bold,
             ),
+              children: <InlineSpan>[
+                TextSpan(
+                  text: classfees,
+                  style: const TextStyle(fontSize: 15),
+                )
+              ]
+            )
           ),
-          SizedBox(height: 10),
-          Text(
-            'About Me: $aboutme',
-            style: GoogleFonts.roboto(
+        
+          const SizedBox(height: 10),
+             Text.rich(
+            TextSpan(
+              text: 'About Me: ',
+              style:  const TextStyle(
               color: Color(0xFF180565),
-              fontSize: 20,
+            fontSize: 18,
               letterSpacing: 2,
-              fontWeight: FontWeight.bold,
+             fontWeight: FontWeight.bold,
             ),
+              children: <InlineSpan>[
+                TextSpan(
+                  text: aboutme,
+                  style: const TextStyle(fontSize:15),
+                )
+              ]
+            )
           ),
-          SizedBox(height: 10),
-          Text(
-            'Experience: $experience',
-            style: GoogleFonts.roboto(
+       
+          const SizedBox(height: 10),
+                Text.rich(
+            TextSpan(
+              text: 'Experience: ',
+              style:  const TextStyle(
               color: Color(0xFF180565),
-              fontSize: 20,
+            fontSize: 18,
               letterSpacing: 2,
-              fontWeight: FontWeight.bold,
+             fontWeight: FontWeight.bold,
             ),
+              children: <InlineSpan>[
+                TextSpan(
+                  text: experience,
+                  style: const TextStyle(fontSize: 15),
+                )
+              ]
+            )
           ),
-          SizedBox(height: 10),
-          Text(
-            'Degree: $degree',
-            style: GoogleFonts.roboto(
+        
+          const SizedBox(height: 10),
+              Text.rich(
+            TextSpan(
+              text: 'Degree: ',
+              style:  const TextStyle(
               color: Color(0xFF180565),
-              fontSize: 20,
+            fontSize:18,
               letterSpacing: 2,
-              fontWeight: FontWeight.bold,
+             fontWeight: FontWeight.bold,
             ),
+              children: <InlineSpan>[
+                TextSpan(
+                  text: degree,
+                  style: const TextStyle(fontSize: 15),
+                )
+              ]
+            )
           ),
+       
         ],
       ),
     );
