@@ -16,8 +16,6 @@ class RegisteredClassList extends StatefulWidget {
 
 class _RegisteredClassListState extends State<RegisteredClassList> {
 
-  
-
   Future<List<Subject>> _getSubjectList()async{
 
   List<Subject>  _subjectList= await EnrollmentService.getSubjectList();
@@ -38,7 +36,7 @@ class _RegisteredClassListState extends State<RegisteredClassList> {
               child: GestureDetector(
                 onTap: (){
                  //navigate to student dashboard
-                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentDashboard(teacherEmail: subject.teacherEmail,subject: subject.subjectName,medium: subject.medium,)));
+                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentDashboard()));
                 },
                 child: ClassCard(title: subject.subjectName ?? '', dateTime:  DateFormat('d MMMM yyyy, h:mm a').format(subject.date ?? DateTime.now()),medium: subject.medium ?? '',)),
             )).toList(),

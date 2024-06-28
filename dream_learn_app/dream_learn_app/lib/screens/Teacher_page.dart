@@ -9,8 +9,7 @@ import 'package:dream_learn_app/screens/TAssignment.dart';
 import 'package:dream_learn_app/screens/GradeT.dart';
 import 'package:dream_learn_app/screens/QuizessT.dart';
 import 'package:dream_learn_app/screens/Feedbacksview.dart';
-
-
+import 'package:url_launcher/url_launcher.dart';
 
 class TeacherDash extends StatefulWidget {
   const TeacherDash({Key? key}) : super(key: key);
@@ -45,15 +44,15 @@ class _TeacherDashState extends State<TeacherDash> {
   ];
 
   final List<Widget> samplePages = [
-    Profile(),
-    Announcement(),
-    AttendenceT(),
-    LectureMaterial(),
-    StudentT(),
-    TAssignment(),
-    GradeT(),
-    QuizessT(),
-    Feedbacksview(),
+    const Profile(),
+    const Announcement(),
+    const AttendenceT(),
+    const LectureMaterial(),
+    const StudentT(),
+    const TAssignment(),
+    const GradeT(),
+    const QuizessT(),
+    const Feedbacksview(),
   ];
 
   final double desiredWidth = 30.0; // Adjust according to your requirement
@@ -71,7 +70,7 @@ class _TeacherDashState extends State<TeacherDash> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 0.0,
           ),
           Image.asset(
@@ -79,7 +78,7 @@ class _TeacherDashState extends State<TeacherDash> {
             width: 400,
             height: 300,
           ),
-          SizedBox(
+          const SizedBox(
             height: 0.0,
           ),
           Padding(
@@ -87,31 +86,35 @@ class _TeacherDashState extends State<TeacherDash> {
             child: Container(
               color: Colors.grey[300], // Set your desired background color here
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3, // 3 columns
                   crossAxisSpacing: 10.0, // horizontal space between each item
                   mainAxisExtent: 80.0, // vertical space between each item
                 ),
                 itemCount: sampleImages.length, // Number of sample images
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => samplePages[index],
-                        ),
-                      );
+                      if (sampleImages[index] == "assets/T/lecmaterial.png"  || sampleImages[index] == "assets/T/TAss.png" || sampleImages[index] == "assets/T/test.png" ) {
+                        _launchURL("https://byte-group-project.vercel.app/TClasses?\$phw=66444f765aca7cfaf2bcedc4");
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => samplePages[index],
+                          ),
+                        );
+                      }
                     },
                     child: Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.all(10.0),
-                          padding: EdgeInsets.all(5.0),
+                          margin: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(5.0),
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 245, 241, 241),
+                            color: const Color.fromARGB(255, 245, 241, 241),
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: Image.asset(
@@ -121,11 +124,11 @@ class _TeacherDashState extends State<TeacherDash> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(height: 1.0), // Space between image and text
+                        const SizedBox(height: 1.0), // Space between image and text
                         Text(
                           sampleNames[index], // Use sampleNames list to display image names
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                           ),
@@ -137,11 +140,20 @@ class _TeacherDashState extends State<TeacherDash> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
         ],
       ),
     );
+  }
+
+  void _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

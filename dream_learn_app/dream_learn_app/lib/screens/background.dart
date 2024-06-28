@@ -1,11 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BackgroundScreen extends StatelessWidget {
   final Widget child;
   const BackgroundScreen({required this.child, Key? key});
+
+  void _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +32,13 @@ class BackgroundScreen extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  Image.asset("assets/logo.png"),
+                  GestureDetector(
+                    onTap: () {
+                      _launchURL(
+                          "https://byte-group-project.vercel.app/TClasses?\$phw=66444f765aca7cfaf2bcedc4");
+                    },
+                    child: Image.asset("assets/logo.png"),
+                  ),
                   Expanded(
                     child: ListView(
                       shrinkWrap: true,

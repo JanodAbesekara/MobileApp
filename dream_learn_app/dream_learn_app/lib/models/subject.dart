@@ -3,7 +3,6 @@ class Subject{
   String? medium;
   DateTime? date;
 String? email;
-String? teacherEmail;
 
   Subject.fromJson(Map<String,dynamic> json){
     subjectName=json['Ensubject'];
@@ -12,7 +11,6 @@ String? teacherEmail;
     
     );
     email=json['userEmail'];
-    teacherEmail=json['teacherEmail'];
 
   }
 
