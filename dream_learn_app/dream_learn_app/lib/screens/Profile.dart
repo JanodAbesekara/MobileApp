@@ -14,6 +14,30 @@ class _ProfileState extends State<Profile> {
   late Future<List<Map<String, dynamic>>?> _profileDataFuture;
   late Future<Map<String, String>?> _nameFuture;
 
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          BackgroundScreen(
+            child: _passChild(context),
+          ),
+          Positioned(
+            top: 50,
+            left: 20,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -39,28 +63,7 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          BackgroundScreen(
-            child: _passChild(context),
-          ),
-          Positioned(
-            top: 50,
-            left: 20,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildAvatar(String? imageUrl) {
     return CircleAvatar(

@@ -130,15 +130,24 @@ class StudentCard extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 20),
-              Image.network(
-                profile,
-                width: 80,
-                height: 80,
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset('assets/profile_avatar.png',
-                      width: 80, height: 80);
-                },
-              ),
+              ClipRRect(
+                borderRadius:
+                    BorderRadius.circular(50.0), // Adjust the radius as needed
+                child: Image.network(
+                  profile,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      'assets/profile_avatar.png',
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
+              )
             ],
           ),
         ),
@@ -154,7 +163,7 @@ class StudentCard extends StatelessWidget {
           Text(
             '$label: ',
             style: GoogleFonts.lora(
-              fontSize: 15,
+              fontSize: 13,
               fontWeight: FontWeight.bold,
               color: Color(0xFF222831),
             ),
@@ -164,8 +173,8 @@ class StudentCard extends StatelessWidget {
               value,
               style: TextStyle(
                 color: Color(0xFF180565),
-                fontSize: 13,
-                letterSpacing: 2,
+                fontSize: 12,
+                letterSpacing: 1,
               ),
             ),
           ),
