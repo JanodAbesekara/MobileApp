@@ -65,7 +65,7 @@ class _ProfileState extends State<Profile> {
       padding: const EdgeInsets.all(20.0),
       child: Row(children: [
         Positioned(
-              top: 50,
+              top: 10,
               left: 20,
           child: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
@@ -75,7 +75,7 @@ class _ProfileState extends State<Profile> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(90, 30, 5, 40),
+          padding: const EdgeInsets.fromLTRB(90, 10, 5, 40),
           child: Column(
             children: [
               Center(
