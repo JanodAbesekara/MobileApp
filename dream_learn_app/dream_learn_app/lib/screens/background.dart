@@ -1,10 +1,12 @@
+import 'package:dream_learn_app/screens/side_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BackgroundScreen extends StatelessWidget {
+  final bool shouldShowSidebar;
   final Widget child;
-  const BackgroundScreen({required this.child, Key? key});
+  const BackgroundScreen({super.key, required this.child,this.shouldShowSidebar=false});
 
   void _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
@@ -64,6 +66,18 @@ class BackgroundScreen extends StatelessWidget {
                 ],
               ),
             ),
+            if(shouldShowSidebar==true)
+            Positioned(
+              
+              child:    IconButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => const SideBar()));
+            },
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.blue,
+            )))
           ],
         ),
       ),

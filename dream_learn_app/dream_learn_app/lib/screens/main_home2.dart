@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/Teacher_page.dart';
 
 class MainHome2 extends StatelessWidget {
-  const MainHome2({Key? key}) : super(key: key);
+  const MainHome2({super.key});
 
   Widget _passChild(BuildContext context) {
     return GestureDetector(
@@ -20,13 +20,13 @@ class MainHome2 extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           RoleSelectionButton("assets/student_icon.png", 'Students', () {
-             Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisteredClassList()));
+             Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisteredClassList()));
           }),
           const SizedBox(height: 20),
           RoleSelectionButton("assets/teacher_icon.png", 'Teachers', () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => TeacherDash()),
+              MaterialPageRoute(builder: (context) => const TeacherDash()),
             );
           }),
           const SizedBox(height: 50),
@@ -38,6 +38,7 @@ class MainHome2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackgroundScreen(
+      shouldShowSidebar: true,
       child: _passChild(context),
     );
   }

@@ -12,7 +12,7 @@ import 'package:dream_learn_app/screens/Feedbacksview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TeacherDash extends StatefulWidget {
-  const TeacherDash({Key? key}) : super(key: key);
+  const TeacherDash({super.key});
 
   @override
   _TeacherDashState createState() => _TeacherDashState();
@@ -61,6 +61,7 @@ class _TeacherDashState extends State<TeacherDash> {
   @override
   Widget build(BuildContext context) {
     return BackgroundScreen(
+      shouldShowSidebar: true,
       child: _dashboard(context),
     );
   }
