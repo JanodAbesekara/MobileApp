@@ -68,7 +68,7 @@ class SideBar extends StatelessWidget {
               imagePath: 'assets/find_teacher_icon.png',
               title: 'Finding Teachers',
               onTap: () async {
-                const url = 'https://byte-group-project.vercel.app/aboutus';
+                const url = 'https://byte-group-project.vercel.app/classes';
                 if (await canLaunchUrlString(url)) {
                   await launchUrlString(url);
                 } else {
