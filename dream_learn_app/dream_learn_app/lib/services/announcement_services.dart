@@ -8,7 +8,6 @@ class AnnouncementServices {
 
     if (response.statusCode == 200) {
       // Print the entire response body for debugging
-      print("Response Body: ${response.body}");
 
       List<dynamic> announcementList = jsonDecode(response.body)['announcements'];
 
@@ -16,7 +15,7 @@ class AnnouncementServices {
       List<Map<String, dynamic>> mappedAnnouncements = announcementList
           .map((announcement) => announcement as Map<String, dynamic>)
           .toList();
-      print( "Maqpping data : ${mappedAnnouncements}");
+      
       return mappedAnnouncements;
     } else {
       print("Error fetching announcement data: ${response.body}");
