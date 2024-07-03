@@ -1,6 +1,7 @@
 import 'package:dream_learn_app/screens/background.dart';
 import 'package:dream_learn_app/screens/learning_material_screen.dart';
 import 'package:dream_learn_app/screens/side_bar.dart';
+import 'package:dream_learn_app/screens/student_payments.dart';
 import 'package:dream_learn_app/screens/student_quiz_screen.dart';
 import 'package:dream_learn_app/screens/teacher_details.dart';
 import 'package:dream_learn_app/utils/dashboard_grid_item.dart';
@@ -40,7 +41,11 @@ class StudentDashboard extends StatelessWidget {
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
                     title: 'Tution fees',
-                    onTap: () {},
+                    
+                    onTap: () =>Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>   StudentTutionFees(
+                          teacherEmail:teacherEmail ?? '' ,subject:subject ?? '' ,medium:medium ?? '' ,
+                              ))),
                   ),
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
@@ -97,21 +102,15 @@ class StudentDashboard extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        IconButton(
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => const SideBar()));
-            },
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.blue,
-            ))
+     
       ]),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BackgroundScreen(child: _passChild(context));
+    return BackgroundScreen(
+      shouldShowSidebar: true,
+      child: _passChild(context));
   }
 }

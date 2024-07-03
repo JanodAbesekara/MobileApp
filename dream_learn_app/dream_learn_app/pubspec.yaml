@@ -47,6 +47,7 @@ dependencies:
   flutter_cache_manager: ^3.3.2
   firebase_core: ^3.0.0
   video_player: ^2.8.7
+  file_picker: ^8.0.5
 
 dev_dependencies:
   flutter_test:

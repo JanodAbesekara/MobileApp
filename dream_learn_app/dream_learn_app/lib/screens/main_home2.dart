@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 class MainHome2 extends StatelessWidget {
-  const MainHome2({Key? key}) : super(key: key);
+  const MainHome2({super.key});
 
   static Future<String?> _getUserRole() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -33,6 +33,8 @@ class MainHome2 extends StatelessWidget {
             width: 191,
             height: 229,
           ),
+
+
           const SizedBox(height: 80),
           if (role == 'Student')
             RoleSelectionButton("assets/student_icon.png", 'Students', () {
@@ -47,6 +49,7 @@ class MainHome2 extends StatelessWidget {
               );
             }),
           const SizedBox(height: 80),
+
         ],
       ),
     );
@@ -54,6 +57,7 @@ class MainHome2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return FutureBuilder<String?>(
       future: _getUserRole(),
       builder: (context, snapshot) {
@@ -69,6 +73,7 @@ class MainHome2 extends StatelessWidget {
           );
         }
       },
+
     );
   }
 }
