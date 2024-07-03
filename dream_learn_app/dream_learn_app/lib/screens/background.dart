@@ -6,7 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 class BackgroundScreen extends StatelessWidget {
   final bool shouldShowSidebar;
   final Widget child;
-  const BackgroundScreen({super.key, required this.child,this.shouldShowSidebar=false});
+  const BackgroundScreen(
+      {super.key, required this.child, this.shouldShowSidebar = false});
 
   void _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
@@ -66,18 +67,21 @@ class BackgroundScreen extends StatelessWidget {
                 ],
               ),
             ),
-            if(shouldShowSidebar==true)
-            Positioned(
-              
-              child:    IconButton(
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => const SideBar()));
-            },
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.blue,
-            )))
+            if (shouldShowSidebar == true)
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Positioned(
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const SideBar()));
+                        },
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Colors.blue,
+                          size: 30,
+                        ))),
+              )
           ],
         ),
       ),
