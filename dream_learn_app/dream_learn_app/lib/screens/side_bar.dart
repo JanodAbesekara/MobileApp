@@ -40,18 +40,17 @@ class SideBar extends StatelessWidget {
               },
             ),
             SettingsListTile(
-                imagePath: 'assets/about_us_icon.png',
-                title: 'About us',
-                onTap: () async {
-                const url =
-                    'https://byte-group-project.vercel.app/aboutus';
+              imagePath: 'assets/about_us_icon.png',
+              title: 'About us',
+              onTap: () async {
+                const url = 'https://byte-group-project.vercel.app/aboutus';
                 if (await canLaunchUrlString(url)) {
                   await launchUrlString(url);
                 } else {
                   throw 'Could not launch $url';
                 }
               },
-              ),
+            ),
             SettingsListTile(
                 imagePath: 'assets/contact_us_icon.png',
                 title: 'Contact us',
@@ -63,14 +62,20 @@ class SideBar extends StatelessWidget {
                 imagePath: 'assets/backto_dashboard_icon.png',
                 title: 'Back to DashBord',
                 onTap: () {
-                   Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 }),
             SettingsListTile(
-                imagePath: 'assets/find_teacher_icon.png',
-                title: 'Finding Teachers',
-                onTap: () {
-                  print('go to settings');
-                }),
+              imagePath: 'assets/find_teacher_icon.png',
+              title: 'Finding Teachers',
+              onTap: () async {
+                const url = 'https://byte-group-project.vercel.app/aboutus';
+                if (await canLaunchUrlString(url)) {
+                  await launchUrlString(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+            ),
             SettingsListTile(
                 imagePath: 'assets/log_out_icon.png',
                 title: 'Log Out',
