@@ -132,7 +132,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BackgroundScreen(child: _passChild(context));
+    return BackgroundScreen(shouldShowBackButton: false, child: _passChild(context));
   }
 }
 

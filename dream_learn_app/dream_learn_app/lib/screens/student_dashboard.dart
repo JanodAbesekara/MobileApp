@@ -1,9 +1,13 @@
 import 'package:dream_learn_app/screens/background.dart';
+import 'package:dream_learn_app/screens/feedbackscreen.dart';
 import 'package:dream_learn_app/screens/learning_material_screen.dart';
 import 'package:dream_learn_app/screens/side_bar.dart';
+import 'package:dream_learn_app/screens/student_announcments.dart';
+import 'package:dream_learn_app/screens/student_assignments.dart';
 import 'package:dream_learn_app/screens/student_payments.dart';
 import 'package:dream_learn_app/screens/student_quiz_screen.dart';
 import 'package:dream_learn_app/screens/teacher_details.dart';
+import 'package:dream_learn_app/screens/web_view_screen.dart';
 import 'package:dream_learn_app/utils/dashboard_grid_item.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +17,7 @@ class StudentDashboard extends StatelessWidget {
   final String? medium;
 
   const StudentDashboard({super.key, this.teacherEmail, this.subject,this.medium});
+
 
   Widget _passChild(BuildContext context) {
     return Padding(
@@ -57,13 +62,21 @@ class StudentDashboard extends StatelessWidget {
                   ),
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
-                    title: 'Home work',
-                    onTap: () {},
+                    title: 'Knowledge Home',
+                    
+                    onTap: ()=>  Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const WebViewScreen(
+                            
+                              ))),
                   ),
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
                     title: 'Assingmnets',
-                    onTap: () {},
+                    
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>  StudentAssignmentScreen(
+                             teacherEmail: teacherEmail, subject: subject,medium: medium,
+                              ))),
                   ),
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
@@ -76,12 +89,20 @@ class StudentDashboard extends StatelessWidget {
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
                     title: 'Feedbacks',
-                    onTap: () {},
+                    
+                    onTap: ()=>  Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>  FeedbackScaren(
+                            
+                              )))
                   ),
                   DashboardGridItem(
                     iconPath: 'assets/find_teacher_icon.png',
                     title: 'Announcement',
-                    onTap: () {},
+                    
+                    onTap: () =>Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => StudentAnnouncement(
+                            teacherEmail:teacherEmail ?? '' ,subject:subject ?? '' ,medium:medium ?? '' ,
+                              ))),
                   ),
                   DashboardGridItem(
                       iconPath: 'assets/find_teacher_icon.png',

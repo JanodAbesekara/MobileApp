@@ -1,18 +1,19 @@
+import 'package:dream_learn_app/services/student_service.dart';
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/models/quiz.dart';
 import 'package:dream_learn_app/services/quiz_service.dart';
 
-class StudentQuizScreen extends StatefulWidget {
+class StudentAssignmentScreen extends StatefulWidget {
   final String? teacherEmail;
   final String? subject;
   final String? medium;
-  const StudentQuizScreen({super.key, this.teacherEmail, this.subject, this.medium});
+  const StudentAssignmentScreen({super.key, this.teacherEmail, this.subject, this.medium});
 
   @override
-  State<StudentQuizScreen> createState() => _StudentQuizScreenState();
+  State<StudentAssignmentScreen> createState() => _StudentAssignmentScreenState();
 }
 
-class _StudentQuizScreenState extends State<StudentQuizScreen> {
+class _StudentAssignmentScreenState extends State<StudentAssignmentScreen> {
   List<int?> selectedOptions = [];
    Quiz? _loadedQuiz;
    int correctAnswercount=0;
@@ -22,9 +23,9 @@ class _StudentQuizScreenState extends State<StudentQuizScreen> {
     super.initState();
   }
 
-  Future<Quiz?> _getQuiz() async {
+  Future<Quiz?> _getAssignement() async {
     Quiz? filteredQuiz;
-    List<Quiz> quizList = await QuizService.getQuizList();
+    List<Quiz> quizList = await StudentService.getAssignementList();
    
     try { 
       filteredQuiz = quizList.firstWhere((quz) =>
@@ -62,14 +63,14 @@ class _StudentQuizScreenState extends State<StudentQuizScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Quiz'),
+        title: const Text('Assignment'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
             children: [FutureBuilder<Quiz?>(
-              future: _getQuiz(),
+              future: _getAssignement(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
