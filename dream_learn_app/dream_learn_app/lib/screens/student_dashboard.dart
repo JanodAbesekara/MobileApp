@@ -23,21 +23,22 @@ class StudentDashboard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(children: [
-        Container(
-          decoration: BoxDecoration(
+        Column(
+          children: [
+            const SizedBox(height: 20),
+            Image.asset(
+              'assets/student_dashboard_main_icon.png',
+              height: 170,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+         
+            Container(
+                  decoration: BoxDecoration(
               color: const Color(0xffD9D9D9).withOpacity(0.9),
               borderRadius: BorderRadius.circular(20)),
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              Image.asset(
-                'assets/student_dashboard_main_icon.png',
-                height: 170,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              GridView.count(
+              child: GridView.count(
                 shrinkWrap: true,
                 crossAxisCount: 3,
                 childAspectRatio: 1.4,
@@ -117,8 +118,8 @@ class StudentDashboard extends StatelessWidget {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         const SizedBox(
           height: 10,
