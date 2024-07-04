@@ -45,7 +45,7 @@ class StudentparentsService {
       if (responseBody is Map<String, dynamic> &&
           responseBody.containsKey('data')) {
         List<dynamic> studentList = responseBody['data'];
-        print(studentList); // Ensure this statement is executed
+      
         return studentList.cast<Map<String, dynamic>>();
       } else {
         throw Exception('Data field not found in response');

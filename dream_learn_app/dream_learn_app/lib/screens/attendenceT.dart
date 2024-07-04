@@ -48,6 +48,7 @@ class AttendenceT extends StatelessWidget {
               itemBuilder: (context, index) {
                 Map<String, dynamic> attendance = attendenceList[index];
                 return AttendenceCard(
+                  name: attendance['posts']['studentname'],
                   email: attendance['posts']['studentnemail'],
                   subject: attendance['posts']['subject'],
                   medium: attendance['posts']['medium'],
@@ -63,12 +64,14 @@ class AttendenceT extends StatelessWidget {
 }
 
 class AttendenceCard extends StatelessWidget {
+  final String name;
   final String email;
   final String subject;
   final String medium;
   final double attendancePercentage;
   const AttendenceCard({
     Key? key,
+    required this.name,
     required this.email,
     required this.subject,
     required this.medium,
@@ -95,6 +98,7 @@ class AttendenceCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _buildRow('Student Name:', name),
           _buildRow('Student Email:', email),
           _buildRow('Subject:', subject),
           _buildRow('Medium:', medium),

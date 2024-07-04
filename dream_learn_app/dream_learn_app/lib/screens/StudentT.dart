@@ -135,14 +135,14 @@ class StudentCard extends StatelessWidget {
                     BorderRadius.circular(50.0), // Adjust the radius as needed
                 child: Image.network(
                   profile,
-                  width: 80,
-                  height: 80,
+                  width: 60,
+                  height: 60,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Image.asset(
                       'assets/profile_avatar.png',
-                      width: 80,
-                      height: 80,
+                      width: 60,
+                      height: 60,
                       fit: BoxFit.cover,
                     );
                   },

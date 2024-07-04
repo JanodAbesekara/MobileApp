@@ -19,7 +19,8 @@ class GradeService {
       throw Exception('Email not found in token');
     }
 
-    var url = Uri.http('bytegroupproject.onrender.com', '/api/assignment/getgradefromteacher', {'email': email});
+    var url = Uri.http('bytegroupproject.onrender.com',
+        '/api/assignment/getgradefromteacher', {'email': email});
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -27,7 +28,7 @@ class GradeService {
         var responseBody = jsonDecode(response.body);
         if (responseBody.containsKey('data')) {
           List<dynamic> gradeList = responseBody['data'];
-          print(gradeList);
+
           return gradeList.cast<Map<String, dynamic>>();
         } else {
           throw Exception('Data field not found in response');

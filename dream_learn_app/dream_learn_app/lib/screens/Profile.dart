@@ -14,7 +14,6 @@ class _ProfileState extends State<Profile> {
   late Future<List<Map<String, dynamic>>?> _profileDataFuture;
   late Future<Map<String, String>?> _nameFuture;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +22,6 @@ class _ProfileState extends State<Profile> {
           BackgroundScreen(
             child: _passChild(context),
           ),
-         
         ],
       ),
     );
@@ -54,8 +52,6 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-
-
   Widget _buildAvatar(String? imageUrl) {
     return CircleAvatar(
       radius: 80,
@@ -65,31 +61,39 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _buildNameAndDate(String firstName, String lastName) {
-    return Row(
-
-      children: [
-        
-         IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-        
-        Column(
-        children: [
-          Text(
-            '$firstName $lastName',
-            style: const TextStyle(
-              color: Color(0xFF180565),
-              fontSize: 20,
-              letterSpacing: 2,
-              fontWeight: FontWeight.bold,
-            ),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(children: [
+        Positioned(
+              top: 10,
+              left: 20,
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
-          const SizedBox(height: 10),
-        ],
-      ),]
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(90, 10, 5, 40),
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  '$firstName $lastName',
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 72, 5, 48),
+                    fontSize: 23,
+                    letterSpacing: 2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        ),
+      ]),
     );
   }
 
@@ -173,134 +177,111 @@ class ProfileCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
-      decoration:  BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 251, 252, 254),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text.rich(
-            TextSpan(
+          const SizedBox(height: 10),
+          Text.rich(TextSpan(
               text: 'Subject: ',
-              style:  const TextStyle(
-              color: Color(0xFF180565),
-            fontSize: 18,
-              letterSpacing: 2,
-             fontWeight: FontWeight.bold,
-            ),
+              style: GoogleFonts.lora(
+                color: Color.fromARGB(255, 6, 2, 22),
+                fontSize: 16,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+              ),
               children: <InlineSpan>[
                 TextSpan(
                   text: subject,
-                  style: const TextStyle(fontSize: 15),
+                  style: const TextStyle(fontSize: 13, color: Colors.blueGrey),
                 )
-              ]
-            )
-          ),
-       
-          const SizedBox(height: 10),
-          Text.rich(
-            TextSpan(
+              ])),
+          Text.rich(TextSpan(
               text: 'Medium: ',
-              style:  const TextStyle(
-              color: Color(0xFF180565),
-            fontSize: 18,
-              letterSpacing: 2,
-             fontWeight: FontWeight.bold,
-            ),
+              style: GoogleFonts.lora(
+                color: Color.fromARGB(255, 6, 2, 22),
+                fontSize: 16,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+              ),
               children: <InlineSpan>[
                 TextSpan(
                   text: medium,
-                  style: const TextStyle(fontSize: 15),
+                  style: const TextStyle(fontSize: 13, color: Colors.blueGrey),
                 )
-              ]
-            )
-          ),
-      
-          const SizedBox(height: 10),
-           Text.rich(
-            TextSpan(
+              ])),
+          Text.rich(TextSpan(
               text: 'Classfees: ',
-              style:  const TextStyle(
-              color: Color(0xFF180565),
-            fontSize: 18,
-              letterSpacing: 2,
-             fontWeight: FontWeight.bold,
-            ),
+              style: GoogleFonts.lora(
+                color: Color.fromARGB(255, 6, 2, 22),
+                fontSize: 16,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+              ),
               children: <InlineSpan>[
                 TextSpan(
-                  text: classfees,
-                  style: const TextStyle(fontSize: 15),
-                )
-              ]
-            )
-          ),
-        
-          const SizedBox(height: 10),
-             Text.rich(
-            TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Rs. ${classfees}.00',
+                      style:
+                          const TextStyle(fontSize: 13, color: Colors.blueGrey),
+                    ),
+                  ],
+                ),
+              ])),
+          Text.rich(TextSpan(
               text: 'About Me: ',
-              style:  const TextStyle(
-              color: Color(0xFF180565),
-            fontSize: 18,
-              letterSpacing: 2,
-             fontWeight: FontWeight.bold,
-            ),
+              style: GoogleFonts.lora(
+                color: Color.fromARGB(255, 6, 2, 22),
+                fontSize: 16,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+              ),
               children: <InlineSpan>[
                 TextSpan(
                   text: aboutme,
-                  style: const TextStyle(fontSize:15),
+                  style: const TextStyle(fontSize: 13, color: Colors.blueGrey),
                 )
-              ]
-            )
-          ),
-       
-          const SizedBox(height: 10),
-                Text.rich(
-            TextSpan(
+              ])),
+          Text.rich(TextSpan(
               text: 'Experience: ',
-              style:  const TextStyle(
-              color: Color(0xFF180565),
-            fontSize: 18,
-              letterSpacing: 2,
-             fontWeight: FontWeight.bold,
-            ),
+              style: GoogleFonts.lora(
+                color: Color.fromARGB(255, 6, 2, 22),
+                fontSize: 16,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+              ),
               children: <InlineSpan>[
                 TextSpan(
                   text: experience,
-                  style: const TextStyle(fontSize: 15),
+                  style: const TextStyle(fontSize: 13, color: Colors.blueGrey),
                 )
-              ]
-            )
-          ),
-        
-          const SizedBox(height: 10),
-              Text.rich(
-            TextSpan(
+              ])),
+          Text.rich(TextSpan(
               text: 'Degree: ',
-              style:  const TextStyle(
-              color: Color(0xFF180565),
-            fontSize:18,
-              letterSpacing: 2,
-             fontWeight: FontWeight.bold,
-            ),
+              style: GoogleFonts.lora(
+                color: Color.fromARGB(255, 6, 2, 22),
+                fontSize: 16,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+              ),
               children: <InlineSpan>[
                 TextSpan(
                   text: degree,
-                  style: const TextStyle(fontSize: 15),
+                  style: const TextStyle(fontSize: 13, color: Colors.blueGrey),
                 )
-              ]
-            )
-          ),
-       
+              ])),
         ],
       ),
     );

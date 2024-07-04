@@ -75,18 +75,20 @@ class AnnouncementCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            Center(
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 12),
             Text(
               description,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 13,
               ),
             ),
             Align(
@@ -94,7 +96,7 @@ class AnnouncementCard extends StatelessWidget {
               child: Text(
                 date,
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 10,
                   color: Colors.grey,
                 ),
               ),

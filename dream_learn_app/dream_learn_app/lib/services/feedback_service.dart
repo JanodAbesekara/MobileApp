@@ -24,9 +24,6 @@ class FeedbackService {
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
-      // Print the entire response body for debugging
-      print("Response Body: ${response.body}");
-
       List<dynamic> feedbackList = jsonDecode(response.body)['data'];
 
       // Filter feedback based on decoded email
