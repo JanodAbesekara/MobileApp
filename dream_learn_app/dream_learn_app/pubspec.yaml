@@ -48,6 +48,7 @@ dependencies:
   firebase_core: ^3.0.0
   video_player: ^2.8.7
   file_picker: ^8.0.5
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:
@@ -109,6 +110,7 @@ flutter:
       - assets/T/gade12.png
       - assets/T/feed12.png
       - assets/T/profile.png
+      
      
 
   #   - images/a_dot_ham.jpeg

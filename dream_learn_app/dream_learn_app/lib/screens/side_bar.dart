@@ -1,9 +1,9 @@
 import 'package:dream_learn_app/screens/contact_us.dart';
+import 'package:dream_learn_app/screens/login_screen.dart';
 import 'package:dream_learn_app/utils/settings_list_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:dream_learn_app/screens/login_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:dream_learn_app/screens/about_us.dart';
+
 
 class SideBar extends StatelessWidget {
   const SideBar({super.key});
@@ -11,6 +11,7 @@ class SideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     
       body: SafeArea(
         child: Column(
           children: [
@@ -27,43 +28,31 @@ class SideBar extends StatelessWidget {
                   print('go to settings');
                 }),
             SettingsListTile(
-              imagePath: 'assets/knowledge_base_icon.png',
-              title: 'Knowledge base',
-              onTap: () async {
-                const url =
-                    'https://byte-group-project.vercel.app/knowledgebase';
-                if (await canLaunchUrlString(url)) {
-                  await launchUrlString(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              },
-            ),
+                imagePath: 'assets/knowledge_base_icon.png',
+                title: 'Knowledge base',
+                onTap: () {
+                  print('go to settings');
+                }),
             SettingsListTile(
                 imagePath: 'assets/about_us_icon.png',
                 title: 'About us',
-                onTap: () async {
-                const url =
-                    'https://byte-group-project.vercel.app/aboutus';
-                if (await canLaunchUrlString(url)) {
-                  await launchUrlString(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              },
-              ),
+                onTap: () {
+                  //print('go to settings');
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const  AboutUS()));
+                  //Navigator.of(context).push(MaterialPageRoute(builder: (context) => AboutUS()));
+
+                }),
             SettingsListTile(
                 imagePath: 'assets/contact_us_icon.png',
                 title: 'Contact us',
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => ContactUS()));
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ContactUS()));
                 }),
             SettingsListTile(
                 imagePath: 'assets/backto_dashboard_icon.png',
                 title: 'Back to DashBord',
                 onTap: () {
-                   Navigator.of(context).pop();
+                  print('go to settings');
                 }),
             SettingsListTile(
                 imagePath: 'assets/find_teacher_icon.png',
@@ -75,8 +64,8 @@ class SideBar extends StatelessWidget {
                 imagePath: 'assets/log_out_icon.png',
                 title: 'Log Out',
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>   LoginScreen()));
+                 
                 }),
           ],
         ),

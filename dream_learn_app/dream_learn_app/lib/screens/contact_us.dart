@@ -51,7 +51,7 @@ class ContactUS extends StatelessWidget {
               Text('Telephone - ',style: _contactDetailsStyles,),
               Column(
                 children: [
-                   Text('(+94) 2743473',style: _contactDetailsStyles,),
+                   Text('(011 123 4567',style: _contactDetailsStyles,),
                     Text('(8.00 pm - 6.00am )',style: _contactDetailsStyles,),
                 ],
               )
