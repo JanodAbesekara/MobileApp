@@ -83,14 +83,14 @@ class LoginScreen extends StatelessWidget {
         ),
         const HoverText(
           text: 'Forgot Password? Click here to reset',
-          url: "https://byte-group-project.vercel.app/TClasses?\$phw=66444f765aca7cfaf2bcedc4",
+          url: "https://byte-group-project.vercel.app/login",
         ),
         const SizedBox(
           height: 25,
         ),
         const HoverText(
           text: 'New? Create An Account',
-          url: "https://byte-group-project.vercel.app/TClasses?\$phw=66444f765aca7cfaf2bcedc4",
+          url: "https://byte-group-project.vercel.app/Registrationform",
         ),
         const SizedBox(
           height: 30,
