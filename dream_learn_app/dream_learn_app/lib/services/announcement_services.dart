@@ -15,7 +15,7 @@ class AnnouncementServices {
       List<Map<String, dynamic>> mappedAnnouncements = announcementList
           .map((announcement) => announcement as Map<String, dynamic>)
           .toList();
-      
+
       return mappedAnnouncements;
     } else {
       print("Error fetching announcement data: ${response.body}");
@@ -23,3 +23,4 @@ class AnnouncementServices {
     }
   }
 }
+
