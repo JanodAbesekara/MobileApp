@@ -19,40 +19,50 @@ class RegisteredClassList extends StatefulWidget {
 class _RegisteredClassListState extends State<RegisteredClassList> {
 
   Future<List<Subject>> _getSubjectList()async{
-
-  List<Subject>  subjectList= await EnrollmentService.getSubjectList();
-  final filteredList= subjectList.where((sub) => sub.email==studentEmail).toList();
-  return filteredList;
-    
+    List<Subject>  subjectList = await EnrollmentService.getSubjectList();
+    final filteredList = subjectList.where((sub) => sub.email == studentEmail).toList();
+    return filteredList;
   }
 
   @override
   Widget build(BuildContext context) {
     return BackgroundScreen(
-      child: FutureBuilder(future: _getSubjectList(), builder:(context,snapshot){
-        if(snapshot.hasData){
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: snapshot.data!.map((subject) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 10),
-              child: GestureDetector(
-                onTap: (){
-                 //navigate to student dashboard
-                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentDashboard(teacherEmail: subject.teacherEmail,subject: subject.subjectName,medium: subject.medium,)));
-                },
-                child: ClassCard(title: subject.subjectName ?? '', dateTime:  DateFormat('d MMMM yyyy, h:mm a').format(subject.date ?? DateTime.now()),medium: subject.medium ?? '',)),
-            )).toList(),
-          );
+      child: FutureBuilder(
+        future: _getSubjectList(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: snapshot.data!.map((subject) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigate to student dashboard
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => StudentDashboard(
+                        teacherEmail: subject.teacherEmail,
+                        subject: subject.subjectName,
+                        medium: subject.medium,
+                      ),
+                    ));
+                  },
+                  child: ClassCard(
+                    title: subject.subjectName ?? '',
+                    dateTime: DateFormat('d MMMM yyyy, h:mm a').format(subject.date ?? DateTime.now()),
+                    medium: subject.medium ?? '',
+                  ),
+                ),
+              )).toList(),
+            );
+          }
 
-        }
+          if (snapshot.hasError) {
+            print('Error loading subject list');
+          }
 
-        if(snapshot.hasError){
-          print('having error loading subject list');
-
-        }
-
-        return const Center(child: CircularProgressIndicator());
-      } ),
+          return const Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }

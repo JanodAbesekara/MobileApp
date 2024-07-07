@@ -3,49 +3,30 @@ import 'dart:convert';
 import 'package:dream_learn_app/helpers/student_helper.dart';
 
 class AnnouncementServices {
-  static Future<List<Map<String, dynamic>>?> getAnnouncement() async {
-    var url = Uri.http('bytegroupproject.onrender.com', '/api/get/Notifactions');
-    var response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      // Print the entire response body for debugging
-
-      List<dynamic> announcementList = jsonDecode(response.body)['announcements'];
-
-      // Convert each item in announcementList to Map<String, dynamic>
-      List<Map<String, dynamic>> mappedAnnouncements = announcementList
-          .map((announcement) => announcement as Map<String, dynamic>)
-          .toList();
-      
-      return mappedAnnouncements;
-    } else {
-      print("Error fetching announcement data: ${response.body}");
-      return null;
-    }
-  }
-
-    static Future<List<Map<String, dynamic>>?> getStudentAnnouncement() async {
-    var url = Uri.http('bytegroupproject.onrender.com', '/api/get/Notifactions',{'email':studentEmail});
+  static Future<List<Map<String, dynamic>>?> getStudentAnnouncement() async {
+    var url = Uri.http('bytegroupproject.onrender.com', '/api/get/notifaction', {'email': studentEmail});
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
       // Print the entire response body for debugging
       print("Response Body: ${response.body}");
 
-      List<dynamic> announcementList = jsonDecode(response.body)['announcements'];
+      // Parse the response body
+      var data = jsonDecode(response.body);
+      List<dynamic> announcements = data['announcements'] ?? [];
+      List<dynamic> announceme = data['announceme'] ?? [];
 
-      // Convert each item in announcementList to Map<String, dynamic>
-      List<Map<String, dynamic>> mappedAnnouncements = announcementList
-          .map((announcement) => announcement as Map<String, dynamic>)
-          .toList();
-      print( "Maqpping data : ${mappedAnnouncements}");
+      // Combine announcements and announceme into a single list
+      List<Map<String, dynamic>> mappedAnnouncements = [
+        ...announcements.map((item) => item as Map<String, dynamic>),
+        ...announceme.map((item) => item as Map<String, dynamic>)
+      ];
+
+      print("Mapped Data: $mappedAnnouncements");
       return mappedAnnouncements;
     } else {
-      print("Error fetching announcement data: ${response.body}");
+      print("Error fetching student announcement data: ${response.body}");
       return null;
     }
   }
-
-
-
 }

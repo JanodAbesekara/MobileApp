@@ -110,6 +110,16 @@ flutter:
       - assets/T/gade12.png
       - assets/T/feed12.png
       - assets/T/profile.png
+
+      - assets/annoucement.png
+      - assets/assignment.png
+      - assets/edubase.png
+      - assets/feedbacks.png
+      - assets/grades.png
+      - assets/Lecture_meterials.png
+      - assets/quizzes.png
+      - assets/teacher.png
+      - assets/tuitionfees.png
       
      
 

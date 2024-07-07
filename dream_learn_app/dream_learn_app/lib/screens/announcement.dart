@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:dream_learn_app/screens/ApplicationinsideNot.dart';
 import 'package:dream_learn_app/services/announcement_services.dart';
 
 class Announcement extends StatefulWidget {
-  const Announcement({Key? key}) : super(key: key);
+  const Announcement({super.key});
 
   @override
   _AnnouncementState createState() => _AnnouncementState();
@@ -14,26 +13,19 @@ class _AnnouncementState extends State<Announcement> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Announcements',
-          textAlign: TextAlign.right,
-          style: TextStyle(
-            color: Color.fromARGB(85, 26, 26, 26),
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Color.fromARGB(255, 189, 179, 179),
+        title: const Text('Announcements'),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       body: FutureBuilder<List<Map<String, dynamic>>?>(
-        future: AnnouncementServices.getAnnouncement(),
+        future: AnnouncementServices.getStudentAnnouncement(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No announcements available'));
+            return const Center(child: Text('No announcements available'));
           } else {
             List<Map<String, dynamic>> announcementList = snapshot.data!;
             return ListView.builder(
@@ -63,40 +55,47 @@ class AnnouncementCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.date,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Padding(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: Text(
                 title,
-                style: TextStyle(
-                  fontSize: 16,
+                style: const TextStyle(
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  color: Colors.blue,
                 ),
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text(
               description,
-              style: TextStyle(
-                fontSize: 13,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black87,
               ),
             ),
+            const SizedBox(height: 12),
             Align(
               alignment: Alignment.centerRight,
               child: Text(
                 date,
-                style: TextStyle(
-                  fontSize: 10,
+                style: const TextStyle(
+                  fontSize: 12,
                   color: Colors.grey,
                 ),
               ),
