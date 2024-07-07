@@ -10,6 +10,7 @@ import 'package:dream_learn_app/screens/teacher_details.dart';
 import 'package:dream_learn_app/screens/web_view_screen.dart';
 import 'package:dream_learn_app/utils/dashboard_grid_item.dart';
 import 'package:flutter/material.dart';
+import 'package:dream_learn_app/screens/student_grades.dart';
 
 class StudentDashboard extends StatelessWidget {
   final String? teacherEmail;
@@ -45,7 +46,7 @@ class StudentDashboard extends StatelessWidget {
                 // children: _gridItemList.map((map) =>  DashboardGridItem(iconPath: map['iconPath'],title: map['title'],onTap:map['onTap'],)).toList(),
                 children: [
                   DashboardGridItem(
-                    iconPath: 'assets/find_teacher_icon.png',
+                    iconPath: 'assets/tuitionfees.png',
                     title: 'Tution fees',
                     
                     onTap: () =>Navigator.of(context).push(MaterialPageRoute(
@@ -54,7 +55,7 @@ class StudentDashboard extends StatelessWidget {
                               ))),
                   ),
                   DashboardGridItem(
-                    iconPath: 'assets/find_teacher_icon.png',
+                    iconPath: 'assets/teacher.png',
                     title: 'Teacher',
                     onTap: () =>Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>  TeacherDetails(
@@ -62,7 +63,7 @@ class StudentDashboard extends StatelessWidget {
                               ))),
                   ),
                   DashboardGridItem(
-                    iconPath: 'assets/find_teacher_icon.png',
+                    iconPath: 'assets/edubase.png',
                     title: 'Knowledge Home',
                     
                     onTap: ()=>  Navigator.of(context).push(MaterialPageRoute(
@@ -71,7 +72,7 @@ class StudentDashboard extends StatelessWidget {
                               ))),
                   ),
                   DashboardGridItem(
-                    iconPath: 'assets/find_teacher_icon.png',
+                    iconPath: 'assets/assignment.png',
                     title: 'Assingmnets',
                     
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
@@ -80,7 +81,7 @@ class StudentDashboard extends StatelessWidget {
                               ))),
                   ),
                   DashboardGridItem(
-                    iconPath: 'assets/find_teacher_icon.png',
+                    iconPath: 'assets/Lecture_meterials.png',
                     title: 'Learning materials',
                     onTap:()=>  Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => LearningMaterialsScreen(
@@ -88,7 +89,7 @@ class StudentDashboard extends StatelessWidget {
                               ))),
                   ),
                   DashboardGridItem(
-                    iconPath: 'assets/find_teacher_icon.png',
+                    iconPath: 'assets/feedbacks.png',
                     title: 'Feedbacks',
                     
                     onTap: ()=>  Navigator.of(context).push(MaterialPageRoute(
@@ -97,7 +98,7 @@ class StudentDashboard extends StatelessWidget {
                               )))
                   ),
                   DashboardGridItem(
-                    iconPath: 'assets/find_teacher_icon.png',
+                    iconPath: 'assets/annoucement.png',
                     title: 'Announcement',
                     
                     onTap: () =>Navigator.of(context).push(MaterialPageRoute(
@@ -106,15 +107,20 @@ class StudentDashboard extends StatelessWidget {
                               ))),
                   ),
                   DashboardGridItem(
-                      iconPath: 'assets/find_teacher_icon.png',
+                      iconPath: 'assets/quizzes.png',
                       title: 'Quizzes',
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => StudentQuizScreen(
                               teacherEmail: teacherEmail, subject: subject,medium: medium,)))),
                   DashboardGridItem(
-                    iconPath: 'assets/find_teacher_icon.png',
+                    iconPath: 'assets/grades.png',
                     title: 'Grades',
-                    onTap: () {},
+                    onTap: ()=>  Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>  StudentGrades(
+                           teacherEmail: teacherEmail ?? '',
+                          
+                            
+                              ))),
                   ),
                 ],
               ),

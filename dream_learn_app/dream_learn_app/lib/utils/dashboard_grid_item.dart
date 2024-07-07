@@ -17,12 +17,12 @@ class DashboardGridItem extends StatelessWidget {
           onTap();
         },
          child: Container(
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
              border: Border.all()
           ),
-          child: Image.asset(iconPath)),
+          child: Image.asset(iconPath,width: 30,height: 30,)),
        ),
 
         //text

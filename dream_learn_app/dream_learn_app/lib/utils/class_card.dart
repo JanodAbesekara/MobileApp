@@ -4,35 +4,61 @@ class ClassCard extends StatelessWidget {
   final String title;
   final String medium;
   final String dateTime;
-  const ClassCard({required this.title,required this.dateTime,required this.medium, super.key});
+  const ClassCard({required this.title, required this.dateTime, required this.medium, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 7),
-      height: 102,
-     
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      height: 110,
       decoration: BoxDecoration(
-         color: Color(0xffD9D9D9),
-        borderRadius: BorderRadius.circular(15)
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          ),
+        ],
+        gradient: LinearGradient(
+          colors: [Color(0xffd9d9d9), Colors.white],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-       children: [
-        //title
-        Text(title,style: TextStyle(
-          fontSize: 20
-        ),),
-        SizedBox(height: 20,),
-         Text(medium,style: TextStyle(
-          fontSize: 10
-        )),
-         Text(dateTime,style: TextStyle(
-          fontSize: 10
-        ),),
-        
-       ],
+        children: [
+          // Title
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          SizedBox(height: 15),
+          // Medium
+          Text(
+            medium,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey[700],
+            ),
+          ),
+          SizedBox(height: 5),
+          // Date Time
+          Text(
+            dateTime,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey[700],
+            ),
+          ),
+        ],
       ),
-    
-    ); }
+    );
+  }
 }
