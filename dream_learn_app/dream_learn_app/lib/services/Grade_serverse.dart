@@ -4,7 +4,11 @@ import 'package:jwt_decode/jwt_decode.dart';
 import 'dart:convert';
 
 class GradeService {
-  static Future<List<Map<String, dynamic>>?> getGradeList() async {
+  static Future<List<Map<String, dynamic>>?> getGradeList({
+    required String teacherEmail,
+    required String subject,
+    required String medium,
+  }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('auth_token');
 
@@ -29,7 +33,16 @@ class GradeService {
         if (responseBody.containsKey('data')) {
           List<dynamic> gradeList = responseBody['data'];
 
-          return gradeList.cast<Map<String, dynamic>>();
+          // Filter the grade list based on teacherEmail, subject, and medium
+          List<Map<String, dynamic>> filteredGradeList = gradeList
+              .cast<Map<String, dynamic>>()
+              .where((grade) =>
+                  grade['teacherEmail'] == teacherEmail &&
+                  grade['subject'] == subject &&
+                  grade['medium'] == medium)
+              .toList();
+
+          return filteredGradeList;
         } else {
           throw Exception('Data field not found in response');
         }

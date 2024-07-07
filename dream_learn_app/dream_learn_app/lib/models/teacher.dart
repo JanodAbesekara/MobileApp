@@ -13,4 +13,8 @@ class Teacher{
     date= DateTime.tryParse(json['createdAt']) ;
 
   }
+
+  get subject => null;
+
+  get medium => null;
 }

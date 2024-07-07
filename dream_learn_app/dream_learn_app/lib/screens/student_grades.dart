@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 
 class StudentGrades extends StatelessWidget {
   final String teacherEmail;
-  const StudentGrades({required this.teacherEmail, super.key});
+  final String subject;
+  final String medium;
+  const StudentGrades({required this.teacherEmail, required this.subject, required this.medium  ,super.key});
 
   Future<List<GradeModel>> _getGradeDetails() async {
     try {
