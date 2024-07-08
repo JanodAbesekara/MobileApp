@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dream_learn_app/screens/background.dart';
 import 'package:dream_learn_app/services/feedback_service.dart';
 
 class Feedbacksview extends StatelessWidget {
@@ -8,23 +7,11 @@ class Feedbacksview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          BackgroundScreen(
-            child: _feedbacks(context),
-          ),
-          Positioned(
-            top: 50,
-            left: 20,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        title: Text('Feedbacks'),
+        backgroundColor: Colors.blue,
       ),
+      body: _feedbacks(context),
     );
   }
 
@@ -40,23 +27,18 @@ class Feedbacksview extends StatelessWidget {
           return Center(child: Text('No feedback available'));
         } else {
           List<Map<String, dynamic>> feedbackList = snapshot.data!;
-          return Container(
-            height: MediaQuery.of(context)
-                .size
-                .height, // Example: Use screen height
-            child: ListView.builder(
-              itemCount: feedbackList.length,
-              itemBuilder: (context, index) {
-                Map<String, dynamic> feedback = feedbackList[index];
-                return Feedbackcard(
-                  studentemail: feedback['studentemail'],
-                  feedtext: feedback['feedtext'],
-                  value: feedback['value'].toDouble(),
-                  subject: feedback['feedSubject'],
-                  medium: feedback['feedmedium'],
-                );
-              },
-            ),
+          return ListView.builder(
+            itemCount: feedbackList.length,
+            itemBuilder: (context, index) {
+              Map<String, dynamic> feedback = feedbackList[index];
+              return Feedbackcard(
+                studentemail: feedback['studentemail'],
+                feedtext: feedback['feedtext'],
+                value: feedback['value'].toDouble(),
+                subject: feedback['feedSubject'],
+                medium: feedback['feedmedium'],
+              );
+            },
           );
         }
       },
@@ -83,7 +65,7 @@ class Feedbackcard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -100,34 +82,95 @@ class Feedbackcard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Text(
-              studentemail,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Student email: ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+                TextSpan(
+                  text: studentemail,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(height: 10),
-          Text(feedtext),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Feedback: ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+                TextSpan(
+                  text: feedtext,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Subject: ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+                TextSpan(
+                  text: subject,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Medium: ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+                TextSpan(
+                  text: medium,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
           SizedBox(height: 10),
           StarRating(rating: value),
-          SizedBox(height: 10),
-          Text(
-            subject,
-            style: TextStyle(
-              fontSize: 15,
-              color: Colors.grey,
-            ),
-          ),
-          Text(
-            medium,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey,
-            ),
-          ),
         ],
       ),
     );
@@ -158,4 +201,3 @@ class StarRating extends StatelessWidget {
     );
   }
 }
-

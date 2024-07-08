@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dream_learn_app/screens/background.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dream_learn_app/services/Grade_serverse.dart';
 
@@ -9,23 +8,16 @@ class GradeT extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          BackgroundScreen(
-            child: _passChild(context),
-          ),
-          Positioned(
-            top: 50,
-            left: 20,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text('Grades'),
+          ],
+        ),
+        backgroundColor: Colors.blue,
       ),
+      body: _passChild(context),
     );
   }
 
@@ -41,22 +33,19 @@ class GradeT extends StatelessWidget {
           return Center(child: Text('No data found'));
         } else {
           List<Map<String, dynamic>> gradeList = snapshot.data!;
-          return Container(
-            height: MediaQuery.of(context).size.height,
-            child: ListView.builder(
-              itemCount: gradeList.length,
-              itemBuilder: (context, index) {
-                Map<String, dynamic> grade = gradeList[index];
-                return GradeCard(
-                  email: grade['email'],
-                  name: grade['name'],
-                  subject: grade['subject'],
-                  medium: grade['medium'],
-                  grade: grade['grade'],
-                  score: grade['score'],
-                );
-              },
-            ),
+          return ListView.builder(
+            itemCount: gradeList.length,
+            itemBuilder: (context, index) {
+              Map<String, dynamic> grade = gradeList[index];
+              return GradeCard(
+                email: grade['email'],
+                name: grade['name'],
+                subject: grade['subject'],
+                medium: grade['medium'],
+                grade: grade['grade'],
+                score: grade['score'],
+              );
+            },
           );
         }
       },
@@ -116,74 +105,109 @@ class GradeCard extends StatelessWidget {
     String gradeLabel = getGradeLabel(score);
     Color cardColor = getGradeColor(gradeLabel);
 
-    return Container(
-      margin: const EdgeInsets.all(15),
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
+      child: Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Row(
             children: [
-               Text(
-                '$name',
-                style: GoogleFonts.lora(
-                  fontSize: 16,
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: cardColor,
+                child: Text(
+                  gradeLabel,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-              Text(
-                '$gradeLabel',
-                style: GoogleFonts.lora(
-                  fontSize: 16,
+              const SizedBox(width: 20),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: GoogleFonts.lora(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text.rich(
+                      TextSpan(
+                        text: 'Email: ',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: email,
+                            style: const TextStyle(fontWeight: FontWeight.normal),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text.rich(
+                      TextSpan(
+                        text: 'Medium: ',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: medium,
+                            style: const TextStyle(fontWeight: FontWeight.normal),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text.rich(
+                      TextSpan(
+                        text: 'Subject: ',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: subject,
+                            style: const TextStyle(fontWeight: FontWeight.normal),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text.rich(
+                      TextSpan(
+                        text: 'Score: ',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: '$score%',
+                            style: const TextStyle(fontWeight: FontWeight.normal),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '$email',
-                style: GoogleFonts.lora(
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '$medium',
-                style: GoogleFonts.lora(
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '$subject',
-                style: GoogleFonts.lora(
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }

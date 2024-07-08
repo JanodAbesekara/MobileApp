@@ -12,11 +12,39 @@ class StudentGrades extends StatelessWidget {
     try {
       List<GradeModel> gradeList = await StudentService.getGrades();
       print(gradeList);
-
       return gradeList;
     } catch (e) {
       print("Error in _getGradeDetails: $e");
       rethrow;
+    }
+  }
+
+  Color getGradeColor(String gradeLabel) {
+    switch (gradeLabel) {
+      case 'W':
+        return const Color.fromARGB(255, 236, 135, 128);
+      case 'C':
+        return const Color.fromARGB(255, 239, 227, 127);
+      case 'B':
+        return const Color.fromARGB(255, 137, 106, 232);
+      case 'A':
+        return const Color.fromARGB(255, 106, 232, 137);
+      default:
+        return Colors.white;
+    }
+  }
+
+  String getGradeLabel(int score) {
+    if (score >= 75) {
+      return 'A';
+    } else if (score >= 65 && score < 75) {
+      return 'B';
+    } else if (score >= 55 && score < 65) {
+      return 'C';
+    } else if (score >= 45 && score < 55) {
+      return 'D';
+    } else {
+      return 'W';
     }
   }
 
@@ -44,6 +72,7 @@ class StudentGrades extends StatelessWidget {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 var item = snapshot.data![index];
+                String gradeLabel = getGradeLabel(item.score);
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
                   child: Card(
@@ -57,9 +86,9 @@ class StudentGrades extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.blue,
+                            backgroundColor: getGradeColor(gradeLabel),
                             child: Text(
-                              item.grade,
+                              gradeLabel,
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -82,7 +111,7 @@ class StudentGrades extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 8),
                                 Text('Medium: ${item.medium}', style: const TextStyle(fontSize: 16)),
-                                Text('Score: ${item.score}', style: const TextStyle(fontSize: 16)),
+                                Text('Score: ${item.score}%', style: const TextStyle(fontSize: 16)),
                               ],
                             ),
                           ),
@@ -100,5 +129,4 @@ class StudentGrades extends StatelessWidget {
       ),
     );
   }
-}
-
+} 

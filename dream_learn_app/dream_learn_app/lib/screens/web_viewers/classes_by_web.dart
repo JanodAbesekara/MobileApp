@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class WebViewScreen extends StatelessWidget {
-  const WebViewScreen({super.key});
+class ClassesbyWeb extends StatelessWidget {
+  const ClassesbyWeb({super.key});
 
   WebViewController _webViewInit() {
     final controller = WebViewController()
@@ -25,7 +26,7 @@ class WebViewScreen extends StatelessWidget {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://byte-group-project.vercel.app'));
+      ..loadRequest(Uri.parse('https://byte-group-project.vercel.app/'));
     return controller;
   }
 
@@ -34,7 +35,7 @@ class WebViewScreen extends StatelessWidget {
     final controller = _webViewInit();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Knowledge Home'),
+        title: const Text('Classes'),
         backgroundColor: Colors.blue,
       ),
       body: WebViewWidget(controller: controller),

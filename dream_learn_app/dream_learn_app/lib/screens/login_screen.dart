@@ -5,7 +5,9 @@ import 'package:dream_learn_app/screens/main_home2.dart';
 import 'package:dream_learn_app/services/auth_service.dart';
 import 'package:dream_learn_app/utils/text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:url_launcher/url_launcher.dart';
+import 'package:dream_learn_app/screens/web_viewers/forgot_password_by_web.dart';
+import 'package:dream_learn_app/screens/web_viewers/create_an_account_by_web.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -81,16 +83,36 @@ class LoginScreen extends StatelessWidget {
         const SizedBox(
           height: 25,
         ),
-        const HoverText(
-          text: 'Forgot Password? Click here to reset',
-          url: "https://byte-group-project.vercel.app/TClasses?\$phw=66444f765aca7cfaf2bcedc4",
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const ForgotPasswordByWeb()),
+            );
+          },
+          child: const Text(
+            'Forgot Password? Click here to reset',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
         ),
         const SizedBox(
           height: 25,
         ),
-        const HoverText(
-          text: 'New? Create An Account',
-          url: "https://byte-group-project.vercel.app/TClasses?\$phw=66444f765aca7cfaf2bcedc4",
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const CreateAnAccountByWeb()),
+            );
+          },
+          child: const Text(
+            'New? Create An Account',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         const SizedBox(
           height: 30,
@@ -133,57 +155,5 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackgroundScreen(shouldShowBackButton: false, child: _passChild(context));
-  }
-}
-
-class HoverText extends StatefulWidget {
-  final String text;
-  final String url;
-
-  const HoverText({super.key, required this.text, required this.url});
-
-  @override
-  _HoverTextState createState() => _HoverTextState();
-}
-
-class _HoverTextState extends State<HoverText> {
-  bool _isHovering = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) {
-        setState(() {
-          _isHovering = true;
-        });
-      },
-      onExit: (_) {
-        setState(() {
-          _isHovering = false;
-        });
-      },
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          _launchURL(widget.url);
-        },
-        child: Text(
-          widget.text,
-          style: TextStyle(
-            color: _isHovering ? Colors.blue : Colors.black,
-            fontWeight: widget.text == 'New? Create An Account' ? FontWeight.bold : FontWeight.normal,
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _launchURL(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }

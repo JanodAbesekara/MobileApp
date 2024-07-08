@@ -15,7 +15,7 @@ class _AnnouncementState extends State<Announcement> {
       appBar: AppBar(
         title: const Text('Announcements'),
         backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        foregroundColor: Color.fromARGB(255, 0, 0, 0),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>?>(
         future: AnnouncementServices.getStudentAnnouncement(),

@@ -89,7 +89,7 @@ class _StudentTutionFeesState extends State<StudentTutionFees> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Learning Materials'),
+        title: const Text('Tution Fees'),
         backgroundColor: Colors.blue,
       ),
       body: Padding(
