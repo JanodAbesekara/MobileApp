@@ -60,6 +60,8 @@ class StudentDashboard extends StatelessWidget {
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => TeacherDetails(
                               teacherEmail: teacherEmail ?? '',
+                              subject: subject ?? '',
+                              medium: medium ?? '',
                             ))),
                   ),
                   DashboardGridItem(

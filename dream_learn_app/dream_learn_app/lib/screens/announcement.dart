@@ -106,3 +106,4 @@ class AnnouncementCard extends StatelessWidget {
     );
   }
 }
+
