@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dream_learn_app/screens/AppInsideBackground.dart';
 import 'package:dream_learn_app/services/ProfileService.dart';
 
 class Profile extends StatefulWidget {
@@ -13,19 +12,6 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   late Future<List<Map<String, dynamic>>?> _profileDataFuture;
   late Future<Map<String, String>?> _nameFuture;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          BackgroundScreen(
-            child: _passChild(context),
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   void initState() {
@@ -52,48 +38,25 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Widget _buildAvatar(String? imageUrl) {
-    return CircleAvatar(
-      radius: 80,
-      backgroundImage: NetworkImage(imageUrl ?? ''),
-      backgroundColor: Colors.transparent,
-    );
-  }
-
   Widget _buildNameAndDate(String firstName, String lastName) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Row(children: [
-        Positioned(
-              top: 10,
-              left: 20,
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(90, 10, 5, 40),
-          child: Column(
-            children: [
-              Center(
-                child: Text(
-                  '$firstName $lastName',
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 72, 5, 48),
-                    fontSize: 23,
-                    letterSpacing: 2,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+      child: Column(
+        children: [
+          Center(
+            child: Text(
+              '$firstName $lastName',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 23,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 10),
-            ],
+            ),
           ),
-        ),
-      ]),
+          const SizedBox(height: 10),
+        ],
+      ),
     );
   }
 
@@ -108,8 +71,8 @@ class _ProfileState extends State<Profile> {
         } else if (!nameSnapshot.hasData || nameSnapshot.data!.isEmpty) {
           return const Center(child: Text('No name found'));
         } else {
-          final firstName = nameSnapshot.data!['firstName']!;
-          final lastName = nameSnapshot.data!['lastName']!;
+          final firstName = nameSnapshot.data!['firstName'] ?? 'N/A';
+          final lastName = nameSnapshot.data!['lastName'] ?? 'N/A';
           return FutureBuilder<List<Map<String, dynamic>>?>(
             future: _profileDataFuture,
             builder: (context, snapshot) {
@@ -132,12 +95,12 @@ class _ProfileState extends State<Profile> {
                           itemBuilder: (context, index) {
                             Map<String, dynamic> profile = profileList[index];
                             return ProfileCard(
-                              subject: profile['subject'],
-                              medium: profile['medium'],
-                              classfees: profile['classpees'],
-                              aboutme: profile['aboutme'],
-                              experience: profile['experience'],
-                              degree: profile['degree'],
+                              subject: profile['subject'] ?? 'N/A',
+                              medium: profile['medium'] ?? 'N/A',
+                              classfees: profile['classfees'] ?? 'N/A',
+                              aboutme: profile['aboutme'] ?? 'N/A',
+                              experience: profile['experience'] ?? 'N/A',
+                              degree: profile['degree'] ?? 'N/A',
                             );
                           },
                         ),
@@ -150,6 +113,18 @@ class _ProfileState extends State<Profile> {
           );
         }
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile'),
+        backgroundColor: Colors.blue,
+        foregroundColor: Color.fromARGB(255, 0, 0, 0),
+      ),
+      body: _passChild(context),
     );
   }
 }
@@ -178,7 +153,7 @@ class ProfileCard extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 251, 252, 254),
+        color: const Color.fromARGB(255, 251, 252, 254),
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -193,10 +168,11 @@ class ProfileCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          Text.rich(TextSpan(
+          Text.rich(
+            TextSpan(
               text: 'Subject: ',
               style: GoogleFonts.lora(
-                color: Color.fromARGB(255, 6, 2, 22),
+                color: Colors.black,
                 fontSize: 16,
                 letterSpacing: 2,
                 fontWeight: FontWeight.bold,
@@ -204,13 +180,16 @@ class ProfileCard extends StatelessWidget {
               children: <InlineSpan>[
                 TextSpan(
                   text: subject,
-                  style: const TextStyle(fontSize: 13, color: Colors.blueGrey),
+                  style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.6)),
                 )
-              ])),
-          Text.rich(TextSpan(
+              ],
+            ),
+          ),
+          Text.rich(
+            TextSpan(
               text: 'Medium: ',
               style: GoogleFonts.lora(
-                color: Color.fromARGB(255, 6, 2, 22),
+                color: Colors.black,
                 fontSize: 16,
                 letterSpacing: 2,
                 fontWeight: FontWeight.bold,
@@ -218,32 +197,33 @@ class ProfileCard extends StatelessWidget {
               children: <InlineSpan>[
                 TextSpan(
                   text: medium,
-                  style: const TextStyle(fontSize: 13, color: Colors.blueGrey),
+                  style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.6)),
                 )
-              ])),
-          Text.rich(TextSpan(
+              ],
+            ),
+          ),
+          Text.rich(
+            TextSpan(
               text: 'Classfees: ',
               style: GoogleFonts.lora(
-                color: Color.fromARGB(255, 6, 2, 22),
+                color: Colors.black,
                 fontSize: 16,
                 letterSpacing: 2,
                 fontWeight: FontWeight.bold,
               ),
               children: <InlineSpan>[
                 TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Rs. ${classfees}.00',
-                      style:
-                          const TextStyle(fontSize: 13, color: Colors.blueGrey),
-                    ),
-                  ],
+                  text: 'Rs. $classfees.00',
+                  style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.6)),
                 ),
-              ])),
-          Text.rich(TextSpan(
+              ],
+            ),
+          ),
+          Text.rich(
+            TextSpan(
               text: 'About Me: ',
               style: GoogleFonts.lora(
-                color: Color.fromARGB(255, 6, 2, 22),
+                color: Colors.black,
                 fontSize: 16,
                 letterSpacing: 2,
                 fontWeight: FontWeight.bold,
@@ -251,13 +231,16 @@ class ProfileCard extends StatelessWidget {
               children: <InlineSpan>[
                 TextSpan(
                   text: aboutme,
-                  style: const TextStyle(fontSize: 13, color: Colors.blueGrey),
+                  style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.6)),
                 )
-              ])),
-          Text.rich(TextSpan(
+              ],
+            ),
+          ),
+          Text.rich(
+            TextSpan(
               text: 'Experience: ',
               style: GoogleFonts.lora(
-                color: Color.fromARGB(255, 6, 2, 22),
+                color: Colors.black,
                 fontSize: 16,
                 letterSpacing: 2,
                 fontWeight: FontWeight.bold,
@@ -265,13 +248,16 @@ class ProfileCard extends StatelessWidget {
               children: <InlineSpan>[
                 TextSpan(
                   text: experience,
-                  style: const TextStyle(fontSize: 13, color: Colors.blueGrey),
+                  style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.6)),
                 )
-              ])),
-          Text.rich(TextSpan(
+              ],
+            ),
+          ),
+          Text.rich(
+            TextSpan(
               text: 'Degree: ',
               style: GoogleFonts.lora(
-                color: Color.fromARGB(255, 6, 2, 22),
+                color: Colors.black,
                 fontSize: 16,
                 letterSpacing: 2,
                 fontWeight: FontWeight.bold,
@@ -279,9 +265,11 @@ class ProfileCard extends StatelessWidget {
               children: <InlineSpan>[
                 TextSpan(
                   text: degree,
-                  style: const TextStyle(fontSize: 13, color: Colors.blueGrey),
+                  style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.6)),
                 )
-              ])),
+              ],
+            ),
+          ),
         ],
       ),
     );

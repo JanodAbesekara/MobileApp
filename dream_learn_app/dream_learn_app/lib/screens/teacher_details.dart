@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TeacherDetails extends StatelessWidget {
-  final String teacherEmail;
-  const TeacherDetails({required this.teacherEmail, super.key});
+  final String? teacherEmail;
+  final String? subject;
+  final String? medium;
+
+  const TeacherDetails({required this.teacherEmail, required this.subject, required this.medium, super.key});
 
   Future<Teacher> _getTeacherDetails() async {
-    List<Teacher> teacherList = await TeacherService.getTeachers();
+    List<Teacher> teacherList = await TeacherService.getTeachers(email: teacherEmail, subject: subject, medium: medium);
     final Teacher teacher;
     try {
       teacher = teacherList.firstWhere((teacher) => teacher.email == teacherEmail);
@@ -48,7 +51,13 @@ class TeacherDetails extends StatelessWidget {
         future: _getTeacherDetails(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: Image(
+                image: AssetImage('assets/loading.gif'),
+                width: 100,
+                height: 100,
+              ),
+            );
           } else if (snapshot.hasError) {
             print('Error loading teacher details: ${snapshot.error}');
             return const Center(child: Text('Error loading teacher details'));
@@ -62,9 +71,31 @@ class TeacherDetails extends StatelessWidget {
                   CircleAvatar(
                     radius: 78,
                     backgroundColor: Colors.blueAccent,
-                    child: CircleAvatar(
-                      radius: 75,
-                      backgroundImage: AssetImage('assets/images/teacher_avatar.png'), // Placeholder image
+                    child: FutureBuilder<String?>(
+                      future: TeacherService.fetchProfileUrl(teacher.email, subject, medium),
+                      builder: (context, profileSnapshot) {
+                        if (profileSnapshot.connectionState == ConnectionState.waiting) {
+                          return CircleAvatar(
+                            radius: 75,
+                            backgroundImage: AssetImage('assets/loading.gif'), // Placeholder loading image
+                          );
+                        } else if (profileSnapshot.hasError) {
+                          return CircleAvatar(
+                            radius: 75,
+                            backgroundImage: AssetImage('assets/profile_avatar.png'), // Placeholder error image
+                          );
+                        } else if (profileSnapshot.hasData && profileSnapshot.data != null) {
+                          return CircleAvatar(
+                            radius: 75,
+                            backgroundImage: NetworkImage(profileSnapshot.data!),
+                          );
+                        } else {
+                          return CircleAvatar(
+                            radius: 75,
+                            backgroundImage: AssetImage('assets/profile_avatar.png'), // Default placeholder image
+                          );
+                        }
+                      },
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -91,7 +122,9 @@ class TeacherDetails extends StatelessWidget {
                           const SizedBox(height: 20),
                           _infoRow(Icons.email, 'Email', teacher.email ?? 'N/A'),
                           const SizedBox(height: 20),
-                          _infoRow(Icons.date_range, 'Joined on', DateFormat('d MMMM yyyy, h:mm a').format(teacher.date!)),
+                          _infoRow(Icons.date_range, 'Joined on', teacher.date != null
+                              ? DateFormat('d MMMM yyyy, h:mm a').format(teacher.date!)
+                              : 'N/A'),
                         ],
                       ),
                     ),

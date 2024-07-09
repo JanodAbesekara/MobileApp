@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dream_learn_app/screens/background.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dream_learn_app/services/Studentparents_service.dart';
 
@@ -9,25 +8,14 @@ class StudentT extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: BackgroundScreen(
-              child: _buildFutureBuilder(context),
-            ),
-          ),
-          Positioned(
-            top: 50,
-            left: 20,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        title: Text(
+          'Registered Students',
+          style: TextStyle(color: Colors.black), // App bar text color
+        ),
+        backgroundColor: Colors.blue,
       ),
+      body: _buildFutureBuilder(context),
     );
   }
 
@@ -43,29 +31,26 @@ class StudentT extends StatelessWidget {
           return Center(child: Text('No students found'));
         } else {
           List<Map<String, dynamic>> studentList = snapshot.data!;
-          return Container(
-            height: MediaQuery.of(context).size.height,
-            child: ListView.builder(
-              itemCount: studentList.length,
-              itemBuilder: (context, index) {
-                Map<String, dynamic> student = studentList[index];
-                final profile = student['profile'] ?? {};
-                if (student['userEmail'] == null ||
-                    student['Ensubject'] == null ||
-                    student['Enmedium'] == null) {
-                  return SizedBox.shrink();
-                }
-                return StudentCard(
-                  profile: profile['url'] ?? 'assets/profile_avatar.png',
-                  subject: student['Ensubject'] ?? 'N/A',
-                  studentEmail: student['userEmail'] ?? 'N/A',
-                  medium: student['Enmedium'] ?? 'N/A',
-                  parentsName: profile['name'] ?? 'N/A',
-                  parentsPhone: profile['mobileNo']?.toString() ?? 'N/A',
-                  parentsEmail: profile['email'] ?? 'N/A',
-                );
-              },
-            ),
+          return ListView.builder(
+            itemCount: studentList.length,
+            itemBuilder: (context, index) {
+              Map<String, dynamic> student = studentList[index];
+              final profile = student['profile'] ?? {};
+              if (student['userEmail'] == null ||
+                  student['Ensubject'] == null ||
+                  student['Enmedium'] == null) {
+                return SizedBox.shrink();
+              }
+              return StudentCard(
+                profile: profile['url'] ?? 'assets/profile_avatar.png',
+                subject: student['Ensubject'] ?? 'N/A',
+                studentEmail: student['userEmail'] ?? 'N/A',
+                medium: student['Enmedium'] ?? 'N/A',
+                parentsName: profile['name'] ?? 'N/A',
+                parentsPhone: profile['mobileNo']?.toString() ?? 'N/A',
+                parentsEmail: profile['email'] ?? 'N/A',
+              );
+            },
           );
         }
       },
@@ -111,28 +96,13 @@ class StudentCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildInfoText('Student Email', studentEmail),
-                    _buildInfoText('Subject', subject),
-                    _buildInfoText('Medium', medium),
-                    _buildInfoText('Parent\'s Name', parentsName),
-                    _buildInfoText('Parent\'s Phone', parentsPhone),
-                    _buildInfoText('Parent\'s Email', parentsEmail),
-                  ],
-                ),
-              ),
-              SizedBox(width: 20),
-              ClipRRect(
-                borderRadius:
-                    BorderRadius.circular(50.0), // Adjust the radius as needed
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50.0),
                 child: Image.network(
                   profile,
                   width: 60,
@@ -147,9 +117,26 @@ class StudentCard extends StatelessWidget {
                     );
                   },
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildInfoText('Student Email', studentEmail),
+                    _buildInfoText('Parent Email', parentsEmail),
+                    SizedBox(height: 10),
+                    _buildInfoText('Parent\'s Name', parentsName),
+                    _buildInfoText('Parent\'s Phone', parentsPhone),
+                    _buildInfoText('Subject', subject),
+                    _buildInfoText('Medium', medium),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -158,27 +145,25 @@ class StudentCard extends StatelessWidget {
   Widget _buildInfoText(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
-      child: Row(
-        children: [
-          Text(
-            '$label: ',
-            style: GoogleFonts.lora(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF222831),
-            ),
+      child: Text.rich(
+        TextSpan(
+          text: '$label: ',
+          style: GoogleFonts.lora(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: Color.fromARGB(255, 0, 0, 0),
           ),
-          Expanded(
-            child: Text(
-              value,
+          children: [
+            TextSpan(
+              text: value,
               style: TextStyle(
-                color: Color(0xFF180565),
+                color: Color.fromARGB(255, 54, 54, 57),
                 fontSize: 12,
                 letterSpacing: 1,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
