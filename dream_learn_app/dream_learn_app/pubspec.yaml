@@ -94,6 +94,7 @@ flutter:
       - assets/zoom.png
       - assets/lec_recording.png
       - assets/submission_link.png
+      - assets/loading.gif
 
       - assets/get_help.png
       - assets/student_dashboard_main_icon.png

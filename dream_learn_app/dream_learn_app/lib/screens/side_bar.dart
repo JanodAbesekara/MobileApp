@@ -4,8 +4,7 @@ import 'package:dream_learn_app/utils/settings_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:dream_learn_app/screens/about_us.dart';
 import 'package:dream_learn_app/screens/student_dashboard.dart';
-import 'package:dream_learn_app/screens/web_view_screen.dart';
-import 'package:dream_learn_app/screens/web_view_2.dart';
+import 'package:dream_learn_app/screens/web_viewers/classes_by_web.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dream_learn_app/screens/Teacher_page.dart';
@@ -77,7 +76,7 @@ class SideBar extends StatelessWidget {
                     title: 'Classes',
                     onTap: () {
                       Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const WebViewScreen2()),
+                        MaterialPageRoute(builder: (context) => const ClassesbyWeb()),
                       );
                     },
                   ),

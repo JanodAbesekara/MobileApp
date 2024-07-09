@@ -9,6 +9,9 @@ import 'package:dream_learn_app/screens/TAssignment.dart';
 import 'package:dream_learn_app/screens/GradeT.dart';
 import 'package:dream_learn_app/screens/QuizessT.dart';
 import 'package:dream_learn_app/screens/Feedbacksview.dart';
+import 'package:dream_learn_app/screens/web_viewers/teacher_meterials.dart';
+import 'package:dream_learn_app/screens/web_viewers/teacher_assignments.dart';
+import 'package:dream_learn_app/screens/web_viewers/quizzes_to_teacher_by_web.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TeacherDash extends StatefulWidget {
@@ -85,7 +88,10 @@ class _TeacherDashState extends State<TeacherDash> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 46.0), // Add padding to left and right
             child: Container(
-              color: Colors.grey[300], // Set your desired background color here
+              decoration: BoxDecoration(
+                color: Colors.grey[300], // Set your desired background color here
+                borderRadius: BorderRadius.circular(20), // Add this line for rounded corners
+              ),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3, // 3 columns
@@ -98,8 +104,18 @@ class _TeacherDashState extends State<TeacherDash> {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      if (sampleImages[index] == "assets/T/lecmaterial.png"  || sampleImages[index] == "assets/T/TAss.png" || sampleImages[index] == "assets/T/test.png" ) {
-                        _launchURL("https://byte-group-project.vercel.app/TClasses?\$phw=66444f765aca7cfaf2bcedc4");
+                      if (sampleImages[index] == "assets/T/lecmaterial.png") {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const NotesUplod(),
+                        ));
+                      } else if (sampleImages[index] == "assets/T/TAss.png") {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const AssignmentsToTeacherbyWeb(),
+                        ));
+                      } else if (sampleImages[index] == "assets/T/test.png") {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const QuizzesToTeacherbyWeb(),
+                        ));
                       } else {
                         Navigator.push(
                           context,
@@ -157,4 +173,12 @@ class _TeacherDashState extends State<TeacherDash> {
       throw 'Could not launch $url';
     }
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: Scaffold(
+      body: TeacherDash(),
+    ),
+  ));
 }
