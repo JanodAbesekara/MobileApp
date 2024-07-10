@@ -52,7 +52,7 @@ class FeedbackScaren extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Value',
+                'Value (1-5)',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),

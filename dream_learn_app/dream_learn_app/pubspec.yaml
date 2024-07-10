@@ -49,6 +49,7 @@ dependencies:
   video_player: ^2.8.7
   file_picker: ^8.0.5
   path: ^1.9.0
+  firebase_auth: ^5.1.1
 
 dev_dependencies:
   flutter_test:

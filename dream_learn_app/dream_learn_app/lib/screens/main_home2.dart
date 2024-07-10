@@ -37,15 +37,15 @@ class MainHome2 extends StatelessWidget {
 
           const SizedBox(height: 80),
           if (role == 'Student')
-            RoleSelectionButton("assets/student_icon.png", 'Students', () {
+            RoleSelectionButton("assets/student_icon.png", 'Hello..!', () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => RegisteredClassList()));
+                  MaterialPageRoute(builder: (context) => const RegisteredClassList()));
             }),
           if (role == 'Lecturer')
-            RoleSelectionButton("assets/teacher_icon.png", 'Teachers', () {
+            RoleSelectionButton("assets/teacher_icon.png", 'Hello..!', () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TeacherDash()),
+                MaterialPageRoute(builder: (context) => const TeacherDash()),
               );
             }),
           const SizedBox(height: 80),
@@ -62,11 +62,11 @@ class MainHome2 extends StatelessWidget {
       future: _getUserRole(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data == null) {
-          return Center(child: Text('Role not found'));
+          return const Center(child: Text('Role not found'));
         } else {
           return BackgroundScreen(
             child: _passChild(context, snapshot.data!),

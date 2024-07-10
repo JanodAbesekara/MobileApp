@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dream_learn_app/services/announcement_services.dart';
+import 'package:dream_learn_app/services/tannoucement_services.dart';
 
 class Announcement extends StatefulWidget {
   const Announcement({super.key});
@@ -14,11 +14,11 @@ class _AnnouncementState extends State<Announcement> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Announcements'),
-        backgroundColor: Colors.blue,
-        foregroundColor: Color.fromARGB(255, 0, 0, 0),
+        backgroundColor: Colors.blue,  // Updated background color
+        foregroundColor: const Color.fromARGB(255, 0, 0, 0),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>?>(
-        future: AnnouncementServices.getStudentAnnouncement(),
+        future: AnnouncementServices.getAnnouncement(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -71,33 +71,34 @@ class AnnouncementCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Divider(
+              color: const Color.fromARGB(255, 224, 224, 224),
+              thickness: 1,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              description,
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black87,
+                height: 1.5,  // Added line height for better readability
               ),
             ),
             const SizedBox(height: 12),
             Text(
-              description,
+              date,
               style: const TextStyle(
                 fontSize: 14,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                date,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
           ],

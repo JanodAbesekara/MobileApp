@@ -5,8 +5,46 @@ import 'package:dream_learn_app/models/quiz.dart';
 import 'package:dream_learn_app/models/student_class_fee.dart';
 import 'package:http/http.dart' as http;
 
-class StudentService{
-static Future<List<StudentClassFee>> getPayments(String studentEmail) async{
+class StudentService {
+  static Future<bool> postPayment({
+    required String photoUrl,
+    required String teacherEmail,
+    required String subject,
+    required String medium,
+    required String bankName,
+    required String accountNo,
+    // required String email,
+  }) async {
+    var url = Uri.https('bytegroupproject.onrender.com', '/api/Test/poststudentpayment');
+
+    try {
+      var response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'photourl': photoUrl,
+          'TeacherEmail': teacherEmail,
+          'stuemail': studentEmail,
+          'Subject': subject,
+          'medium': medium,
+          'Bankname': bankName,
+          'AccountNum': accountNo,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      print('Error posting payment: $err');
+      return false;
+    }
+  }
+static Future<List<StudentClassFee>> getPayments() async{
     var url =
         Uri.http('bytegroupproject.onrender.com', '/api/Test/getdetails',{'email':studentEmail});
     var response = await http.get(url);

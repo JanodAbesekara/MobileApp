@@ -46,17 +46,10 @@ List<Map<String, dynamic>> announcementList= await  AnnouncementServices.getStud
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Announcements',
-          textAlign: TextAlign.right,
-          style: TextStyle(
-            color: Color.fromARGB(85, 26, 26, 26),
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 189, 179, 179),
+        title: const Text('Announcements'),
+        backgroundColor: Colors.blue,
       ),
+      
       body: FutureBuilder<List<Map<String, dynamic>>?>(
         future:_filterAnnouncements(),
         builder: (context, snapshot) {

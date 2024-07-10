@@ -51,13 +51,7 @@ class TeacherDetails extends StatelessWidget {
         future: _getTeacherDetails(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: Image(
-                image: AssetImage('assets/loading.gif'),
-                width: 100,
-                height: 100,
-              ),
-            );
+             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             print('Error loading teacher details: ${snapshot.error}');
             return const Center(child: Text('Error loading teacher details'));
@@ -75,10 +69,7 @@ class TeacherDetails extends StatelessWidget {
                       future: TeacherService.fetchProfileUrl(teacher.email, subject, medium),
                       builder: (context, profileSnapshot) {
                         if (profileSnapshot.connectionState == ConnectionState.waiting) {
-                          return CircleAvatar(
-                            radius: 75,
-                            backgroundImage: AssetImage('assets/loading.gif'), // Placeholder loading image
-                          );
+                           return const Center(child: CircularProgressIndicator());
                         } else if (profileSnapshot.hasError) {
                           return CircleAvatar(
                             radius: 75,
