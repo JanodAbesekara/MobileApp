@@ -37,12 +37,12 @@ class MainHome2 extends StatelessWidget {
 
           const SizedBox(height: 80),
           if (role == 'Student')
-            RoleSelectionButton("assets/student_icon.png", 'Hello..!', () {
+            RoleSelectionButton("assets/student_icon.png", 'Student', () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const RegisteredClassList()));
             }),
           if (role == 'Lecturer')
-            RoleSelectionButton("assets/teacher_icon.png", 'Hello..!', () {
+            RoleSelectionButton("assets/teacher_icon.png", 'Teacher', () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const TeacherDash()),

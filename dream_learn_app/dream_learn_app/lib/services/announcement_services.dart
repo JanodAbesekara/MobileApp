@@ -1,10 +1,11 @@
+import 'package:dream_learn_app/helpers/domain_helper.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:dream_learn_app/helpers/student_helper.dart';
 
 class AnnouncementServices {
   static Future<List<Map<String, dynamic>>?> getStudentAnnouncement() async {
-    var url = Uri.http('bytegroupproject.onrender.com', '/api/get/notifaction', {'email': studentEmail});
+    var url = Uri.http(domainUrl, '/api/get/notifaction', {'email': studentEmail});
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -22,7 +23,7 @@ class AnnouncementServices {
         ...announceme.map((item) => item as Map<String, dynamic>)
       ];
 
-      print("Mapped Data: $mappedAnnouncements");
+      print("Mapped Data-----------------------------: $mappedAnnouncements");
       return mappedAnnouncements;
     } else {
       print("Error fetching student announcement data: ${response.body}");

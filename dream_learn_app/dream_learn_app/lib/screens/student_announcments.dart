@@ -24,17 +24,21 @@ List<Map<String, dynamic>> announcementList= await  AnnouncementServices.getStud
     //       item['TeacheSubject'] == widget.subject &&
     //       item['mediua'] == widget.medium).toList();
 
-    //   print('listttt->${filteredAnnouncementList.length}');
+      
     for(int i=0;i<announcementList.length;i++){
       final item= announcementList[i];
+       print('---------------------------------------------------->${widget.teacherEmail}--------------${widget.subject}-------${widget.medium}');
+      print('-------------${i}------');
       if(item['postedemail'] == widget.teacherEmail &&
           item['TeacheSubject'] == widget.subject &&
           item['mediua'] == widget.medium){
+           print('---------------item----------------${item}');
            filteredAnnouncementList.add(item);
 
       }
 
-    }
+    }  print('listttt---------------------->${filteredAnnouncementList.length}');
+    
       return filteredAnnouncementList;
           
     } catch (err) {

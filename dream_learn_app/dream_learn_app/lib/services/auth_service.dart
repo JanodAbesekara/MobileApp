@@ -1,3 +1,4 @@
+import 'package:dream_learn_app/helpers/domain_helper.dart';
 import 'package:dream_learn_app/models/login_data_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -5,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   static Future<LoginDataModel> login(String email, String password) async {
-    var url = Uri.https('bytegroupproject.onrender.com', '/api/auth/login');
+    var url = Uri.http(domainUrl, '/api/auth/login');
     var response = await http.post(url, body: {'email': email, 'password': password});
     Map<String, dynamic> decodedJson = jsonDecode(response.body) as Map<String, dynamic>;
 

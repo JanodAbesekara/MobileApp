@@ -1,3 +1,4 @@
+import 'package:dream_learn_app/models/subject.dart';
 import 'package:dream_learn_app/models/teacher.dart';
 import 'package:dream_learn_app/models/Grade_model.dart';
 import 'package:dream_learn_app/services/student_grade_service.dart';
@@ -13,10 +14,14 @@ class StudentGrades extends StatelessWidget {
   Future<List<GradeModel>> _getGradeDetails() async {
     try {
       List<GradeModel> gradeList = await StudentService.getGrades();
+      // print("--------------------------:$gradeList");
+        
       List<GradeModel> filteredGradeList = gradeList.where((grade) {
+        
+//print("--------------------------:$medium------------------------:$subject");
     return grade.subject == subject && grade.medium == medium;
   }).toList();
-      print(filteredGradeList);
+     // print("--------------------------:$filteredGradeList");
       return filteredGradeList;
     } catch (e) {
       print("Error in _getGradeDetails: $e");

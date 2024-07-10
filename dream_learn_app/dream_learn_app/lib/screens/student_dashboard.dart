@@ -124,6 +124,8 @@ class StudentDashboard extends StatelessWidget {
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => StudentGrades(
                               teacherEmail: teacherEmail ?? '',
+                              subject: subject,
+                              medium: medium,
                             ))),
                   ),
                 ],

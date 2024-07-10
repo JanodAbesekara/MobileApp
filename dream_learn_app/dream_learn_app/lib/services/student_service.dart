@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dream_learn_app/helpers/domain_helper.dart';
 import 'package:dream_learn_app/helpers/student_helper.dart';
 import 'package:dream_learn_app/models/quiz.dart';
 import 'package:dream_learn_app/models/student_class_fee.dart';
@@ -15,7 +16,7 @@ class StudentService {
     required String accountNo,
     // required String email,
   }) async {
-    var url = Uri.https('bytegroupproject.onrender.com', '/api/Test/poststudentpayment');
+    var url = Uri.https(domainUrl, '/api/Test/poststudentpayment');
 
     try {
       var response = await http.post(
@@ -57,7 +58,7 @@ static Future<List<StudentClassFee>> getPayments() async{
 }
 
    static Future<List<Quiz>> getAssignementList()async{
-      var url = Uri.http('bytegroupproject.onrender.com', '/api/Test/getAssignment',{'email':studentEmail});
+      var url = Uri.http(domainUrl, '/api/Test/getAssignment',{'email':studentEmail});
        var response =await http.get(url);
          Map decodedJson= jsonDecode(response.body)  as Map;
        if(response.statusCode==200){
@@ -68,7 +69,7 @@ static Future<List<StudentClassFee>> getPayments() async{
   }
 
      static Future<List<Quiz>> getAnnouncementsList()async{
-      var url = Uri.http('bytegroupproject.onrender.com', '/api/get/notifaction',{'email':studentEmail});
+      var url = Uri.http(domainUrl, '/api/get/notifaction',{'email':studentEmail});
        var response =await http.get(url);
          Map decodedJson= jsonDecode(response.body)  as Map;
        if(response.statusCode==200){
@@ -79,7 +80,7 @@ static Future<List<StudentClassFee>> getPayments() async{
   }
 
    static Future<bool> postFeedback(String feedtext, String value,String teacheremail,String feedSubject,String feedmedium) async {
-    var url = Uri.https('bytegroupproject.onrender.com', '/api/auth/feedbackadd');
+    var url = Uri.http(domainUrl, '/api/auth/feedbackadd');
 
     try{
         // var response = await http.post(url, body: {'feedtext': feedtext, 'value': value,'studentemail':studentEmail,'teacheremail':teacheremail,'feedSubject':feedSubject,'feedmedium':feedmedium});

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dream_learn_app/helpers/domain_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:dream_learn_app/models/subject.dart';
@@ -19,8 +20,8 @@ class EnrollmentService{
     if (email == null) {
       throw Exception('Email not found in token');
     }
-
-      var url = Uri.http('bytegroupproject.onrender.com', '/api/Enrol/getSubject', {'userEmail': email});
+//------------------------------------------------------>
+      var url = Uri.http(domainUrl, '/api/Enrol/getSubject', {'userEmail': email});
        var response =await http.get(url);
           Map<String, dynamic> decodedJson= jsonDecode(response.body)  as Map<String, dynamic>;
        if(response.statusCode==200){

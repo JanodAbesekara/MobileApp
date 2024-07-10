@@ -1,3 +1,4 @@
+import 'package:dream_learn_app/helpers/domain_helper.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decode/jwt_decode.dart';
@@ -19,7 +20,7 @@ class AttendenceService {
       throw Exception('Email not found in token');
     }
 
-    var url = Uri.http('bytegroupproject.onrender.com', '/api/user/getstudentattendence');
+    var url = Uri.http(domainUrl, '/api/user/getstudentattendence');
     var response = await http.get(url);
 
     if (response.statusCode == 200) {

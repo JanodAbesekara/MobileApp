@@ -1,9 +1,10 @@
+import 'package:dream_learn_app/helpers/domain_helper.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AnnouncementServices {
   static Future<List<Map<String, dynamic>>?> getAnnouncement() async {
-    var url = Uri.http('bytegroupproject.onrender.com', '/api/get/Notifactions');
+    var url = Uri.http(domainUrl, '/api/get/Notifactions');
     var response = await http.get(url);
 
     if (response.statusCode == 200) {

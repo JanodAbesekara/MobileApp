@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dream_learn_app/helpers/domain_helper.dart';
 import 'package:dream_learn_app/models/teacher.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,7 +11,7 @@ class TeacherService {
       if (medium != null) 'medium': medium,
     };
 
-    var url = Uri.http('bytegroupproject.onrender.com', '/api/auth/teachermangement', queryParams);
+    var url = Uri.http(domainUrl, '/api/auth/teachermangement', queryParams);
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -37,7 +38,7 @@ class TeacherService {
       if (medium != null) 'medium': medium,
     };
 
-    var url = Uri.http('bytegroupproject.onrender.com', '/api/Test/profileget', queryParams);
+    var url = Uri.http(domainUrl, '/api/Test/profileget', queryParams);
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
