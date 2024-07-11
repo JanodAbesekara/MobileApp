@@ -15,7 +15,10 @@ class StudentTutionFees extends StatefulWidget {
   final String? medium;
 
   const StudentTutionFees(
-      {required this.teacherEmail, required this.subject, required this.medium, super.key});
+      {required this.teacherEmail,
+      required this.subject,
+      required this.medium,
+      super.key});
 
   @override
   State<StudentTutionFees> createState() => _StudentTutionFeesState();
@@ -40,7 +43,8 @@ class _StudentTutionFeesState extends State<StudentTutionFees> {
     return filteredFee;
   }
 
-  Future<void> _onFileSelection(BuildContext context, StudentClassFee feeDetails) async {
+  Future<void> _onFileSelection(
+      BuildContext context, StudentClassFee feeDetails) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
@@ -53,13 +57,15 @@ class _StudentTutionFeesState extends State<StudentTutionFees> {
         FirebaseStorage storage = FirebaseStorage.instance;
 
         // Create a reference to the location you want to upload to in firebase
-        Reference reference = storage.ref().child("/Recite/${basename(file.path)}");
+        Reference reference =
+            storage.ref().child("/Recite/${basename(file.path)}");
 
         // Upload the file to firebase
         UploadTask uploadTask = reference.putFile(file);
 
         // Waits till the file is uploaded then stores the download url
-        String uploadedLocation = await uploadTask.snapshot.ref.getDownloadURL();
+        String uploadedLocation =
+            await uploadTask.snapshot.ref.getDownloadURL();
         print('$uploadedLocation<------------------location is');
 
         // Post the payment details
@@ -80,8 +86,13 @@ class _StudentTutionFeesState extends State<StudentTutionFees> {
         var snackBar = SnackBar(
           content: Align(
             alignment: Alignment.center,
-            child: Text(isPosted ? 'Recipt uploaded and payment posted successfully!' : 'Recipt uploaded but payment failed!'),
+            child: Text(
+              isPosted
+                  ? 'Receipt uploaded and payment posted successfully!'
+                  : 'Receipt uploaded but payment failed!',
+            ),
           ),
+          backgroundColor: isPosted ? Color.fromARGB(255, 0, 0, 0) : Colors.red,
         );
 
         // Find the ScaffoldMessenger in the widget tree
@@ -154,28 +165,62 @@ class _StudentTutionFeesState extends State<StudentTutionFees> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Teacher email: ', style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.black87)),
-                        Text('${feeDetails.teacherEmail}', style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.black54)),
+                        Text('Teacher email: ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                ?.copyWith(color: Colors.black87)),
+                        Text('${feeDetails.teacherEmail}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                ?.copyWith(color: Colors.black54)),
                         const SizedBox(height: 10),
-                        Text('Bank Name: ', style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.black87)),
-                        Text('${feeDetails.bankName}', style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.black54)),
+                        Text('Bank Name: ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                ?.copyWith(color: Colors.black87)),
+                        Text('${feeDetails.bankName}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                ?.copyWith(color: Colors.black54)),
                         const SizedBox(height: 10),
-                        Text('Account no: ', style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.black87)),
-                        Text('${feeDetails.accountNo}', style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.black54)),
+                        Text('Account no: ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                ?.copyWith(color: Colors.black87)),
+                        Text('${feeDetails.accountNo}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                ?.copyWith(color: Colors.black54)),
                         const SizedBox(height: 10),
-                        Text('Class fee: Rs. ', style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.black87)),
-                        Text('${feeDetails.classFee}', style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.black54)),
+                        Text('Class fee: Rs. ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                ?.copyWith(color: Colors.black87)),
+                        Text('${feeDetails.classFee}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                ?.copyWith(color: Colors.black54)),
                         const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ElevatedButton(
-                              onPressed: () async => await _onFileSelection(context, feeDetails),
+                              onPressed: () async =>
+                                  await _onFileSelection(context, feeDetails),
                               child: const Text('Upload Recipts'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.deepPurple,
                                 foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 32, vertical: 12),
                               ),
                             ),
                             if (_isLoading) const CircularProgressIndicator(),

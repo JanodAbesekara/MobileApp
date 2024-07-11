@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:video_player/video_player.dart';
 
 class OnlineVideoView extends StatefulWidget {
@@ -14,44 +12,63 @@ class OnlineVideoView extends StatefulWidget {
 }
 
 class _OnlineVideoViewState extends State<OnlineVideoView> {
-    VideoPlayerController? _controller;
+  VideoPlayerController? _controller;
   File? _videoFile;
 
-  _getFirebaseVideoFile()async{
-        final url=  await FirebaseStorage.instance
-  .ref()
-  .child("videos/1717561300821jd.mp4")
-  .getDownloadURL();
-
-
-
-//  _videoFile = await DefaultCacheManager().getSingleFile(url);
-setState(() {
-  
-});
- _controller = VideoPlayerController.networkUrl (Uri.parse(widget.videoLink))
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
+  Future<void> _initializeVideoPlayer() async {
+    if (widget.videoLink.isNotEmpty) {
+      _controller = VideoPlayerController.network(widget.videoLink)
+        ..initialize().then((_) {
+          // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+          setState(() {});
+        });
+    }
   }
-
 
   @override
   void initState() {
-    
-   
     super.initState();
+    _initializeVideoPlayer();
   }
 
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Video Player'),
+        backgroundColor: Colors.blue,
       ),
-      body: _controller!=null? VideoPlayer(_controller!): const Center(child: CircularProgressIndicator()),
+      body: widget.videoLink.isEmpty
+          ? Center(
+              child: Text(
+                'No Video link in this lecture.',
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
+            )
+          : _controller != null && _controller!.value.isInitialized
+              ? AspectRatio(
+                  aspectRatio: _controller!.value.aspectRatio,
+                  child: VideoPlayer(_controller!),
+                )
+              : const Center(child: CircularProgressIndicator()),
+      floatingActionButton: widget.videoLink.isNotEmpty
+          ? FloatingActionButton(
+              onPressed: _controller != null && _controller!.value.isPlaying
+                  ? _controller!.pause
+                  : _controller!.play,
+              child: Icon(
+                _controller != null && _controller!.value.isPlaying
+                    ? Icons.pause
+                    : Icons.play_arrow,
+              ),
+            )
+          : null,
     );
   }
 }

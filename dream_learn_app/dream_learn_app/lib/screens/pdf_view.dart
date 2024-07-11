@@ -1,6 +1,4 @@
-
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
@@ -15,46 +13,44 @@ class OnlinePdfView extends StatefulWidget {
 
 class _OnlinePdfViewState extends State<OnlinePdfView> {
   String? firebasePdfDownloadebleUrl;
-   File? docFile;
+  File? docFile;
 
-  Future _getFirebasePdfFile()async{
-    final url=  await FirebaseStorage.instance
-  .ref()
-  .child("pdfs/1717562343672214002D.pdf")
-  .getDownloadURL();
+  Future<void> _getFirebasePdfFile() async {
+    if (widget.pdfLink.isEmpty) {
+      return;
+    }
 
-firebasePdfDownloadebleUrl=url;
- docFile = await DefaultCacheManager().getSingleFile(firebasePdfDownloadebleUrl!);
-setState(() {
-  
-});
-
-
-  
+    docFile = await DefaultCacheManager().getSingleFile(widget.pdfLink);
+    setState(() {});
   }
 
   @override
   void initState() {
-   WidgetsBinding.instance.addPostFrameCallback((_)async{
-   await _getFirebasePdfFile();
-  });
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _getFirebasePdfFile();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lecture Note'),
+        backgroundColor: Colors.blue,
       ),
-
-      body:
-      firebasePdfDownloadebleUrl==null? const Center(child: CircularProgressIndicator(),):
-      
-       PdfView(
-       path: docFile!.path
-      ),
+      body: widget.pdfLink.isEmpty
+          ? Center(
+              child: Text(
+                'No PDF link in this lecture.',
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
+            )
+          : docFile == null
+              ? const Center(child: CircularProgressIndicator())
+              : PdfView(
+                  path: docFile!.path,
+                ),
     );
   }
 }

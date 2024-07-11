@@ -1,6 +1,7 @@
 import 'package:dream_learn_app/models/lecture_material.dart';
 import 'package:dream_learn_app/screens/pdf_view.dart';
 import 'package:dream_learn_app/screens/video_view.dart';
+import 'package:dream_learn_app/screens/web_viewers/otherlink_web.dart';
 import 'package:dream_learn_app/services/lecture_material_service.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -91,7 +92,7 @@ class _LearningMaterialsScreenState extends State<LearningMaterialsScreen> {
                             ),
                             const SizedBox(height: 10),
                             GestureDetector(
-                              onTap: () => Navigator.push(
+                               onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => OnlinePdfView(
@@ -159,7 +160,17 @@ class _LearningMaterialsScreenState extends State<LearningMaterialsScreen> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            Row(
+                            GestureDetector(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OtherLinkbyWeb(
+                                    webLink: lecMaterial.otherLinks
+                                        .toString(),
+                                  ),
+                                ),
+                              ),
+                            child: Row(
                               children: [
                                 Image.asset(
                                   "assets/submission_link.png",
@@ -168,11 +179,12 @@ class _LearningMaterialsScreenState extends State<LearningMaterialsScreen> {
                                 ),
                                 const SizedBox(width: 10),
                                 const Text(
-                                  'Activity Submission Link',
+                                  'Other Links',
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],
                             ),
+                            )
                           ],
                         ),
                       ),

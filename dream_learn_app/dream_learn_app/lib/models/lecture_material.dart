@@ -3,6 +3,7 @@ class LectureMaterial{
   String? pdfPath;
   Uri? zoomLink;
   Uri? lectureRecording;
+  Uri? otherLinks;
 
   LectureMaterial.fromJson(Map<String,dynamic> json){
   lessonName=  json['lesson'];
@@ -12,7 +13,7 @@ class LectureMaterial{
    
    );
    lectureRecording = Uri.tryParse(json['video']);
-
+    otherLinks = Uri.tryParse(json['otherlink']);
   }
 
 }

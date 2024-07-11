@@ -20,25 +20,28 @@ class DashboardGridItem extends StatelessWidget {
     return Column(
       children: [
         // Icon
-        GestureDetector(
-          onTap: onTap,
-          child: Container(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: backgroundColor, // Set background color
-              shape: BoxShape.circle,
-              border: Border.all(),
-            ),
-            child: Image.asset(
-              iconPath,
-              width: 30,
-              height: 30,
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: GestureDetector(
+            onTap: onTap,
+            child: Container(
+              padding: const EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                color: backgroundColor, // Set background color
+                shape: BoxShape.circle,
+                border: Border.all(),
+              ),
+              child: Image.asset(
+                iconPath,
+                width: 30,
+                height: 30,
+              ),
             ),
           ),
         ),
         // Text
         Text(title),
-      ],
+      ]
     );
   }
 }
