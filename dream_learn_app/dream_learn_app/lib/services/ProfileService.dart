@@ -1,4 +1,5 @@
 // File: ProfileService.dart
+import 'package:dream_learn_app/helpers/domain_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:http/http.dart' as http;
@@ -15,8 +16,8 @@ class ProfileService {
     String? email = decodedToken['email'];
 
     if (email != null) {
-      var url = Uri.parse(
-          'https://bytegroupproject.onrender.com/api/Test/getlecturefulldtails?email=$email');
+      var url = Uri.http(
+          domainUrl,'/api/Test/getlecturefulldtails',{'email':email});
       var response = await http.get(url);
 
       if (response.statusCode == 200) {

@@ -16,7 +16,7 @@ class StudentService {
     required String accountNo,
     // required String email,
   }) async {
-    var url = Uri.https(domainUrl, '/api/Test/poststudentpayment');
+    var url = Uri.http(domainUrl, '/api/Test/poststudentpayment');
 
     try {
       var response = await http.post(
@@ -47,7 +47,7 @@ class StudentService {
   }
 static Future<List<StudentClassFee>> getPayments() async{
     var url =
-        Uri.http('bytegroupproject.onrender.com', '/api/Test/getdetails',{'email':studentEmail});
+        Uri.http(domainUrl, '/api/Test/getdetails',{'email':studentEmail});
     var response = await http.get(url);
     Map<String, dynamic> decodedJson= jsonDecode(response.body)  as Map<String, dynamic>;
     if(response.statusCode==200){
